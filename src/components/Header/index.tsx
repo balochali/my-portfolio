@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { usePathname } from 'next/navigation'; // Add this import
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
-  const pathname = usePathname(); // Get current path
+  const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
     { name: 'Home', href: '#home', command: 'cd ~/' },
@@ -17,9 +18,6 @@ const Header = () => {
     { name: 'Skills', href: '#skills', command: 'cat skills.json' },
     { name: 'Contact', href: '#contact', command: 'ping contact' }
   ];
-
-  // Check if current path is home
-  const isHome = pathname === '/';
 
   useEffect(() => {
     const updateTime = () => {
@@ -40,12 +38,24 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+      
+      // Determine active section based on scroll position
+      if (window.scrollY < 100) {
+        setActiveSection('home');
+      } else {
+        // You can add more logic here to detect other sections
+        // For now, we'll just keep it simple
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Check if we're at the home section (either root path or scrolled to top)
+  const isHomeActive = pathname === '/' || activeSection === 'home';
 
   const headerVariants: Variants = {
     initial: { y: -100, opacity: 0 },
@@ -111,50 +121,54 @@ const Header = () => {
               className="flex items-center gap-2 cursor-pointer"
             >
               <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-black font-bold text-sm">
-                JD
+                AB
               </div>
               <span className="text-green-400 font-bold text-lg hidden sm:block">
-                john.dev
+                baloch.dev
               </span>
             </motion.div>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                className={`group relative px-4 py-2 transition-all duration-300 ${
-                  (isHome && item.name === 'Home') 
-                    ? 'text-green-400' 
-                    : 'text-gray-300 hover:text-green-400'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.5 }}
-              >
-                <span className="relative z-10">{item.name}</span>
-                
-                {/* Active/Hover background */}
-                <motion.div
-                  className={`absolute inset-0 rounded border ${
-                    (isHome && item.name === 'Home')
-                      ? 'bg-green-400/20 border-green-400/30'
-                      : 'border-green-400/20 opacity-0 group-hover:opacity-100 bg-green-400/10'
+            {navItems.map((item, index) => {
+              const isActive = (isHomeActive && item.name === 'Home') || 
+                              (activeSection === item.href.substring(1));
+              return (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  className={`group relative px-4 py-2 transition-all duration-300 ${
+                    isActive 
+                      ? 'text-green-400' 
+                      : 'text-gray-300 hover:text-green-400'
                   }`}
-                  initial={false}
-                  transition={{ duration: 0.2 }}
-                />
-                
-                {/* Terminal command tooltip */}
-                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-green-400 text-xs px-2 py-1 rounded border border-green-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                  $ {item.command}
-                </div>
-              </motion.a>
-            ))}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.5 }}
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  
+                  {/* Active/Hover background */}
+                  <motion.div
+                    className={`absolute inset-0 rounded border ${
+                      isActive
+                        ? 'bg-green-400/20 border-green-400/30'
+                        : 'border-green-400/20 opacity-0 group-hover:opacity-100 bg-green-400/10'
+                    }`}
+                    initial={false}
+                    transition={{ duration: 0.2 }}
+                  />
+                  
+                  {/* Terminal command tooltip */}
+                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-green-400 text-xs px-2 py-1 rounded border border-green-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    $ {item.command}
+                  </div>
+                </motion.a>
+              );
+            })}
           </nav>
 
           {/* Right Side - Time & Menu Button */}
@@ -198,26 +212,30 @@ const Header = () => {
               className="lg:hidden border-t border-green-400/20 bg-black/95 overflow-hidden"
             >
               <div className="py-4 space-y-2">
-                {navItems.map((item, index) => (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    custom={index}
-                    variants={itemVariants}
-                    initial="closed"
-                    animate="open"
-                    exit="closed"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 ${
-                      (isHome && item.name === 'Home')
-                        ? 'text-green-400 bg-green-400/5 border-green-400'
-                        : 'text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400'
-                    }`}
-                  >
-                    <span>{item.name}</span>
-                    <span className="text-xs text-green-400/60">$ {item.command}</span>
-                  </motion.a>
-                ))}
+                {navItems.map((item, index) => {
+                  const isActive = (isHomeActive && item.name === 'Home') || 
+                                  (activeSection === item.href.substring(1));
+                  return (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      custom={index}
+                      variants={itemVariants}
+                      initial="closed"
+                      animate="open"
+                      exit="closed"
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 ${
+                        isActive
+                          ? 'text-green-400 bg-green-400/5 border-green-400'
+                          : 'text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400'
+                      }`}
+                    >
+                      <span>{item.name}</span>
+                      <span className="text-xs text-green-400/60">$ {item.command}</span>
+                    </motion.a>
+                  );
+                })}
                 
                 {/* Mobile Time Display */}
                 <motion.div

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection/hero";
+import AboutSection from '@/components/About';
 
 interface LandingAnimationProps {
   onComplete?: () => void;
@@ -79,6 +80,7 @@ const LandingAnimation = ({ onComplete }: LandingAnimationProps) => {
         <>
           <Header />
           <HeroSection />
+          <AboutSection />
         </>
       )}
 

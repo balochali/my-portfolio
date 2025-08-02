@@ -83,7 +83,7 @@ const HeroSection = () => {
               {/* Welcome Message */}
               <motion.div variants={itemVariants}>
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
-                  Hello, I&apos;m <span className="text-green-400">John Doe</span>
+                  Hello, I&apos;m <span className="text-green-400">Ali Baloch</span>
                 </div>
                 <div className="text-lg text-gray-300">
                   <TypeAnimation
@@ -211,7 +211,7 @@ const HeroSection = () => {
                   <div className="relative rounded-lg overflow-hidden border border-green-400/20">
                     <Image
                       src="/hero-section/my-picture.jpeg"
-                      alt="John Doe - Full Stack Developer"
+                      alt="Ali Baloch - Full Stack Developer"
                       width={400}
                       height={500}
                       className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale hover:grayscale-0"
@@ -223,7 +223,7 @@ const HeroSection = () => {
                     
                     {/* Bottom info */}
                     <div className="absolute bottom-4 left-4 right-4">
-                      <div className="text-white font-semibold">John Doe</div>
+                      <div className="text-white font-semibold">Ali Baloch</div>
                       <div className="text-green-400 text-sm">Full Stack Developer</div>
                     </div>
 
