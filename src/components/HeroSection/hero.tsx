@@ -62,7 +62,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-black text-green-400 font-mono overflow-hidden relative">
+    <section data-section="hero" className="min-h-screen bg-black text-green-400 font-mono overflow-hidden relative">
       {/* Simple grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
       

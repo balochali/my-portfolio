@@ -12,11 +12,11 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
-    { name: 'Home', href: '#home', command: 'cd ~/' },
-    { name: 'About', href: '#about', command: 'cat about.txt' },
-    { name: 'Projects', href: '#projects', command: 'ls projects/' },
-    { name: 'Skills', href: '#skills', command: 'cat skills.json' },
-    { name: 'Contact', href: '#contact', command: 'ping contact' }
+    { name: 'Home', href: '#home', command: 'cd ~/', section: 'home' },
+    { name: 'About', href: '#about', command: 'cat about.txt', section: 'about' },
+    { name: 'Projects', href: '#projects', command: 'ls projects/', section: 'projects' },
+    { name: 'Skills', href: '#skills', command: 'cat skills.json', section: 'skills' },
+    { name: 'Contact', href: '#contact', command: 'ping contact', section: 'contact' }
   ];
 
   useEffect(() => {
@@ -41,18 +41,91 @@ const Header = () => {
       const isScrolled = window.scrollY > 50;
       setScrolled(isScrolled);
       
-      // Determine active section based on scroll position
-      if (window.scrollY < 100) {
-        setActiveSection('home');
-      } else {
-        // You can add more logic here to detect other sections
-        // For now, we'll just keep it simple
+      // Get all sections
+      const heroSection = document.querySelector('[data-section="hero"]');
+      const aboutSection = document.querySelector('[data-section="about"]');
+      const projectsSection = document.querySelector('[data-section="projects"]');
+      const skillsSection = document.querySelector('[data-section="skills"]');
+      const contactSection = document.querySelector('[data-section="contact"]');
+      
+      const scrollY = window.scrollY;
+      let currentSection = 'home';
+      
+      // Check each section from bottom to top
+      if (contactSection) {
+        const contactRect = contactSection.getBoundingClientRect();
+        const contactTop = contactRect.top + scrollY;
+        if (scrollY >= contactTop - 300) {
+          currentSection = 'contact';
+        }
       }
+      
+      if (skillsSection && currentSection === 'home') {
+        const skillsRect = skillsSection.getBoundingClientRect();
+        const skillsTop = skillsRect.top + scrollY;
+        if (scrollY >= skillsTop - 300) {
+          currentSection = 'skills';
+        }
+      }
+      
+      if (projectsSection && currentSection === 'home') {
+        const projectsRect = projectsSection.getBoundingClientRect();
+        const projectsTop = projectsRect.top + scrollY;
+        if (scrollY >= projectsTop - 300) {
+          currentSection = 'projects';
+        }
+      }
+      
+      if (aboutSection && currentSection === 'home') {
+        const aboutRect = aboutSection.getBoundingClientRect();
+        const aboutTop = aboutRect.top + scrollY;
+        if (scrollY >= aboutTop - 300) {
+          currentSection = 'about';
+        }
+      }
+      
+      if (heroSection && currentSection === 'home') {
+        const heroRect = heroSection.getBoundingClientRect();
+        const heroTop = heroRect.top + scrollY;
+        const heroHeight = heroRect.height;
+        if (scrollY >= heroTop && scrollY < heroTop + heroHeight - 300) {
+          currentSection = 'home';
+        }
+      }
+      
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Add scroll listener with a small delay to ensure sections are rendered
+    const timer = setTimeout(() => {
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId: string) => {
+    const targetSection = sectionId === 'home' ? 'hero' : sectionId;
+    const element = document.querySelector(`[data-section="${targetSection}"]`);
+    
+    if (element) {
+      const headerHeight = 80; // Adjust based on your header height
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    
+    setIsMenuOpen(false); // Close mobile menu if open
+  };
 
   // Check if we're at the home section (either root path or scrolled to top)
   const isHomeActive = pathname === '/' || activeSection === 'home';
@@ -119,6 +192,7 @@ const Header = () => {
             <motion.div 
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-2 cursor-pointer"
+              onClick={() => scrollToSection('home')}
             >
               <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-black font-bold text-sm">
                 AB
@@ -132,12 +206,11 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item, index) => {
-              const isActive = (isHomeActive && item.name === 'Home') || 
-                              (activeSection === item.href.substring(1));
+              const isActive = activeSection === item.section;
               return (
-                <motion.a
+                <motion.button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => scrollToSection(item.section)}
                   className={`group relative px-4 py-2 transition-all duration-300 ${
                     isActive 
                       ? 'text-green-400' 
@@ -166,7 +239,7 @@ const Header = () => {
                   <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-green-400 text-xs px-2 py-1 rounded border border-green-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                     $ {item.command}
                   </div>
-                </motion.a>
+                </motion.button>
               );
             })}
           </nav>
@@ -213,19 +286,17 @@ const Header = () => {
             >
               <div className="py-4 space-y-2">
                 {navItems.map((item, index) => {
-                  const isActive = (isHomeActive && item.name === 'Home') || 
-                                  (activeSection === item.href.substring(1));
+                  const isActive = activeSection === item.section;
                   return (
-                    <motion.a
+                    <motion.button
                       key={item.name}
-                      href={item.href}
                       custom={index}
                       variants={itemVariants}
                       initial="closed"
                       animate="open"
                       exit="closed"
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 ${
+                      onClick={() => scrollToSection(item.section)}
+                      className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 w-full text-left ${
                         isActive
                           ? 'text-green-400 bg-green-400/5 border-green-400'
                           : 'text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400'
@@ -233,7 +304,7 @@ const Header = () => {
                     >
                       <span>{item.name}</span>
                       <span className="text-xs text-green-400/60">$ {item.command}</span>
-                    </motion.a>
+                    </motion.button>
                   );
                 })}
                 

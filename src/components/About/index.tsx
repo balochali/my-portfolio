@@ -1,67 +1,89 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
-import { useRef } from 'react';
+import React, { useState } from "react";
+import { motion, useInView, Variants } from "framer-motion";
+import { useRef } from "react";
 
 const AboutSection = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const tabs = [
-    { id: 'overview', label: 'overview.js', icon: '📋' },
-    { id: 'experience', label: 'experience.json', icon: '💼' },
-    { id: 'education', label: 'education.md', icon: '🎓' },
-    { id: 'achievements', label: 'achievements.txt', icon: '🏆' }
+    { id: "overview", label: "overview.js", icon: "📋" },
+    { id: "experience", label: "experience.json", icon: "💼" },
+    { id: "education", label: "education.md", icon: "🎓" },
+    { id: "achievements", label: "achievements.txt", icon: "🏆" },
   ];
 
+  // --- UPDATED EXPERIENCE ---
   const experiences = [
     {
-      company: "Tech Innovations Ltd",
-      position: "Senior Full Stack Developer",
-      duration: "2022 - Present",
-      description: "Led development of scalable web applications using MERN stack. Improved performance by 40% and reduced load times significantly.",
-      technologies: ["React", "Node.js", "MongoDB", "AWS"]
+      company: "TechThree",
+      position: "Software Engineer",
+      duration: "Apr 2024 – Present",
+      description:
+        "Developing scalable backend services and APIs using Node.js and PostgreSQL. Contributed to optimizing database queries and improving application performance for large-scale clients.",
+      technologies: ["Node.js", "PostgreSQL", "Express.js", "AWS"],
     },
     {
-      company: "Digital Solutions Inc",
+      company: "TechThree",
+      position: "Backend Developer",
+      duration: "Jan 2024 – Jul 2024",
+      description:
+        "Worked on server-side logic, database modeling, and API development for high-traffic web apps. Collaborated closely with frontend teams for seamless integration.",
+      technologies: ["Node.js", "Prisma", "MongoDB"],
+    },
+    {
+      company: "TechThree",
       position: "Frontend Developer",
-      duration: "2020 - 2022",
-      description: "Developed responsive user interfaces and collaborated with backend teams to deliver seamless user experiences.",
-      technologies: ["React", "TypeScript", "CSS3", "Redux"]
+      duration: "Jun 2023 – Jan 2024",
+      description:
+        "Built responsive, dynamic UIs using React and Next.js. Ensured pixel-perfect implementation of designs and optimized performance for mobile and desktop platforms.",
+      technologies: ["React", "Next.js", "Tailwind CSS", "Redux"],
     },
     {
-      company: "StartupXYZ",
-      position: "Junior Developer",
-      duration: "2019 - 2020",
-      description: "Built and maintained multiple client projects, focusing on clean code and modern web technologies.",
-      technologies: ["JavaScript", "HTML5", "CSS3", "Node.js"]
-    }
+      company: "LaunchBox Pakistan",
+      position: "MERN Stack Developer",
+      duration: "May 2023 – Jul 2023",
+      description:
+        "Developed full-stack web solutions for startups, focusing on rapid prototyping and scalable architectures.",
+      technologies: ["React", "Node.js", "MongoDB", "Express"],
+    },
+    {
+      company: "QF Network",
+      position: "MERN Stack Developer",
+      duration: "Nov 2022 – May 2023",
+      description:
+        "Created and maintained e-commerce and community platforms, improving performance and user experience.",
+      technologies: ["React", "Node.js", "MongoDB"],
+    },
   ];
 
+  // --- UPDATED EDUCATION ---
   const education = [
     {
-      degree: "Bachelor of Computer Science",
-      institution: "University of Technology",
-      year: "2019",
-      grade: "First Class Honors"
+      degree: "Bachelor of Science in Computer Science",
+      institution: "Sukkur IBA University",
+      year: "2024",
+      grade: "CGPA: 3.5+",
     },
     {
       degree: "Full Stack Web Development",
-      institution: "FreeCodeCamp",
-      year: "2018",
-      grade: "Certified"
-    }
+      institution: "FreeCodeCamp (Self-Learning)",
+      year: "2022",
+      grade: "Certified",
+    },
   ];
 
+  // --- UPDATED ACHIEVEMENTS ---
   const achievements = [
-    "🚀 Built 20+ production-ready web applications",
-    "⭐ Contributed to 5+ open source projects",
-    "📈 Improved application performance by 40% on average",
-    "👥 Mentored 10+ junior developers",
-    "🏅 Won 'Best Innovation Award' at Tech Conference 2023",
-    "💡 Published 15+ technical articles"
+    "🚀 Successfully delivered 20+ production-grade MERN projects.",
+    "💡 Designed scalable backend architectures reducing API latency by 40%.",
+    "🏆 Recognized as top performer at TechThree for rapid project delivery.",
+    "📈 Contributed to open-source projects in the Node.js community.",
+    "👨‍🏫 Mentored junior developers in MERN stack and clean code practices.",
+    "🎯 Built and deployed blockchain-integrated features for Telegram bots.",
   ];
 
   const containerVariants: Variants = {
@@ -89,7 +111,7 @@ const AboutSection = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'overview':
+      case "overview":
         return (
           <motion.div
             key="overview"
@@ -101,21 +123,38 @@ const AboutSection = () => {
             <div className="space-y-4">
               <div className="text-green-300">{`const aboutMe = {`}</div>
               <div className="pl-4 space-y-2 text-gray-300">
-                <div><span className="text-green-400">name:</span> <span className="text-yellow-300">{`"Ali Baloch"`}</span>,</div>
-                <div><span className="text-green-400">role:</span> <span className="text-yellow-300">{`"Full Stack Developer"`}</span>,</div>
-                <div><span className="text-green-400">location:</span> <span className="text-yellow-300">{`"Karachi, Pakistan"`}</span>,</div>
-                <div><span className="text-green-400">passion:</span> <span className="text-yellow-300">{`"Building digital solutions"`}</span>,</div>
+                <div>
+                  <span className="text-green-400">name:</span>{" "}
+                  <span className="text-yellow-300">{`"Ali Baloch"`}</span>,
+                </div>
+                <div>
+                  <span className="text-green-400">role:</span>{" "}
+                  <span className="text-yellow-300">{`"Full Stack Developer"`}</span>
+                  ,
+                </div>
+                <div>
+                  <span className="text-green-400">location:</span>{" "}
+                  <span className="text-yellow-300">{`"Karachi, Pakistan"`}</span>
+                  ,
+                </div>
+                <div>
+                  <span className="text-green-400">passion:</span>{" "}
+                  <span className="text-yellow-300">{`"Building digital solutions"`}</span>
+                  ,
+                </div>
               </div>
               <div className="text-green-300">{`};`}</div>
             </div>
-            
+
             <div className="bg-gray-900/30 p-4 rounded border border-green-400/20">
               <div className="text-green-300 mb-2">{`// About Me`}</div>
               <p className="text-gray-300 leading-relaxed">
-                I&apos;m a passionate full-stack developer with expertise in modern web technologies. 
-                I love creating efficient, scalable solutions and turning complex problems into 
-                simple, elegant code. When I&apos;m not coding, you&apos;ll find me exploring new technologies, 
-                contributing to open source, or sharing knowledge with the developer community.
+                I&apos;m a passionate full-stack developer with expertise in
+                modern web technologies. I love creating efficient, scalable
+                solutions and turning complex problems into simple, elegant
+                code. When I&apos;m not coding, you&apos;ll find me exploring
+                new technologies, contributing to open source, or sharing
+                knowledge with the developer community.
               </p>
             </div>
 
@@ -140,7 +179,7 @@ const AboutSection = () => {
           </motion.div>
         );
 
-      case 'experience':
+      case "experience":
         return (
           <motion.div
             key="experience"
@@ -179,7 +218,7 @@ const AboutSection = () => {
           </motion.div>
         );
 
-      case 'education':
+      case "education":
         return (
           <motion.div
             key="education"
@@ -198,14 +237,16 @@ const AboutSection = () => {
                 className="bg-gray-900/30 p-4 rounded border border-green-400/20"
               >
                 <h3 className="text-white font-semibold mb-1">{edu.degree}</h3>
-                <div className="text-green-300 text-sm mb-1">{edu.institution}</div>
+                <div className="text-green-300 text-sm mb-1">
+                  {edu.institution}
+                </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">{edu.year}</span>
                   <span className="text-green-400 text-sm">{edu.grade}</span>
                 </div>
               </motion.div>
             ))}
-            
+
             <div className="bg-gray-900/30 p-4 rounded border border-green-400/20">
               <div className="text-green-300 mb-2">## Continuous Learning</div>
               <div className="text-gray-300 text-sm space-y-1">
@@ -218,7 +259,7 @@ const AboutSection = () => {
           </motion.div>
         );
 
-      case 'achievements':
+      case "achievements":
         return (
           <motion.div
             key="achievements"
@@ -242,7 +283,7 @@ const AboutSection = () => {
                 </motion.div>
               ))}
             </div>
-            
+
             <div className="bg-gray-900/30 p-4 rounded border border-green-400/20">
               <div className="text-green-300 mb-2">$ stats --summary</div>
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -273,10 +314,10 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-black text-green-400 font-mono relative py-20">
+    <section data-section="about" className="min-h-screen bg-black text-green-400 font-mono relative py-20">
       {/* Grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
-      
+
       {/* Glow effect */}
       <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
 
@@ -298,7 +339,10 @@ const AboutSection = () => {
           </motion.div>
 
           {/* Terminal Window */}
-          <motion.div variants={itemVariants} className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden">
+          <motion.div
+            variants={itemVariants}
+            className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden"
+          >
             {/* Terminal Header */}
             <div className="flex items-center justify-between p-4 border-b border-green-400/20">
               <div className="flex items-center gap-3">
@@ -339,9 +383,7 @@ const AboutSection = () => {
             </div>
 
             {/* Tab Content */}
-            <div className="p-6 min-h-[500px]">
-              {renderTabContent()}
-            </div>
+            <div className="p-6 min-h-[500px]">{renderTabContent()}</div>
 
             {/* Terminal Footer */}
             <div className="border-t border-green-400/20 p-3 bg-gray-900/30">
@@ -360,26 +402,31 @@ const AboutSection = () => {
           </motion.div>
 
           {/* Fun Stats */}
-          <motion.div variants={itemVariants} className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <motion.div
+            variants={itemVariants}
+            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+          >
             {[
               { label: "Code Commits", value: "1,000+", icon: "📝" },
               { label: "Coffee Cups", value: "∞", icon: "☕" },
               { label: "Bug Fixes", value: "500+", icon: "🐛" },
-              { label: "Happy Clients", value: "50+", icon: "😊" }
+              { label: "Happy Clients", value: "50+", icon: "😊" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1 + index * 0.1 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 0 25px rgba(0,255,0,0.2)"
+                  boxShadow: "0 0 25px rgba(0,255,0,0.2)",
                 }}
                 className="bg-gray-900/30 p-4 rounded border border-green-400/20 text-center hover:border-green-400/40 transition-all duration-300"
               >
                 <div className="text-2xl mb-1">{stat.icon}</div>
-                <div className="text-green-400 font-bold text-lg">{stat.value}</div>
+                <div className="text-green-400 font-bold text-lg">
+                  {stat.value}
+                </div>
                 <div className="text-gray-300 text-sm">{stat.label}</div>
               </motion.div>
             ))}
