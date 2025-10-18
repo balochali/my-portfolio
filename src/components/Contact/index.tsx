@@ -113,11 +113,11 @@ const ContactSection = () => {
           setTerminalOutput(prev => prev + commands[currentLine] + '\n');
           currentLine++;
           typeLines();
-        }, currentLine % 2 === 0 ? 800 : 200);
+        }, currentLine % 2 === 0 ? 400 : 100);
       }
     };
 
-    setTimeout(typeLines, 1000);
+    setTimeout(typeLines, 500);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
