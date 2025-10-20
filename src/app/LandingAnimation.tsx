@@ -27,6 +27,9 @@ export default function LandingAnimation() {
   ];
 
   useEffect(() => {
+    // Prevent running during SSR
+    if (typeof window === "undefined") return;
+
     const sequence = [
       { delay: 0, phase: 0 },
       { delay: 1200, phase: 1 },
@@ -38,7 +41,6 @@ export default function LandingAnimation() {
       setTimeout(() => setCurrentPhase(phase), delay)
     );
 
-    // Typewriter effect for terminal lines
     let lineIndex = 0;
     const typewriterTimer = setInterval(() => {
       if (lineIndex < bootSequence.length) {
@@ -47,7 +49,6 @@ export default function LandingAnimation() {
       }
     }, 200);
 
-    // Complete animation and show main content
     const completeTimer = setTimeout(() => {
       setShowAnimation(false);
       setShowContent(true);
@@ -87,13 +88,12 @@ export default function LandingAnimation() {
             transition={{ duration: 0.6, ease: "easeInOut" }}
             className="fixed inset-0 bg-black text-green-400 font-mono overflow-hidden z-50"
           >
-            {/* Background Grid */}
+            {/* Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
             <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
 
             <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
               <div className="max-w-4xl w-full">
-                {/* Terminal Window */}
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -128,35 +128,38 @@ export default function LandingAnimation() {
 
                     {/* Boot Messages */}
                     <div className="space-y-1">
-                      {terminalLines.map((line, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className={`text-sm ${
-                            line.includes('name:') || line.includes('role:')
-                              ? 'text-white'
-                              : line.includes('skills:') || line.includes('status:')
-                              ? 'text-blue-400'
-                              : line.includes('Welcome')
-                              ? 'text-green-300 font-semibold'
-                              : 'text-gray-300'
-                          }`}
-                        >
-                          {line}
-                          {index === terminalLines.length - 1 &&
-                            index < bootSequence.length - 1 && (
-                              <motion.span
-                                animate={{ opacity: [1, 0, 1] }}
-                                transition={{ duration: 0.8, repeat: Infinity }}
-                                className="text-green-400 ml-1"
-                              >
-                                |
-                              </motion.span>
-                            )}
-                        </motion.div>
-                      ))}
+                      {terminalLines.map((line, index) => {
+                        if (!line) return null; // 🧩 safeguard
+                        return (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`text-sm ${
+                              line?.includes('name:') || line?.includes('role:')
+                                ? 'text-white'
+                                : line?.includes('skills:') || line?.includes('status:')
+                                ? 'text-blue-400'
+                                : line?.includes('Welcome')
+                                ? 'text-green-300 font-semibold'
+                                : 'text-gray-300'
+                            }`}
+                          >
+                            {line}
+                            {index === terminalLines.length - 1 &&
+                              index < bootSequence.length - 1 && (
+                                <motion.span
+                                  animate={{ opacity: [1, 0, 1] }}
+                                  transition={{ duration: 0.8, repeat: Infinity }}
+                                  className="text-green-400 ml-1"
+                                >
+                                  |
+                                </motion.span>
+                              )}
+                          </motion.div>
+                        );
+                      })}
                     </div>
 
                     {/* Success Section */}
