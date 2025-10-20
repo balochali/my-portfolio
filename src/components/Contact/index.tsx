@@ -19,23 +19,23 @@ const ContactSection = () => {
   const contactMethods = [
     {
       name: 'Email',
-      value: 'ali.baloch@example.com',
+      value: 'alibaloshi018@gmail.com',
       icon: '📧',
-      command: 'mailto:ali.baloch@example.com',
+      command: 'mailto:alibaloshi018@gmail.com',
       description: 'Primary communication method',
       available: true
     },
     {
       name: 'LinkedIn',
-      value: '/in/ali-baloch-dev',
+      value: '/in/balochali',
       icon: '💼',
-      command: 'https://linkedin.com/in/ali-baloch-dev',
+      command: 'https://www.linkedin.com/in/balochali/',
       description: 'Professional networking',
       available: true
     },
     {
       name: 'GitHub',
-      value: '/alibaloch-dev',
+      value: '/balochali',
       icon: '🐙',
       command: 'https://github.com/alibaloch-dev',
       description: 'Code repositories',
@@ -43,9 +43,9 @@ const ContactSection = () => {
     },
     {
       name: 'WhatsApp',
-      value: '+92 XXX XXXXXXX',
+      value: '+92 343 3322698',
       icon: '💬',
-      command: 'https://wa.me/92XXXXXXXXX',
+      command: 'https://wa.me/923433322698',
       description: 'Quick messaging',
       available: true
     },
@@ -57,14 +57,7 @@ const ContactSection = () => {
       description: 'Tech discussions',
       available: false
     },
-    {
-      name: 'Twitter',
-      value: '@alibaloch_dev',
-      icon: '🐦',
-      command: 'https://twitter.com/alibaloch_dev',
-      description: 'Tech updates & thoughts',
-      available: true
-    }
+
   ];
 
   // Update time

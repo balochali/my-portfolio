@@ -517,7 +517,7 @@ const SkillsSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-3xl font-bold text-green-400 mb-2"
             >
-              4+
+              3+
             </motion.div>
             <div className="text-gray-300">Years Experience</div>
           </motion.div>
@@ -533,7 +533,7 @@ const SkillsSection = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-3xl font-bold text-green-400 mb-2"
             >
-              {skillsData.reduce((acc, skill) => acc + skill.projects, 0)}+
+              20+
             </motion.div>
             <div className="text-gray-300">Projects Completed</div>
           </motion.div>

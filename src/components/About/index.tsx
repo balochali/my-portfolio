@@ -21,7 +21,7 @@ const AboutSection = () => {
     {
       company: "TechThree",
       position: "Software Engineer",
-      duration: "Apr 2024 – Present",
+      duration: "Apr 2024 – Mar 2025",
       description:
         "Developing scalable backend services and APIs using Node.js and PostgreSQL. Contributed to optimizing database queries and improving application performance for large-scale clients.",
       technologies: ["Node.js", "PostgreSQL", "Express.js", "AWS"],
@@ -66,12 +66,12 @@ const AboutSection = () => {
       degree: "Bachelor of Science in Computer Science",
       institution: "Sukkur IBA University",
       year: "2024",
-      grade: "CGPA: 3.5+",
+      grade: "CGPA: 2.8+",
     },
     {
-      degree: "Full Stack Web Development",
-      institution: "FreeCodeCamp (Self-Learning)",
-      year: "2022",
+      degree: "Programming For Everybody (Python)",
+      institution: "Coursera",
+      year: "2020",
       grade: "Certified",
     },
   ];
@@ -370,7 +370,7 @@ const AboutSection = () => {
                   onClick={() => setActiveTab(tab.id)}
                   whileHover={{ backgroundColor: "rgba(0,255,0,0.1)" }}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-4 py-3 text-sm font-medium border-r border-green-400/20 transition-all duration-300 flex items-center gap-2 ${
+                  className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 ${
                     activeTab === tab.id
                       ? "bg-green-400/10 text-green-400 border-b-2 border-b-green-400"
                       : "text-gray-400 hover:text-green-300"
