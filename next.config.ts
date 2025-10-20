@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: { unoptimized: true }, // prevents Vercel image optimization issues
+  typescript: {
+    ignoreBuildErrors: false, // ensures build halts on type errors
+  },
 };
 
 export default nextConfig;
