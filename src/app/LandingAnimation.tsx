@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection/hero";
-import AboutSection from '@/components/About';
-import ProjectsSection from '@/components/Projects';
-import SkillsSection from '@/components/Skills';
-import ContactSection from '@/components/Contact';
+import AboutSection from "@/components/About";
+import ProjectsSection from "@/components/Projects";
+import SkillsSection from "@/components/Skills";
+import ContactSection from "@/components/Contact";
 
 export default function LandingAnimation() {
   const [showAnimation, setShowAnimation] = useState(true);
@@ -23,7 +23,7 @@ export default function LandingAnimation() {
     "$ skills: ['React', 'Node.js', 'MongoDB']",
     "$ status: 'Ready to collaborate'",
     "$ Launching interface...",
-    "$ Welcome to Ali's Portfolio!"
+    "$ Welcome to Ali's Portfolio!",
   ];
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function LandingAnimation() {
     let lineIndex = 0;
     const typewriterTimer = setInterval(() => {
       if (lineIndex < bootSequence.length) {
-        setTerminalLines(prev => [...prev, bootSequence[lineIndex]]);
+        setTerminalLines((prev) => [...prev, bootSequence[lineIndex]]);
         lineIndex++;
       }
     }, 200);
@@ -108,7 +108,9 @@ export default function LandingAnimation() {
                         <div className="w-3 h-3 bg-yellow-500 rounded-full" />
                         <div className="w-3 h-3 bg-green-500 rounded-full" />
                       </div>
-                      <span className="text-sm text-gray-400">portfolio-boot.sh</span>
+                      <span className="text-sm text-gray-400">
+                        portfolio-boot.sh
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <motion.div
@@ -137,13 +139,14 @@ export default function LandingAnimation() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3 }}
                             className={`text-sm ${
-                              line?.includes('name:') || line?.includes('role:')
-                                ? 'text-white'
-                                : line?.includes('skills:') || line?.includes('status:')
-                                ? 'text-blue-400'
-                                : line?.includes('Welcome')
-                                ? 'text-green-300 font-semibold'
-                                : 'text-gray-300'
+                              line?.includes("name:") || line?.includes("role:")
+                                ? "text-white"
+                                : line?.includes("skills:") ||
+                                  line?.includes("status:")
+                                ? "text-blue-400"
+                                : line?.includes("Welcome")
+                                ? "text-green-300 font-semibold"
+                                : "text-gray-300"
                             }`}
                           >
                             {line}
@@ -151,7 +154,10 @@ export default function LandingAnimation() {
                               index < bootSequence.length - 1 && (
                                 <motion.span
                                   animate={{ opacity: [1, 0, 1] }}
-                                  transition={{ duration: 0.8, repeat: Infinity }}
+                                  transition={{
+                                    duration: 0.8,
+                                    repeat: Infinity,
+                                  }}
                                   className="text-green-400 ml-1"
                                 >
                                   |
@@ -171,11 +177,13 @@ export default function LandingAnimation() {
                         className="mt-6 pt-4 border-t border-green-400/20"
                       >
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="text-sm text-gray-400">Loading:</span>
+                          <span className="text-sm text-gray-400">
+                            Loading:
+                          </span>
                           <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
-                              animate={{ width: '100%' }}
+                              animate={{ width: "100%" }}
                               transition={{ duration: 0.6, ease: "easeOut" }}
                               className="h-full bg-gradient-to-r from-green-400 to-blue-400"
                             />
@@ -184,14 +192,17 @@ export default function LandingAnimation() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 text-xs">
-                          {["Server: Ready", "Database: Connected", "UI: Initialized", "Portfolio: Online"].map(
-                            (status, i) => (
-                              <div key={i} className="flex items-center gap-2">
-                                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                                <span className="text-gray-300">{status}</span>
-                              </div>
-                            )
-                          )}
+                          {[
+                            "Server: Ready",
+                            "Database: Connected",
+                            "UI: Initialized",
+                            "Portfolio: Online",
+                          ].map((status, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                              <span className="text-gray-300">{status}</span>
+                            </div>
+                          ))}
                         </div>
 
                         <motion.div
@@ -200,7 +211,9 @@ export default function LandingAnimation() {
                           transition={{ delay: 0.8 }}
                           className="mt-4 p-3 bg-green-400/10 border border-green-400/30 rounded text-center"
                         >
-                          <div className="text-green-300 font-semibold">✓ System Ready</div>
+                          <div className="text-green-300 font-semibold">
+                            ✓ System Ready
+                          </div>
                           <div className="text-xs text-gray-400 mt-1">
                             Redirecting to portfolio...
                           </div>
