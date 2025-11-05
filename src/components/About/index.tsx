@@ -19,11 +19,19 @@ const AboutSection = () => {
   // --- UPDATED EXPERIENCE ---
   const experiences = [
     {
+      company: "Rex Official",
+      position: "Co-Founder & Web Developer",
+      duration: "May 2025 – Present",
+      description:
+        "Leading web development initiatives and digital strategy for Rex Official. Responsible for building and maintaining the brand’s online presence, e-commerce platform, and performance optimization.",
+      technologies: ["Next.js", "Node.js", "Tailwind CSS", "PostgreSQL"],
+    },
+    {
       company: "TechThree",
       position: "Software Engineer",
       duration: "Apr 2024 – Mar 2025",
       description:
-        "Developing scalable backend services and APIs using Node.js and PostgreSQL. Contributed to optimizing database queries and improving application performance for large-scale clients.",
+        "Developed scalable backend services and APIs using Node.js and PostgreSQL. Contributed to optimizing database queries and improving application performance for large-scale clients.",
       technologies: ["Node.js", "PostgreSQL", "Express.js", "AWS"],
     },
     {
@@ -314,7 +322,10 @@ const AboutSection = () => {
   };
 
   return (
-    <section data-section="about" className="min-h-screen bg-black text-green-400 font-mono relative py-20">
+    <section
+      data-section="about"
+      className="min-h-screen bg-black text-green-400 font-mono relative py-20"
+    >
       {/* Grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
 
