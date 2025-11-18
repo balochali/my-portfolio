@@ -178,23 +178,6 @@ const ProjectDetails = ({ project }: ProjectDetailsProps) => {
                 variants={itemVariants}
                 className="flex flex-col sm:flex-row gap-4 pt-4"
               >
-                {project.demoUrl && (
-                  <motion.a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 0 25px rgba(0,255,0,0.3)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-6 py-3 cursor-pointer bg-green-600 hover:bg-green-500 text-black font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    Launch Project
-                    <span className="text-sm">→</span>
-                  </motion.a>
-                )}
-
                 {project.codeUrl && (
                   <motion.a
                     href={project.codeUrl}
