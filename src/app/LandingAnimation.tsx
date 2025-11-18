@@ -10,37 +10,45 @@ import SkillsSection from "@/components/Skills";
 import ContactSection from "@/components/Contact";
 
 export default function LandingAnimation() {
-  const [showAnimation, setShowAnimation] = useState(true);
-  const [currentPhase, setCurrentPhase] = useState(0);
+  const [showAnimation, setShowAnimation] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [terminalLines, setTerminalLines] = useState<string[]>([]);
-
-  const bootSequence = [
-    "$ Initializing portfolio system...",
-    "$ Loading developer profile...",
-    "$ name: 'Ali Baloch'",
-    "$ role: 'Full Stack Developer'",
-    "$ skills: ['React', 'Node.js', 'MongoDB']",
-    "$ status: 'Ready to collaborate'",
-    "$ Launching interface...",
-    "$ Welcome to Ali's Portfolio!",
-  ];
+  const [isHydrated, setIsHydrated] = useState(false); // hydration check
+  const [currentPhase, setCurrentPhase] = useState(0);
 
   useEffect(() => {
-    // Prevent running during SSR
-    if (typeof window === "undefined") return;
+    setIsHydrated(true); // client-side only
+  }, []);
 
-    const sequence = [
-      { delay: 0, phase: 0 },
-      { delay: 1200, phase: 1 },
-      { delay: 2200, phase: 2 },
-      { delay: 2800, phase: 3 },
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    // Check if already visited in this tab
+    const hasVisited = sessionStorage.getItem("hasVisitedPortfolio");
+
+    if (hasVisited) {
+      // Skip animation for in-app navigation
+      setShowAnimation(false);
+      setShowContent(true);
+      return;
+    }
+
+    // First visit: show animation
+    sessionStorage.setItem("hasVisitedPortfolio", "true");
+    setShowAnimation(true);
+
+    const bootSequence = [
+      "$ Initializing portfolio system...",
+      "$ Loading developer profile...",
+      "$ name: 'Ali Baloch'",
+      "$ role: 'Full Stack Developer'",
+      "$ skills: ['React', 'Node.js', 'MongoDB']",
+      "$ status: 'Ready to collaborate'",
+      "$ Launching interface...",
+      "$ Welcome to Ali's Portfolio!",
     ];
 
-    const timers = sequence.map(({ delay, phase }) =>
-      setTimeout(() => setCurrentPhase(phase), delay)
-    );
-
+    // Typewriter effect
     let lineIndex = 0;
     const typewriterTimer = setInterval(() => {
       if (lineIndex < bootSequence.length) {
@@ -49,17 +57,28 @@ export default function LandingAnimation() {
       }
     }, 200);
 
+    // Update phases for progress bars / success section
+    const phaseTimers = [
+      setTimeout(() => setCurrentPhase(1), 1200),
+      setTimeout(() => setCurrentPhase(2), 2200),
+      setTimeout(() => setCurrentPhase(3), 2800),
+    ];
+
+    // Complete animation after all steps
     const completeTimer = setTimeout(() => {
       setShowAnimation(false);
       setShowContent(true);
     }, 3500);
 
     return () => {
-      timers.forEach(clearTimeout);
       clearInterval(typewriterTimer);
+      phaseTimers.forEach(clearTimeout);
       clearTimeout(completeTimer);
     };
-  }, []);
+  }, [isHydrated]);
+
+  // Prevent flash during SSR
+  if (!isHydrated) return null;
 
   return (
     <>
@@ -131,7 +150,7 @@ export default function LandingAnimation() {
                     {/* Boot Messages */}
                     <div className="space-y-1">
                       {terminalLines.map((line, index) => {
-                        if (!line) return null; // 🧩 safeguard
+                        if (!line) return null;
                         return (
                           <motion.div
                             key={index}
@@ -139,19 +158,19 @@ export default function LandingAnimation() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3 }}
                             className={`text-sm ${
-                              line?.includes("name:") || line?.includes("role:")
+                              line.includes("name:") || line.includes("role:")
                                 ? "text-white"
-                                : line?.includes("skills:") ||
-                                  line?.includes("status:")
+                                : line.includes("skills:") ||
+                                  line.includes("status:")
                                 ? "text-blue-400"
-                                : line?.includes("Welcome")
+                                : line.includes("Welcome")
                                 ? "text-green-300 font-semibold"
                                 : "text-gray-300"
                             }`}
                           >
                             {line}
                             {index === terminalLines.length - 1 &&
-                              index < bootSequence.length - 1 && (
+                              index < 7 && ( // show cursor until last line
                                 <motion.span
                                   animate={{ opacity: [1, 0, 1] }}
                                   transition={{
