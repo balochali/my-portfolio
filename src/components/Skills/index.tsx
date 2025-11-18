@@ -27,7 +27,6 @@ const SkillsSection = () => {
       experience: "3+ years",
       description: "ES6+, Async/Await, DOM Manipulation, SPA development",
       icon: "JS",
-      projects: 18,
       color: "from-yellow-400 to-yellow-600",
     },
     {
@@ -37,7 +36,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Hooks, Context API, Redux, Component Optimization",
       icon: "React",
-      projects: 15,
       color: "from-blue-400 to-blue-600",
     },
     {
@@ -47,7 +45,7 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "SSR, SSG, API Routes, App Router",
       icon: "Next",
-      projects: 8,
+  
       color: "from-gray-400 to-gray-600",
     },
     {
@@ -57,7 +55,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Utility-first styling, custom configs, responsive UI",
       icon: "TW",
-      projects: 10,
       color: "from-cyan-400 to-cyan-600",
     },
     {
@@ -67,7 +64,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Pre-built components, theme customization",
       icon: "UI",
-      projects: 7,
       color: "from-purple-400 to-purple-600",
     },
     {
@@ -77,7 +73,6 @@ const SkillsSection = () => {
       experience: "3+ years",
       description: "Semantic HTML, Flexbox, Grid, Responsive Design",
       icon: "HTML",
-      projects: 15,
       color: "from-pink-400 to-pink-600",
     },
 
@@ -89,7 +84,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Express, REST APIs, middleware, server-side logic",
       icon: "Node",
-      projects: 10,
       color: "from-green-500 to-green-700",
     },
     {
@@ -99,7 +93,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Routing, Middleware, Authentication",
       icon: "Exp",
-      projects: 9,
       color: "from-gray-500 to-gray-700",
     },
     {
@@ -109,7 +102,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "API design, integration, documentation",
       icon: "API",
-      projects: 12,
       color: "from-green-400 to-green-600",
     },
 
@@ -121,7 +113,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "Aggregation, Indexing, Mongoose ODM",
       icon: "Mongo",
-      projects: 8,
       color: "from-green-400 to-green-600",
     },
     {
@@ -131,7 +122,6 @@ const SkillsSection = () => {
       experience: "1+ years",
       description: "Joins, transactions, Prisma ORM",
       icon: "PG",
-      projects: 5,
       color: "from-blue-600 to-blue-800",
     },
     {
@@ -141,7 +131,6 @@ const SkillsSection = () => {
       experience: "1+ years",
       description: "Database design, Stored procedures",
       icon: "SQL",
-      projects: 5,
       color: "from-orange-500 to-orange-700",
     },
 
@@ -153,7 +142,6 @@ const SkillsSection = () => {
       experience: "3+ years",
       description: "Version control, branching, merging, CI/CD basics",
       icon: "Git",
-      projects: 20,
       color: "from-orange-400 to-orange-600",
     },
     {
@@ -163,7 +151,6 @@ const SkillsSection = () => {
       experience: "1 year",
       description: "Containerization, Docker Compose",
       icon: "Docker",
-      projects: 3,
       color: "from-blue-400 to-blue-600",
     },
     {
@@ -173,7 +160,6 @@ const SkillsSection = () => {
       experience: "1+ years",
       description: "Authentication, Firestore, Hosting",
       icon: "FB",
-      projects: 4,
       color: "from-yellow-500 to-orange-500",
     },
 
@@ -185,7 +171,6 @@ const SkillsSection = () => {
       experience: "1+ years",
       description: "Real-time communication, WebSockets",
       icon: "IO",
-      projects: 3,
       color: "from-gray-400 to-gray-600",
     },
     {
@@ -195,7 +180,6 @@ const SkillsSection = () => {
       experience: "1 year",
       description: "Apollo, queries, mutations (basic)",
       icon: "GQL",
-      projects: 2,
       color: "from-pink-500 to-pink-700",
     },
     {
@@ -205,7 +189,6 @@ const SkillsSection = () => {
       experience: "1 year",
       description: "EC2, S3, Lambda basics",
       icon: "AWS",
-      projects: 2,
       color: "from-yellow-600 to-orange-600",
     },
   ];
@@ -437,7 +420,7 @@ const SkillsSection = () => {
                   </h3>
 
                   <div className="text-xs text-gray-400 mb-3">
-                    {skill.experience} • {skill.projects} projects
+                    {skill.experience}
                   </div>
 
                   {/* Progress Bar */}
