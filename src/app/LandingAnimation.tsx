@@ -8,6 +8,7 @@ import AboutSection from "@/components/About";
 import ProjectsSection from "@/components/Projects";
 import SkillsSection from "@/components/Skills";
 import ContactSection from "@/components/Contact";
+import { portfolioData } from "@/data/portfolioData";
 
 export default function LandingAnimation() {
   const [showAnimation, setShowAnimation] = useState(false);
@@ -40,12 +41,15 @@ export default function LandingAnimation() {
     const bootSequence = [
       "$ Initializing portfolio system...",
       "$ Loading developer profile...",
-      "$ name: 'Ali Baloch'",
-      "$ role: 'Full Stack Developer'",
-      "$ skills: ['React', 'Node.js', 'MongoDB']",
-      "$ status: 'Ready to collaborate'",
+      `$ name: '${portfolioData.name}'`,
+      `$ role: '${portfolioData.roles[0]}'`,
+      `$ skills: [${portfolioData.skills
+        .slice(0, 3)
+        .map((s) => `'${s}'`)
+        .join(", ")}]`,
+      `$ status: '${portfolioData.locationInfo.status}'`,
       "$ Launching interface...",
-      "$ Welcome to Ali's Portfolio!",
+      `$ Welcome to ${portfolioData.name.split(" ")[0]}'s Portfolio!`,
     ];
 
     // Typewriter effect

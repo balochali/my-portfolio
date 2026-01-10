@@ -1,78 +1,40 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, Variants } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { portfolioData } from "@/data/portfolioData";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
-  const [terminalOutput, setTerminalOutput] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [terminalOutput, setTerminalOutput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentTime, setCurrentTime] = useState('');
+  const [currentTime, setCurrentTime] = useState("");
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -40]);
 
-  const contactMethods = [
-    {
-      name: 'Email',
-      value: 'alibaloshi018@gmail.com',
-      icon: '📧',
-      command: 'mailto:alibaloshi018@gmail.com',
-      description: 'Primary communication method',
-      available: true
-    },
-    {
-      name: 'LinkedIn',
-      value: '/in/balochali',
-      icon: '💼',
-      command: 'https://www.linkedin.com/in/balochali/',
-      description: 'Professional networking',
-      available: true
-    },
-    {
-      name: 'GitHub',
-      value: '/balochali',
-      icon: '🐙',
-      command: 'https://github.com/alibaloch-dev',
-      description: 'Code repositories',
-      available: true
-    },
-    {
-      name: 'WhatsApp',
-      value: '+92 343 3322698',
-      icon: '💬',
-      command: 'https://wa.me/923433322698',
-      description: 'Quick messaging',
-      available: true
-    },
-    {
-      name: 'Discord',
-      value: 'AliBaloch#1234',
-      icon: '🎮',
-      command: 'https://discord.gg/alibaloch',
-      description: 'Tech discussions',
-      available: false
-    },
-
-  ];
+  const contactMethods = portfolioData.contactMethods;
 
   // Update time
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toLocaleString('en-US', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      }));
+      setCurrentTime(
+        now.toLocaleString("en-US", {
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
     };
 
     updateTime();
@@ -83,59 +45,92 @@ const ContactSection = () => {
   // Terminal output effect
   useEffect(() => {
     const commands = [
-      '$ whoami',
-      'ali-baloch',
-      '$ pwd',
-      '/home/ali-baloch/portfolio/contact',
-      '$ ls -la contact-methods/',
-      'total 6',
-      'drwxr-xr-x  2 ali ali 4096 Dec 15 10:30 .',
-      'drwxr-xr-x  3 ali ali 4096 Dec 15 10:30 ..',
-      '-rw-r--r--  1 ali ali  245 Dec 15 10:30 email.txt',
-      '-rw-r--r--  1 ali ali  189 Dec 15 10:30 linkedin.txt',
-      '-rw-r--r--  1 ali ali  167 Dec 15 10:30 github.txt',
+      "$ whoami",
+      "ali-baloch",
+      "$ pwd",
+      "/home/ali-baloch/portfolio/contact",
+      "$ ls -la contact-methods/",
+      "total 6",
+      "drwxr-xr-x  2 ali ali 4096 Dec 15 10:30 .",
+      "drwxr-xr-x  3 ali ali 4096 Dec 15 10:30 ..",
+      "-rw-r--r--  1 ali ali  245 Dec 15 10:30 email.txt",
+      "-rw-r--r--  1 ali ali  189 Dec 15 10:30 linkedin.txt",
+      "-rw-r--r--  1 ali ali  167 Dec 15 10:30 github.txt",
       '$ echo "Ready to collaborate!"',
-      'Ready to collaborate!',
-      '$ _'
+      "Ready to collaborate!",
+      "$ _",
     ];
 
     let currentLine = 0;
     const typeLines = () => {
       if (currentLine < commands.length) {
-        setTimeout(() => {
-          setTerminalOutput(prev => prev + commands[currentLine] + '\n');
-          currentLine++;
-          typeLines();
-        }, currentLine % 2 === 0 ? 400 : 100);
+        setTimeout(
+          () => {
+            setTerminalOutput((prev) => prev + commands[currentLine] + "\n");
+            currentLine++;
+            typeLines();
+          },
+          currentLine % 2 === 0 ? 400 : 100
+        );
       }
     };
 
     setTimeout(typeLines, 500);
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
 
     // Simulate form submission
     setTimeout(() => {
-      setTerminalOutput(prev => prev + 
-        '$ send-message --to=ali.baloch@example.com\n' +
-        'Sending message...\n' +
-        'Message sent successfully! ✅\n' +
-        'Response time: ~24 hours\n' +
-        '$ _'
+      setTerminalOutput(
+        (prev) =>
+          prev +
+          `$ send-message --to=${
+            portfolioData.socials
+              .find((s) => s.name === "Email")
+              ?.url.replace("mailto:", "") || "ali.baloch@example.com"
+          }\n` +
+          "Sending message...\n" +
+          "Message sent successfully! ✅\n" +
+          "Response time: ~24 hours\n" +
+          "$ _"
       );
-      
-      setFormData({ name: '', email: '', subject: '', message: '' });
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
       setIsSubmitting(false);
     }, 2000);
   };
@@ -164,7 +159,10 @@ const ContactSection = () => {
   };
 
   return (
-    <section data-section="contact" className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden">
+    <section
+      data-section="contact"
+      className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden"
+    >
       {/* Background effects */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.04)_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
       <div className="absolute inset-0 bg-gradient-radial from-green-500/8 via-transparent to-transparent"></div>
@@ -187,7 +185,9 @@ const ContactSection = () => {
                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-xs text-gray-400">~/contact-terminal</span>
+                  <span className="text-xs text-gray-400">
+                    ~/contact-terminal
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-green-400">●</span>
@@ -195,12 +195,15 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-900/30 border border-green-400/30 rounded-b-lg p-6">
-              <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              <motion.h2
+                variants={itemVariants}
+                className="text-4xl sm:text-5xl font-bold text-white mb-4"
+              >
                 Get In <span className="text-green-400">Touch</span>
               </motion.h2>
-              
+
               {/* Live Terminal */}
               <div className="bg-black/60 rounded-lg p-4 mb-4 text-left min-h-[200px]">
                 <pre className="text-xs text-gray-300 whitespace-pre-wrap">
@@ -214,9 +217,13 @@ const ContactSection = () => {
                   </motion.span>
                 </pre>
               </div>
-              
-              <motion.p variants={itemVariants} className="text-gray-300 max-w-2xl mx-auto">
-                Available for freelance projects, full-time opportunities, or just a friendly chat about tech!
+
+              <motion.p
+                variants={itemVariants}
+                className="text-gray-300 max-w-2xl mx-auto"
+              >
+                Available for freelance projects, full-time opportunities, or
+                just a friendly chat about tech!
               </motion.p>
             </div>
           </motion.div>
@@ -230,7 +237,10 @@ const ContactSection = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <motion.div variants={itemVariants} className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden">
+            <motion.div
+              variants={itemVariants}
+              className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden"
+            >
               {/* Form Header */}
               <div className="flex items-center justify-between p-4 border-b border-green-400/20">
                 <div className="flex items-center gap-3">
@@ -239,7 +249,9 @@ const ContactSection = () => {
                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-sm text-gray-400">message-composer.exe</span>
+                  <span className="text-sm text-gray-400">
+                    message-composer.exe
+                  </span>
                 </div>
                 <span className="text-xs text-green-400">Send Message</span>
               </div>
@@ -255,9 +267,16 @@ const ContactSection = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full bg-black/40 border border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all"
+                      className={`w-full bg-black/40 border ${
+                        errors.name ? "border-red-500" : "border-green-400/30"
+                      } rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all`}
                       placeholder="Your Name"
                     />
+                    {errors.name && (
+                      <span className="text-red-500 text-xs mt-1 blink">
+                        {errors.name}
+                      </span>
+                    )}
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
@@ -268,9 +287,16 @@ const ContactSection = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full bg-black/40 border border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all"
+                      className={`w-full bg-black/40 border ${
+                        errors.email ? "border-red-500" : "border-green-400/30"
+                      } rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all`}
                       placeholder="your.email@example.com"
                     />
+                    {errors.email && (
+                      <span className="text-red-500 text-xs mt-1 blink">
+                        {errors.email}
+                      </span>
+                    )}
                   </motion.div>
                 </div>
 
@@ -282,25 +308,44 @@ const ContactSection = () => {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-black/40 border border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all"
+                    className={`w-full bg-black/40 border ${
+                      errors.subject ? "border-red-500" : "border-green-400/30"
+                    } rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all`}
                     placeholder="Project Inquiry / Collaboration / Job Opportunity"
                   />
+                  {errors.subject && (
+                    <span className="text-red-500 text-xs mt-1 blink">
+                      {errors.subject}
+                    </span>
+                  )}
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <label className="block text-sm text-green-300 mb-2">$ cat message.txt</label>
+                  <label className="block text-sm text-green-300 mb-2">
+                    $ cat message.txt
+                  </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className="w-full bg-black/40 border border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all resize-none"
+                    className={`w-full bg-black/40 border ${
+                      errors.message ? "border-red-500" : "border-green-400/30"
+                    } rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all resize-none`}
                     placeholder="Tell me about your project, idea, or just say hello! I'd love to hear from you..."
                   />
+                  {errors.message && (
+                    <span className="text-red-500 text-xs mt-1 blink">
+                      {errors.message}
+                    </span>
+                  )}
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
+                <motion.div
+                  variants={itemVariants}
+                  className="flex flex-col sm:flex-row gap-4"
+                >
                   <motion.button
                     type="button"
                     onClick={handleSubmit}
@@ -313,7 +358,11 @@ const ContactSection = () => {
                       <>
                         <motion.div
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
                           className="w-4 h-4 border-2 border-black border-t-transparent rounded-full"
                         />
                         Sending...
@@ -328,7 +377,14 @@ const ContactSection = () => {
 
                   <motion.button
                     type="button"
-                    onClick={() => setFormData({ name: '', email: '', subject: '', message: '' })}
+                    onClick={() =>
+                      setFormData({
+                        name: "",
+                        email: "",
+                        subject: "",
+                        message: "",
+                      })
+                    }
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="px-6 py-3 bg-transparent border border-green-400/60 text-green-400 hover:bg-green-400/10 font-semibold rounded-lg transition-all duration-300"
@@ -338,13 +394,20 @@ const ContactSection = () => {
                 </motion.div>
 
                 {/* Form Status */}
-                <motion.div variants={itemVariants} className="bg-black/40 rounded-lg p-3 text-xs">
+                <motion.div
+                  variants={itemVariants}
+                  className="bg-black/40 rounded-lg p-3 text-xs"
+                >
                   <div className="text-green-400">$ form --status</div>
                   <div className="text-gray-300">
-                    Fields: {Object.values(formData).filter(Boolean).length}/4 completed
+                    Fields: {Object.values(formData).filter(Boolean).length}/4
+                    completed
                   </div>
                   <div className="text-gray-400">
-                    Validation: {Object.values(formData).every(Boolean) ? '✅ Ready to send' : '⏳ Fill all fields'}
+                    Validation:{" "}
+                    {Object.values(formData).every(Boolean)
+                      ? "✅ Ready to send"
+                      : "⏳ Fill all fields"}
                   </div>
                 </motion.div>
               </div>
@@ -360,14 +423,17 @@ const ContactSection = () => {
             className="space-y-6"
           >
             {/* Contact Info Header */}
-            <motion.div variants={itemVariants} className="bg-gray-900/50 rounded-lg border border-green-400/30 p-6">
+            <motion.div
+              variants={itemVariants}
+              className="bg-gray-900/50 rounded-lg border border-green-400/30 p-6"
+            >
               <h3 className="text-2xl font-bold text-white mb-4">
                 <span className="text-green-400">$</span> contact --list
               </h3>
               <p className="text-gray-300 text-sm mb-4">
                 Multiple ways to reach me. Choose your preferred method:
               </p>
-              
+
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="bg-black/40 rounded-lg p-3">
@@ -387,38 +453,61 @@ const ContactSection = () => {
                 <motion.div
                   key={method.name}
                   variants={itemVariants}
-                  whileHover={{ 
-                    scale: 1.02, 
+                  whileHover={{
+                    scale: 1.02,
                     y: -2,
-                    boxShadow: method.available ? "0 10px 25px rgba(0,255,0,0.1)" : "0 10px 25px rgba(100,100,100,0.1)"
+                    boxShadow: method.available
+                      ? "0 10px 25px rgba(0,255,0,0.1)"
+                      : "0 10px 25px rgba(100,100,100,0.1)",
                   }}
                   className={`bg-gray-900/50 rounded-lg border ${
-                    method.available ? 'border-green-400/30 hover:border-green-400/60' : 'border-gray-600/30'
+                    method.available
+                      ? "border-green-400/30 hover:border-green-400/60"
+                      : "border-gray-600/30"
                   } p-4 transition-all duration-300 group relative overflow-hidden`}
                 >
                   {/* Availability indicator */}
-                  <div className={`absolute top-2 right-2 w-2 h-2 rounded-full ${
-                    method.available ? 'bg-green-400' : 'bg-gray-500'
-                  } ${method.available ? 'animate-pulse' : ''}`} />
+                  <div
+                    className={`absolute top-2 right-2 w-2 h-2 rounded-full ${
+                      method.available ? "bg-green-400" : "bg-gray-500"
+                    } ${method.available ? "animate-pulse" : ""}`}
+                  />
 
                   <div className="flex items-start gap-3">
-                    <div className="text-2xl">{method.icon}</div>
+                    <div
+                      className="text-2xl"
+                      role="img"
+                      aria-label={`${method.name} icon`}
+                    >
+                      {method.icon}
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className={`font-semibold ${method.available ? 'text-white group-hover:text-green-400' : 'text-gray-500'} transition-colors`}>
+                      <h4
+                        className={`font-semibold ${
+                          method.available
+                            ? "text-white group-hover:text-green-400"
+                            : "text-gray-500"
+                        } transition-colors`}
+                      >
                         {method.name}
                       </h4>
-                      <p className={`text-sm ${method.available ? 'text-green-400' : 'text-gray-600'} truncate`}>
+                      <p
+                        className={`text-sm ${
+                          method.available ? "text-green-400" : "text-gray-600"
+                        } truncate`}
+                      >
                         {method.value}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
                         {method.description}
                       </p>
-                      
+
                       {method.available && (
                         <motion.a
                           href={method.command}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`Connect with me on ${method.name}`}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="inline-block mt-2 text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded border border-green-400/30 hover:bg-green-600/30 transition-colors"
@@ -430,10 +519,15 @@ const ContactSection = () => {
                   </div>
 
                   {/* Terminal command preview */}
-                  <div className={`mt-3 bg-black/40 rounded p-2 text-xs font-mono ${
-                    method.available ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    $ open {method.command.replace('https://', '').replace('mailto:', '')}
+                  <div
+                    className={`mt-3 bg-black/40 rounded p-2 text-xs font-mono ${
+                      method.available ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    $ open{" "}
+                    {method.command
+                      .replace("https://", "")
+                      .replace("mailto:", "")}
                   </div>
 
                   {!method.available && (
@@ -448,36 +542,73 @@ const ContactSection = () => {
             </div>
 
             {/* Location & Availability */}
-            <motion.div variants={itemVariants} className="bg-gray-900/50 rounded-lg border border-green-400/30 p-6">
+            <motion.div
+              variants={itemVariants}
+              className="bg-gray-900/50 rounded-lg border border-green-400/30 p-6"
+            >
               <h4 className="text-lg font-semibold text-white mb-3">
                 <span className="text-green-400">$</span> whereis ali-baloch
               </h4>
-              
+
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400">📍</span>
-                  <span className="text-gray-300">Karachi, Pakistan (PKT UTC+5)</span>
+                  <span
+                    className="text-green-400"
+                    role="img"
+                    aria-label="Location"
+                  >
+                    📍
+                  </span>
+                  <span className="text-gray-300">
+                    {portfolioData.locationInfo.location}
+                  </span>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400">⏰</span>
-                  <span className="text-gray-300">Available: 9 AM - 11 PM PKT</span>
+                  <span
+                    className="text-green-400"
+                    role="img"
+                    aria-label="Time Zone"
+                  >
+                    ⏰
+                  </span>
+                  <span className="text-gray-300">
+                    Available: {portfolioData.locationInfo.availability}
+                  </span>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400">🌐</span>
-                  <span className="text-gray-300">Open to remote work worldwide</span>
+                  <span
+                    className="text-green-400"
+                    role="img"
+                    aria-label="Globe"
+                  >
+                    🌐
+                  </span>
+                  <span className="text-gray-300">
+                    Open to remote work worldwide
+                  </span>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400">💼</span>
-                  <span className="text-gray-300">Freelance & Full-time opportunities</span>
+                  <span
+                    className="text-green-400"
+                    role="img"
+                    aria-label="Briefcase"
+                  >
+                    💼
+                  </span>
+                  <span className="text-gray-300">
+                    Freelance & Full-time opportunities
+                  </span>
                 </div>
               </div>
 
               <div className="mt-4 bg-black/40 rounded p-3 text-xs">
                 <div className="text-green-400">$ status --current</div>
-                <div className="text-gray-300">🟢 Available for new projects</div>
+                <div className="text-gray-300">
+                  🟢 {portfolioData.locationInfo.status}
+                </div>
                 <div className="text-gray-400">Last updated: {currentTime}</div>
               </div>
             </motion.div>
@@ -500,7 +631,7 @@ const ContactSection = () => {
             <div className="text-gray-400 text-xs mt-2">
               Response guaranteed within 24 hours
             </div>
-            
+
             <motion.div
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -513,9 +644,9 @@ const ContactSection = () => {
       {/* Floating elements */}
       <motion.div
         style={{ y }}
-        animate={{ 
+        animate={{
           x: [-20, 20, -20],
-          rotate: [0, 10, 0, -10, 0]
+          rotate: [0, 10, 0, -10, 0],
         }}
         transition={{ duration: 12, repeat: Infinity }}
         className="absolute top-20 right-6 w-16 h-16 bg-gray-900/10 border border-green-400/10 rounded-lg flex items-center justify-center text-green-400/20 text-2xl"
@@ -525,9 +656,9 @@ const ContactSection = () => {
 
       <motion.div
         style={{ y: useTransform(scrollY, [0, 1000], [0, 20]) }}
-        animate={{ 
+        animate={{
           x: [25, -25, 25],
-          rotate: [0, -8, 0, 8, 0]
+          rotate: [0, -8, 0, 8, 0],
         }}
         transition={{ duration: 10, repeat: Infinity, delay: 4 }}
         className="absolute bottom-20 left-6 w-20 h-20 bg-gray-900/10 border border-green-400/10 rounded-lg flex items-center justify-center text-green-400/20 text-2xl"

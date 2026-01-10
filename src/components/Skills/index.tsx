@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  Variants,
+  AnimatePresence,
+} from "framer-motion";
 
 const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -45,7 +51,7 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "SSR, SSG, API Routes, App Router",
       icon: "Next",
-  
+
       color: "from-gray-400 to-gray-600",
     },
     {
@@ -210,29 +216,39 @@ const SkillsSection = () => {
 
     let currentCommand = 0;
     let currentChar = 0;
+    let typeTimeout: NodeJS.Timeout;
+    let nextCommandTimeout: NodeJS.Timeout;
+    let bootTimeout: NodeJS.Timeout;
 
     const typeCommand = () => {
       if (currentCommand < commands.length) {
         if (currentChar < commands[currentCommand].length) {
-          setTerminalText(
-            (prev) => prev + commands[currentCommand][currentChar]
-          );
+          const char = commands[currentCommand][currentChar];
+          if (char) {
+            setTerminalText((prev) => prev + char);
+          }
           currentChar++;
-          setTimeout(typeCommand, 50);
+          typeTimeout = setTimeout(typeCommand, 50);
         } else {
-          setTimeout(() => {
+          nextCommandTimeout = setTimeout(() => {
             setTerminalText((prev) => prev + "\n");
             currentCommand++;
             currentChar = 0;
             if (currentCommand < commands.length) {
-              setTimeout(typeCommand, 300);
+              typeCommand();
             }
           }, 800);
         }
       }
     };
 
-    setTimeout(typeCommand, 1000);
+    bootTimeout = setTimeout(typeCommand, 1000);
+
+    return () => {
+      clearTimeout(typeTimeout);
+      clearTimeout(nextCommandTimeout);
+      clearTimeout(bootTimeout);
+    };
   }, []);
 
   // Variants (same as original)
@@ -369,116 +385,117 @@ const SkillsSection = () => {
           ))}
         </motion.div>
 
-        {/* Skills Grid */}
         <motion.div
           layout
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          {filteredSkills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              layout
-              variants={skillVariants}
-              whileHover={{
-                y: -8,
-                scale: 1.03,
-                rotateY: 5,
-              }}
-              className="group relative"
-            >
-              {/* Skill Card */}
-              <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden hover:border-green-400/60 transition-all duration-500 hover:shadow-lg hover:shadow-green-400/10">
-                {/* Card Header */}
-                <div className="flex items-center justify-between p-3 border-b border-green-400/20">
-                  <div className="flex items-center gap-3">
-                    <div className="flex gap-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    </div>
-                    <span className="text-xs text-gray-400">
-                      {skill.name.toLowerCase()}.dev
-                    </span>
-                  </div>
-                  <div className="text-xs text-green-400">{skill.level}%</div>
-                </div>
-
-                {/* Skill Icon */}
-                <div className="relative p-4 text-center">
-                  <div
-                    className={`w-16 h-16 mx-auto rounded-lg bg-gradient-to-br ${skill.color} flex items-center justify-center text-white font-bold text-lg mb-3 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    {skill.icon}
-                  </div>
-
-                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition-colors">
-                    {skill.name}
-                  </h3>
-
-                  <div className="text-xs text-gray-400 mb-3">
-                    {skill.experience}
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="relative">
-                    <div className="w-full bg-gray-800 rounded-full h-2 mb-2">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1.5, delay: index * 0.1 }}
-                        className={`h-2 rounded-full bg-gradient-to-r ${skill.color}`}
-                      />
-                    </div>
-
-                    {/* Proficiency Level */}
-                    <div className="flex justify-between text-xs text-gray-400">
-                      <span>Beginner</span>
-                      <span>Expert</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Skill Details */}
-                <div className="p-4 pt-0 space-y-3">
-                  <p className="text-xs text-gray-300 leading-relaxed">
-                    {skill.description}
-                  </p>
-
-                  {/* Terminal Command */}
-                  <div className="bg-black/40 rounded p-2 text-xs font-mono">
-                    <div className="text-green-400">
-                      $ which {skill.name.toLowerCase()}
-                    </div>
-                    <div className="text-gray-400">
-                      /usr/local/bin/{skill.name.toLowerCase()}
-                    </div>
-                    <div className="text-green-400">
-                      $ {skill.name.toLowerCase()} --version
-                    </div>
-                    <div className="text-gray-300">
-                      Proficiency: {skill.level}%
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating skill level indicator */}
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill, index) => (
               <motion.div
-                animate={{
-                  y: [-3, 3, -3],
-                  rotate: [0, 2, 0, -2, 0],
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4 }}
+                variants={skillVariants}
+                whileHover={{
+                  y: -8,
+                  scale: 1.03,
+                  rotateY: 5,
                 }}
-                transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
-                className="absolute -top-2 -right-2 w-8 h-8 bg-gray-900/90 border border-green-400/40 rounded-full flex items-center justify-center text-green-400 text-xs font-bold z-10"
+                className="group relative"
               >
-                {Math.round(skill.level / 10)}
+                {/* Skill Card */}
+                <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden hover:border-green-400/60 transition-all duration-500 hover:shadow-lg hover:shadow-green-400/10">
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between p-3 border-b border-green-400/20">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      </div>
+                      <span className="text-xs text-gray-400">
+                        {skill.name.toLowerCase()}.dev
+                      </span>
+                    </div>
+                    <div className="text-xs text-green-400">{skill.level}%</div>
+                  </div>
+
+                  {/* Skill Icon */}
+                  <div className="relative p-4 text-center">
+                    <div
+                      className={`w-16 h-16 mx-auto rounded-lg bg-gradient-to-br ${skill.color} flex items-center justify-center text-white font-bold text-lg mb-3 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      {skill.icon}
+                    </div>
+
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition-colors">
+                      {skill.name}
+                    </h3>
+
+                    <div className="text-xs text-gray-400 mb-3">
+                      {skill.experience}
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="relative">
+                      <div className="w-full bg-gray-800 rounded-full h-2 mb-2">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          transition={{ duration: 1.5, delay: index * 0.1 }}
+                          className={`h-2 rounded-full bg-gradient-to-r ${skill.color}`}
+                        />
+                      </div>
+
+                      {/* Proficiency Level */}
+                      <div className="flex justify-between text-xs text-gray-400">
+                        <span>Beginner</span>
+                        <span>Expert</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Skill Details */}
+                  <div className="p-4 pt-0 space-y-3">
+                    <p className="text-xs text-gray-300 leading-relaxed">
+                      {skill.description}
+                    </p>
+
+                    {/* Terminal Command */}
+                    <div className="bg-black/40 rounded p-2 text-xs font-mono">
+                      <div className="text-green-400">
+                        $ which {skill.name.toLowerCase()}
+                      </div>
+                      <div className="text-gray-400">
+                        /usr/local/bin/{skill.name.toLowerCase()}
+                      </div>
+                      <div className="text-green-400">
+                        $ {skill.name.toLowerCase()} --version
+                      </div>
+                      <div className="text-gray-300">
+                        Proficiency: {skill.level}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating skill level indicator */}
+                <motion.div
+                  animate={{
+                    y: [-3, 3, -3],
+                    rotate: [0, 2, 0, -2, 0],
+                  }}
+                  transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
+                  className="absolute -top-2 -right-2 w-8 h-8 bg-gray-900/90 border border-green-400/40 rounded-full flex items-center justify-center text-green-400 text-xs font-bold z-10"
+                >
+                  {Math.round(skill.level / 10)}
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
+            ))}
+          </AnimatePresence>
         </motion.div>
 
         {/* Skills Summary */}
@@ -557,14 +574,19 @@ const SkillsSection = () => {
               %
             </div>
             <div className="text-gray-400 text-xs mt-2">
-              Ready for new challenges! 🚀
+              Ready for new challenges!{" "}
+              <span role="img" aria-label="Rocket">
+                🚀
+              </span>
             </div>
 
             <motion.div
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
               className="inline-block w-2 h-4 bg-green-400 ml-1"
-            />
+            >
+              <span className="sr-only">Blinking cursor</span>
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -579,7 +601,9 @@ const SkillsSection = () => {
         transition={{ duration: 10, repeat: Infinity }}
         className="absolute top-32 right-8 w-24 h-24 bg-gray-900/10 border border-green-400/10 rounded-lg flex items-center justify-center text-green-400/30 text-3xl"
       >
-        &lt;/&gt;
+        <span role="img" aria-label="Code Icon">
+          &lt;/&gt;
+        </span>
       </motion.div>
 
       <motion.div
@@ -591,7 +615,9 @@ const SkillsSection = () => {
         transition={{ duration: 8, repeat: Infinity, delay: 3 }}
         className="absolute bottom-32 left-8 w-20 h-20 bg-gray-900/10 border border-green-400/10 rounded-lg flex items-center justify-center text-green-400/30 text-2xl"
       >
-        {}
+        <span role="img" aria-label="Braces Icon">
+          {}
+        </span>
       </motion.div>
     </section>
   );

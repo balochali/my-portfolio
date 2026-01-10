@@ -4,29 +4,16 @@ import React, { useEffect, useState } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
+import { portfolioData } from "@/data/portfolioData";
 
 const HeroSection = () => {
   const [currentTime, setCurrentTime] = useState("");
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 100]);
 
-  const roles = [
-    "Full Stack Developer",
-    "MERN Stack Engineer",
-    "React Specialist",
-    "Problem Solver",
-  ];
-
-  const skills = [
-    "JavaScript",
-    "React",
-    "Node.js",
-    "MongoDB",
-    "TypeScript",
-    "Next.js",
-    "Express",
-    "CSS",
-  ];
+  const roles = portfolioData.roles;
+  const skills = portfolioData.skills;
+  const socials = portfolioData.socials;
 
   useEffect(() => {
     const updateTime = () => {
@@ -69,21 +56,6 @@ const HeroSection = () => {
     },
   };
 
-  const socials = [
-    {
-      name: "GitHub",
-      url: "https://github.com/balochali",
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/balochali/",
-    },
-    {
-      name: "Email",
-      url: "mailto:alibaloshi018@gmail.com",
-    },
-  ];
-
   return (
     <section
       data-section="hero"
@@ -110,7 +82,7 @@ const HeroSection = () => {
               <motion.div variants={itemVariants}>
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
                   Hello, I&apos;m{" "}
-                  <span className="text-green-400">Ali Baloch</span>
+                  <span className="text-green-400">{portfolioData.name}</span>
                 </div>
                 <div className="text-lg text-gray-300">
                   <TypeAnimation
@@ -127,9 +99,7 @@ const HeroSection = () => {
               <motion.div variants={itemVariants} className="space-y-3">
                 <div className="text-green-300">About:</div>
                 <div className="text-gray-300 leading-relaxed pl-4 border-l-2 border-green-400/30">
-                  I build modern web applications with clean code and great user
-                  experiences. Passionate about solving problems through
-                  technology.
+                  {portfolioData.about}
                 </div>
               </motion.div>
 
@@ -184,7 +154,9 @@ const HeroSection = () => {
                   className="px-6 py-3 cursor-pointer bg-green-600 hover:bg-green-500 text-black font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   Get In Touch
-                  <span className="text-sm">→</span>
+                  <span className="text-sm" role="img" aria-label="Arrow Right">
+                    →
+                  </span>
                 </motion.button>
 
                 <motion.a
@@ -198,7 +170,9 @@ const HeroSection = () => {
                   className="px-6 py-3 bg-transparent border border-green-400 text-green-400 hover:bg-green-400/10 font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   Download Resume
-                  <span className="text-sm">↓</span>
+                  <span className="text-sm" role="img" aria-label="Arrow Down">
+                    ↓
+                  </span>
                 </motion.a>
               </motion.div>
 
@@ -221,7 +195,9 @@ const HeroSection = () => {
                     transition={{ delay: 2.5 + index * 0.1 }}
                     className="w-10 h-10 border border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:border-green-400 transition-all duration-300 text-sm font-bold"
                   >
-                    {social.name[0]}
+                    <span role="img" aria-label={`${social.name} icon`}>
+                      {social.icon || social.name[0]}
+                    </span>
                   </motion.a>
                 ))}
               </motion.div>
@@ -271,9 +247,11 @@ const HeroSection = () => {
 
                     {/* Bottom info */}
                     <div className="absolute bottom-4 left-4 right-4">
-                      <div className="text-white font-semibold">Ali Baloch</div>
+                      <div className="text-white font-semibold">
+                        {portfolioData.name}
+                      </div>
                       <div className="text-green-400 text-sm">
-                        Full Stack Developer
+                        {portfolioData.roles[0]}
                       </div>
                     </div>
 
@@ -306,7 +284,9 @@ const HeroSection = () => {
               transition={{ duration: 6, repeat: Infinity }}
               className="absolute -top-4 -right-4 w-16 h-16 bg-gray-900/80 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 text-xl"
             >
-              &lt;/&gt;
+              <span role="img" aria-label="Code Icon">
+                &lt;/&gt;
+              </span>
             </motion.div>
 
             <motion.div
@@ -317,7 +297,9 @@ const HeroSection = () => {
               transition={{ duration: 5, repeat: Infinity, delay: 1 }}
               className="absolute -bottom-4 -left-4 w-12 h-12 bg-gray-900/80 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 text-lg"
             >
-              {}
+              <span role="img" aria-label="Braces Icon">
+                {}
+              </span>
             </motion.div>
           </motion.div>
         </motion.div>
