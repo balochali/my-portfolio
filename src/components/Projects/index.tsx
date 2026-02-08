@@ -16,7 +16,6 @@ const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [visibleCount, setVisibleCount] = useState(3);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, -50]);
 
   const filters = [
     "All",

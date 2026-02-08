@@ -450,7 +450,7 @@ const ContactSection = () => {
 
             {/* Contact Methods Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {contactMethods.map((method, index) => (
+              {contactMethods.map((method) => (
                 <motion.div
                   key={method.name}
                   variants={itemVariants}

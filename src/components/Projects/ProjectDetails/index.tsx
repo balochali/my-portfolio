@@ -19,7 +19,6 @@ const ProjectDetails = ({ project }: ProjectDetailsProps) => {
   const [currentTime, setCurrentTime] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 100]);
 
   useEffect(() => {
     const updateTime = () => {

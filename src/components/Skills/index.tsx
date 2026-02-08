@@ -220,7 +220,6 @@ const SkillsSection = () => {
     let currentChar = 0;
     let typeTimeout: NodeJS.Timeout;
     let nextCommandTimeout: NodeJS.Timeout;
-    let bootTimeout: any;
 
     const typeCommand = () => {
       if (currentCommand < commands.length) {
@@ -244,7 +243,7 @@ const SkillsSection = () => {
       }
     };
 
-    bootTimeout = setTimeout(typeCommand, 1000);
+    const bootTimeout = setTimeout(typeCommand, 1000);
 
     return () => {
       clearTimeout(typeTimeout);
@@ -615,9 +614,7 @@ const SkillsSection = () => {
         </motion.div>
       </div>
 
-      {/* Floating elements */}
       <motion.div
-        style={{ y }}
         animate={{
           x: [-15, 15, -15],
           rotate: [0, 8, 0, -8, 0],

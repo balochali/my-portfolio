@@ -7,29 +7,9 @@ import { TypeAnimation } from "react-type-animation";
 import { portfolioData } from "@/data/portfolioData";
 
 const HeroSection = () => {
-  const [currentTime, setCurrentTime] = useState("");
-
   const roles = portfolioData.roles;
   const skills = portfolioData.skills;
   const socials = portfolioData.socials;
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }),
-      );
-    };
-
-    updateTime();
-    const timeInterval = setInterval(updateTime, 1000);
-
-    return () => clearInterval(timeInterval);
-  }, []);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },

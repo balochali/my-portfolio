@@ -169,7 +169,7 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
       clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [alwaysVisible]);
+  }, [alwaysVisible, pathname]);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
