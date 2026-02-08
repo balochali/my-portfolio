@@ -1,155 +1,222 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+  alwaysVisible?: boolean;
+}
+
+const Header = ({ alwaysVisible = false }: HeaderProps) => {
   const pathname = usePathname();
-  const [currentTime, setCurrentTime] = useState('');
+  const router = useRouter();
+  const [currentTime, setCurrentTime] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState(
+    pathname === "/" ? "home" : "",
+  );
 
   const navItems = [
-    { name: 'Home', href: '#home', command: 'cd ~/', section: 'home' },
-    { name: 'About', href: '#about', command: 'cat about.txt', section: 'about' },
-    { name: 'Projects', href: '#projects', command: 'ls projects/', section: 'projects' },
-    { name: 'Skills', href: '#skills', command: 'cat skills.json', section: 'skills' },
-    { name: 'Contact', href: '#contact', command: 'ping contact', section: 'contact' }
+    { name: "Home", href: "#home", command: "cd ~/", section: "home" },
+    {
+      name: "About",
+      href: "#about",
+      command: "cat about.txt",
+      section: "about",
+    },
+    {
+      name: "Projects",
+      href: "#projects",
+      command: "ls projects/",
+      section: "projects",
+    },
+    {
+      name: "Skills",
+      href: "#skills",
+      command: "cat skills.json",
+      section: "skills",
+    },
+    {
+      name: "Contact",
+      href: "#contact",
+      command: "ping contact",
+      section: "contact",
+    },
   ];
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toLocaleTimeString('en-US', { 
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      }));
+      setCurrentTime(
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }),
+      );
     };
 
     updateTime();
     const timeInterval = setInterval(updateTime, 1000);
-    
+
     return () => clearInterval(timeInterval);
   }, []);
 
+  // Handle hash navigation on mount
+  useEffect(() => {
+    if (pathname === "/" && window.location.hash) {
+      const hash = window.location.hash.replace("#", "");
+      // Add small delay to ensure rendering
+      setTimeout(() => {
+        scrollToSection(hash);
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  const [isVisible, setIsVisible] = useState(alwaysVisible);
+
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      if (alwaysVisible) {
+        setIsVisible(true);
+        setScrolled(true); // Always show background for consistency
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const isScrolled = scrollY > 50;
       setScrolled(isScrolled);
-      
+
+      // Only track active sections on home page
+      if (pathname !== "/") {
+        setActiveSection("");
+        return;
+      }
+
+      // Show navbar only after scrolling down a bit (e.g., 100px)
+      // or when scrolling up (sticky behavior) - simplified to "show when not at top" as per request
+      setIsVisible(scrollY > 100);
+
       // Get all sections
       const heroSection = document.querySelector('[data-section="hero"]');
       const aboutSection = document.querySelector('[data-section="about"]');
-      const projectsSection = document.querySelector('[data-section="projects"]');
+      const projectsSection = document.querySelector(
+        '[data-section="projects"]',
+      );
       const skillsSection = document.querySelector('[data-section="skills"]');
       const contactSection = document.querySelector('[data-section="contact"]');
-      
-      const scrollY = window.scrollY;
-      let currentSection = 'home';
-      
+
+      let currentSection = "home";
+
       // Check each section from bottom to top
       if (contactSection) {
         const contactRect = contactSection.getBoundingClientRect();
         const contactTop = contactRect.top + scrollY;
         if (scrollY >= contactTop - 300) {
-          currentSection = 'contact';
+          currentSection = "contact";
         }
       }
-      
-      if (skillsSection && currentSection === 'home') {
+
+      if (skillsSection && currentSection === "home") {
         const skillsRect = skillsSection.getBoundingClientRect();
         const skillsTop = skillsRect.top + scrollY;
         if (scrollY >= skillsTop - 300) {
-          currentSection = 'skills';
+          currentSection = "skills";
         }
       }
-      
-      if (projectsSection && currentSection === 'home') {
+
+      if (projectsSection && currentSection === "home") {
         const projectsRect = projectsSection.getBoundingClientRect();
         const projectsTop = projectsRect.top + scrollY;
         if (scrollY >= projectsTop - 300) {
-          currentSection = 'projects';
+          currentSection = "projects";
         }
       }
-      
-      if (aboutSection && currentSection === 'home') {
+
+      if (aboutSection && currentSection === "home") {
         const aboutRect = aboutSection.getBoundingClientRect();
         const aboutTop = aboutRect.top + scrollY;
         if (scrollY >= aboutTop - 300) {
-          currentSection = 'about';
+          currentSection = "about";
         }
       }
-      
-      if (heroSection && currentSection === 'home') {
+
+      if (heroSection && currentSection === "home") {
         const heroRect = heroSection.getBoundingClientRect();
         const heroTop = heroRect.top + scrollY;
         const heroHeight = heroRect.height;
         if (scrollY >= heroTop && scrollY < heroTop + heroHeight - 300) {
-          currentSection = 'home';
+          currentSection = "home";
         }
       }
-      
+
       setActiveSection(currentSection);
     };
 
     // Add scroll listener with a small delay to ensure sections are rendered
     const timer = setTimeout(() => {
       handleScroll();
-      window.addEventListener('scroll', handleScroll);
+      if (!alwaysVisible) {
+        window.addEventListener("scroll", handleScroll);
+      }
     }, 100);
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [alwaysVisible]);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
-    const targetSection = sectionId === 'home' ? 'hero' : sectionId;
+    if (pathname !== "/") {
+      setIsMenuOpen(false);
+      router.push(`/#${sectionId}`);
+      return;
+    }
+
+    const targetSection = sectionId === "home" ? "hero" : sectionId;
     const element = document.querySelector(`[data-section="${targetSection}"]`);
-    
+
     if (element) {
       const headerHeight = 80; // Adjust based on your header height
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - headerHeight;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
-    
+
     setIsMenuOpen(false); // Close mobile menu if open
   };
 
-  // Check if we're at the home section (either root path or scrolled to top)
-  const isHomeActive = pathname === '/' || activeSection === 'home';
-
   const headerVariants: Variants = {
-    initial: { y: -100, opacity: 0 },
-    animate: { 
-      y: 0, 
+    hidden: { y: -100, opacity: 0 },
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   const menuVariants: Variants = {
     closed: {
       opacity: 0,
       height: 0,
-      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] }
+      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
     },
     open: {
       opacity: 1,
-      height: 'auto',
-      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] }
-    }
+      height: "auto",
+      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
+    },
   };
 
   const itemVariants: Variants = {
@@ -157,19 +224,19 @@ const Header = () => {
     open: (i: number) => ({
       opacity: 1,
       x: 0,
-      transition: { delay: i * 0.1, duration: 0.3 }
-    })
+      transition: { delay: i * 0.1, duration: 0.3 },
+    }),
   };
 
   return (
     <motion.header
       variants={headerVariants}
-      initial="initial"
-      animate="animate"
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
       className={`fixed top-0 left-0 right-0 z-50 font-mono transition-all duration-300 ${
-        scrolled 
-          ? 'bg-black/95 backdrop-blur-lg border-b border-green-400/20' 
-          : 'bg-black/80'
+        scrolled
+          ? "bg-black/95 backdrop-blur-lg border-b border-green-400/20"
+          : "bg-black/80"
       }`}
     >
       {/* Terminal Window Container */}
@@ -185,14 +252,16 @@ const Header = () => {
                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
-              <span className="text-gray-400 text-sm hidden sm:block">portfolio.sh</span>
+              <span className="text-gray-400 text-sm hidden sm:block">
+                portfolio.sh
+              </span>
             </div>
 
             {/* Logo/Brand */}
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-2 cursor-pointer"
-              onClick={() => scrollToSection('home')}
+              onClick={() => scrollToSection("home")}
             >
               <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-black font-bold text-sm">
                 AB
@@ -212,9 +281,9 @@ const Header = () => {
                   key={item.name}
                   onClick={() => scrollToSection(item.section)}
                   className={`group relative px-4 py-2 transition-all duration-300 ${
-                    isActive 
-                      ? 'text-green-400' 
-                      : 'text-gray-300 hover:text-green-400'
+                    isActive
+                      ? "text-green-400"
+                      : "text-gray-300 hover:text-green-400"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -223,18 +292,18 @@ const Header = () => {
                   transition={{ delay: index * 0.1 + 0.5 }}
                 >
                   <span className="relative z-10">{item.name}</span>
-                  
+
                   {/* Active/Hover background */}
                   <motion.div
                     className={`absolute inset-0 rounded border ${
                       isActive
-                        ? 'bg-green-400/20 border-green-400/30'
-                        : 'border-green-400/20 opacity-0 group-hover:opacity-100 bg-green-400/10'
+                        ? "bg-green-400/20 border-green-400/30"
+                        : "border-green-400/20 opacity-0 group-hover:opacity-100 bg-green-400/10"
                     }`}
                     initial={false}
                     transition={{ duration: 0.2 }}
                   />
-                  
+
                   {/* Terminal command tooltip */}
                   <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-green-400 text-xs px-2 py-1 rounded border border-green-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                     $ {item.command}
@@ -268,7 +337,7 @@ const Header = () => {
                 animate={{ rotate: isMenuOpen ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {isMenuOpen ? '×' : '≡'}
+                {isMenuOpen ? "×" : "≡"}
               </motion.div>
             </motion.button>
           </div>
@@ -298,16 +367,18 @@ const Header = () => {
                       onClick={() => scrollToSection(item.section)}
                       className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 w-full text-left ${
                         isActive
-                          ? 'text-green-400 bg-green-400/5 border-green-400'
-                          : 'text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400'
+                          ? "text-green-400 bg-green-400/5 border-green-400"
+                          : "text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400"
                       }`}
                     >
                       <span>{item.name}</span>
-                      <span className="text-xs text-green-400/60">$ {item.command}</span>
+                      <span className="text-xs text-green-400/60">
+                        $ {item.command}
+                      </span>
                     </motion.button>
                   );
                 })}
-                
+
                 {/* Mobile Time Display */}
                 <motion.div
                   custom={navItems.length}
@@ -329,8 +400,12 @@ const Header = () => {
       {/* Terminal Command Line Effect */}
       <motion.div
         initial={{ width: 0 }}
-        animate={{ width: '100%' }}
-        transition={{ delay: 1.2, duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        animate={{ width: "100%" }}
+        transition={{
+          delay: 1.2,
+          duration: 1.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
         className="h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"
       />
     </motion.header>

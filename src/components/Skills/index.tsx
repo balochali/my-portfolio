@@ -11,6 +11,7 @@ import {
 
 const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(4);
   const [terminalText, setTerminalText] = useState("");
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -30]);
@@ -51,7 +52,6 @@ const SkillsSection = () => {
       experience: "2+ years",
       description: "SSR, SSG, API Routes, App Router",
       icon: "Next",
-
       color: "from-gray-400 to-gray-600",
     },
     {
@@ -204,6 +204,8 @@ const SkillsSection = () => {
       ? skillsData
       : skillsData.filter((skill) => skill.category === activeCategory);
 
+  const visibleSkills = filteredSkills.slice(0, visibleCount);
+
   // Terminal typing effect (same as original)
   useEffect(() => {
     const commands = [
@@ -218,7 +220,7 @@ const SkillsSection = () => {
     let currentChar = 0;
     let typeTimeout: NodeJS.Timeout;
     let nextCommandTimeout: NodeJS.Timeout;
-    let bootTimeout: NodeJS.Timeout;
+    let bootTimeout: any;
 
     const typeCommand = () => {
       if (currentCommand < commands.length) {
@@ -278,6 +280,7 @@ const SkillsSection = () => {
 
   return (
     <section
+      id="skills"
       data-section="skills"
       className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden"
     >
@@ -346,7 +349,7 @@ const SkillsSection = () => {
                 <span className="text-green-400"> Avg Proficiency:</span>{" "}
                 {Math.round(
                   skillsData.reduce((acc, skill) => acc + skill.level, 0) /
-                    skillsData.length
+                    skillsData.length,
                 )}
                 %
               </motion.div>
@@ -366,7 +369,10 @@ const SkillsSection = () => {
             <motion.button
               key={category}
               variants={itemVariants}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setActiveCategory(category);
+                setVisibleCount(8);
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`px-4 py-2 rounded-lg border transition-all duration-300 text-sm font-semibold ${
@@ -387,10 +393,10 @@ const SkillsSection = () => {
 
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skill, index) => (
+            {visibleSkills.map((skill, index) => (
               <motion.div
                 key={skill.name}
                 layout
@@ -498,6 +504,24 @@ const SkillsSection = () => {
           </AnimatePresence>
         </motion.div>
 
+        {/* Show More Button */}
+        {visibleCount < filteredSkills.length && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="mt-12 text-center"
+          >
+            <motion.button
+              onClick={() => setVisibleCount(filteredSkills.length)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 cursor-pointer bg-transparent border border-green-400 text-green-400 rounded-lg font-semibold hover:bg-green-400/10 transition-all duration-300 shadow-[0_0_10px_rgba(74,222,128,0.2)] hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]"
+            >
+              Show All Skills
+            </motion.button>
+          </motion.div>
+        )}
+
         {/* Skills Summary */}
         <motion.div
           variants={containerVariants}
@@ -569,7 +593,7 @@ const SkillsSection = () => {
               {filteredSkills.length} skills displayed | Average proficiency:{" "}
               {Math.round(
                 filteredSkills.reduce((acc, skill) => acc + skill.level, 0) /
-                  filteredSkills.length
+                  filteredSkills.length,
               )}
               %
             </div>

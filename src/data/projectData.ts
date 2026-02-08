@@ -131,6 +131,17 @@ export const projects: Project[] = [
     ],
     techStack: ["Node.js", "Kafka", "PostgreSQL", "Telegram API", "AI/ML"],
     image: "/project-images/bubsyai.png",
+    gallery: [
+      "/project-images/bubsyai.png",
+      "/project-images/bubsy-rewards.png", // Using other project images as placeholders for now
+      "/project-images/rexofficial.png",
+    ],
+    role: "Full Stack Developer",
+    duration: "3 Months",
+    challenge:
+      "Crypto communities face significant challenges with spam, FUD (Fear, Uncertainty, Doubt), and maintaining user engagement. Manual moderation is inefficient and cannot scale effectively with rapid community growth.",
+    solution:
+      "Developed an autonomous AI agent integrated with Telegram. It uses Kafka for real-time message streaming and a custom ML model to detect sentiment and spam patterns. The bot provides instant moderation, answers community questions, and generates activity reports via a web dashboard.",
     demoUrl: "https://t.me/bubsyAI",
     codeUrl: "https://github.com/balochali/bubsy-ai",
     status: "Completed",

@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { portfolioData } from "@/data/portfolioData";
 
 const HeroSection = () => {
   const [currentTime, setCurrentTime] = useState("");
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 100]);
 
   const roles = portfolioData.roles;
   const skills = portfolioData.skills;
@@ -23,7 +21,7 @@ const HeroSection = () => {
           hour: "2-digit",
           minute: "2-digit",
           hour12: true,
-        })
+        }),
       );
     };
 
@@ -58,6 +56,7 @@ const HeroSection = () => {
 
   return (
     <section
+      id="home"
       data-section="hero"
       className="min-h-screen bg-black text-green-400 font-mono overflow-hidden relative"
     >
@@ -72,10 +71,13 @@ const HeroSection = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
         >
           {/* Left Side - Main Content */}
-          <motion.div variants={itemVariants} className="space-y-8">
+          <motion.div
+            variants={itemVariants}
+            className="space-y-8 order-2 lg:order-1"
+          >
             {/* Main Terminal Content */}
             <div className="space-y-6">
               {/* Welcome Message */}
@@ -145,7 +147,7 @@ const HeroSection = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     const contactSection = document.querySelector(
-                      '[data-section="contact"]'
+                      '[data-section="contact"]',
                     );
                     if (contactSection) {
                       contactSection.scrollIntoView({ behavior: "smooth" });
@@ -207,8 +209,7 @@ const HeroSection = () => {
           {/* Right Side - Profile Image */}
           <motion.div
             variants={itemVariants}
-            style={{ y }}
-            className="relative"
+            className="relative order-1 lg:order-2"
           >
             {/* Terminal Window for Image */}
             <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden">
@@ -234,11 +235,11 @@ const HeroSection = () => {
                   {/* Main image */}
                   <div className="relative rounded-lg overflow-hidden border border-green-400/20">
                     <Image
-                      src="/hero-section/my-picture.jpeg"
+                      src="/hero-section/alibaloch.png"
                       alt="Ali Baloch - Full Stack Developer"
                       width={400}
                       height={500}
-                      className="w-full h-[400px] object-contain filter grayscale transition-transform duration-700 group-hover:scale-105  hover:grayscale-0"
+                      className="w-full h-auto aspect-square object-cover transition-transform duration-700 group-hover:scale-105  hover:grayscale-0"
                       priority
                     />
 
@@ -298,7 +299,7 @@ const HeroSection = () => {
               className="absolute -bottom-4 -left-4 w-12 h-12 bg-gray-900/80 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 text-lg"
             >
               <span role="img" aria-label="Braces Icon">
-                {}
+                {"{}"}
               </span>
             </motion.div>
           </motion.div>

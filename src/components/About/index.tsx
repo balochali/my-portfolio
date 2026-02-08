@@ -57,6 +57,7 @@ const AboutSection = () => {
 
   return (
     <section
+      id="about"
       data-section="about"
       className="min-h-screen bg-black text-green-400 font-mono relative py-20"
     >
@@ -110,14 +111,14 @@ const AboutSection = () => {
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex flex-wrap border-b border-green-400/20">
+            <div className="flex overflow-x-auto border-b border-green-400/20 scrollbar-hide no-scrollbar -mx-px">
               {tabs.map((tab) => (
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   whileHover={{ backgroundColor: "rgba(0,255,0,0.1)" }}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 ${
+                  className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
                     activeTab === tab.id
                       ? "bg-green-400/10 text-green-400 border-b-2 border-b-green-400"
                       : "text-gray-400 hover:text-green-300"

@@ -14,6 +14,7 @@ import Image from "next/image";
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(3);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -50]);
 
@@ -38,9 +39,11 @@ const ProjectsSection = () => {
               .toLowerCase()
               .includes(activeFilter.toLowerCase()) ||
             project.tags.some((tag) =>
-              tag.toLowerCase().includes(activeFilter.toLowerCase())
-            )
+              tag.toLowerCase().includes(activeFilter.toLowerCase()),
+            ),
         );
+
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -67,6 +70,7 @@ const ProjectsSection = () => {
 
   return (
     <section
+      id="projects"
       data-section="projects"
       className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden"
     >
@@ -108,7 +112,10 @@ const ProjectsSection = () => {
             <motion.button
               key={filter}
               variants={itemVariants}
-              onClick={() => setActiveFilter(filter)}
+              onClick={() => {
+                setActiveFilter(filter);
+                setVisibleCount(6); // Reset visible count on filter change
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`px-4 py-2 rounded-lg border transition-all duration-300 text-sm font-semibold ${
@@ -124,10 +131,10 @@ const ProjectsSection = () => {
 
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+            {visibleProjects.map((project, index) => (
               <Link href={`/projects/${project.slug}`} key={project.id}>
                 <motion.div
                   layout
@@ -137,7 +144,7 @@ const ProjectsSection = () => {
                   transition={{ duration: 0.4 }}
                   variants={itemVariants}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative"
+                  className="group relative h-full"
                 >
                   <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden hover:border-green-400/60 transition-all duration-500 hover:shadow-lg hover:shadow-green-400/10">
                     {/* Header */}
@@ -236,6 +243,24 @@ const ProjectsSection = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* View More Button */}
+        {visibleCount < filteredProjects.length && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="mt-12 text-center cursor-pointer"
+          >
+            <motion.button
+              onClick={() => setVisibleCount(filteredProjects.length)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 cursor-pointer bg-transparent border border-green-400 text-green-400 rounded-lg font-semibold hover:bg-green-400/10 transition-all duration-300 shadow-[0_0_10px_rgba(74,222,128,0.2)] hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]"
+            >
+              View More Projects
+            </motion.button>
+          </motion.div>
+        )}
       </div>
     </section>
   );

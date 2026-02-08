@@ -33,7 +33,7 @@ const ContactSection = () => {
           hour: "2-digit",
           minute: "2-digit",
           hour12: true,
-        })
+        }),
       );
     };
 
@@ -70,7 +70,7 @@ const ContactSection = () => {
             currentLine++;
             typeLines();
           },
-          currentLine % 2 === 0 ? 400 : 100
+          currentLine % 2 === 0 ? 400 : 100,
         );
       }
     };
@@ -94,7 +94,7 @@ const ContactSection = () => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -127,7 +127,7 @@ const ContactSection = () => {
           "Sending message...\n" +
           "Message sent successfully! ✅\n" +
           "Response time: ~24 hours\n" +
-          "$ _"
+          "$ _",
       );
 
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -160,6 +160,7 @@ const ContactSection = () => {
 
   return (
     <section
+      id="contact"
       data-section="contact"
       className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden"
     >
@@ -229,7 +230,7 @@ const ContactSection = () => {
           </motion.div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Form */}
           <motion.div
             variants={containerVariants}

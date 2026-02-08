@@ -3,7 +3,7 @@
 import { projects } from "@/data/projectData";
 import { useParams } from "next/navigation";
 import ProjectDetails from "@/components/Projects/ProjectDetails";
-// import Header from "@/components/Header";
+import Header from "@/components/Header";
 
 export default function ProjectPage() {
   const { slug } = useParams();
@@ -14,7 +14,8 @@ export default function ProjectPage() {
 
   return (
     <>
-      <ProjectDetails project={project} />;
+      <Header alwaysVisible={true} />
+      <ProjectDetails project={project} />
     </>
   );
 }

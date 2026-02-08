@@ -49,7 +49,7 @@ const Overview = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-gray-900/30 p-4 rounded border border-green-400/20">
+        <div className="bg-gray-900/30 p-4 rounded border border-green-400/20 h-full">
           <div className="text-green-300 mb-2">Frontend</div>
           <div className="text-sm text-gray-300 space-y-1">
             <div>→ React, Next.js, TypeScript</div>
@@ -57,7 +57,7 @@ const Overview = () => {
             <div>→ Redux, Context API</div>
           </div>
         </div>
-        <div className="bg-gray-900/30 p-4 rounded border border-green-400/20">
+        <div className="bg-gray-900/30 p-4 rounded border border-green-400/20 h-full">
           <div className="text-green-300 mb-2">Backend</div>
           <div className="text-sm text-gray-300 space-y-1">
             <div>→ Node.js, Express.js</div>

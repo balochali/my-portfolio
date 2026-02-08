@@ -14,4 +14,8 @@ export interface Project {
   codeUrl: string; // GitHub or source code link
   status: "Completed" | "In Progress" | "Pending"; // project progress status
   featured: boolean; // highlighted project
+  role?: string; // Role in the project
+  duration?: string; // Duration of the project
+  challenge?: string; // Problem statement
+  solution?: string; // Solution details
 }
