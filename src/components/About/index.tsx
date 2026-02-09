@@ -111,25 +111,46 @@ const AboutSection = () => {
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex overflow-x-auto border-b border-green-400/20 scrollbar-hide no-scrollbar -mx-px">
-              {tabs.map((tab) => (
-                <motion.button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  whileHover={{ backgroundColor: "rgba(0,255,0,0.1)" }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
-                    activeTab === tab.id
-                      ? "bg-green-400/10 text-green-400 border-b-2 border-b-green-400"
-                      : "text-gray-400 hover:text-green-300"
-                  }`}
-                >
-                  <span className="text-xs" role="img" aria-label={tab.aria}>
-                    {tab.icon}
-                  </span>
-                  {tab.label}
-                </motion.button>
-              ))}
+            <div className="relative border-b border-green-400/20">
+              {/* Fade indicators for mobile scroll */}
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none sm:hidden"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none sm:hidden"></div>
+
+              <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide no-scrollbar touch-pan-x translate-z-0">
+                <div className="flex min-w-full px-2 sm:px-0">
+                  {tabs.map((tab) => (
+                    <motion.button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      whileHover={{ backgroundColor: "rgba(0,255,0,0.1)" }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 whitespace-nowrap flex-shrink-0 relative ${
+                        activeTab === tab.id
+                          ? "bg-green-400/10 text-green-400"
+                          : "text-gray-400 hover:text-green-300"
+                      }`}
+                    >
+                      <span
+                        className="text-xs"
+                        role="img"
+                        aria-label={tab.aria}
+                      >
+                        {tab.icon}
+                      </span>
+                      <span className="hidden xs:inline">{tab.label}</span>
+                      <span className="xs:hidden">
+                        {tab.label.split(".")[0]}
+                      </span>
+                      {activeTab === tab.id && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Tab Content */}

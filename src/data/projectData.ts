@@ -24,8 +24,15 @@ export const projects: Project[] = [
       "Simple and portable deployment using Python & Flask",
     ],
     techStack: ["Python", "Flask", "Transformers", "Hugging Face"],
-    image: "/project-images/ai-chatbot.png",
-    gallery: ["/project-images/ai-chatbot.png"],
+    image: "/project-images/ai-chatbot/ai-chatbot.png",
+    gallery: [
+      "/project-images/ai-chatbot/ai-chatbot.png",
+      "/project-images/ai-chatbot/1.png",
+      "/project-images/ai-chatbot/2.png",
+      "/project-images/ai-chatbot/3.png",
+      "/project-images/ai-chatbot/4.png",
+      "/project-images/ai-chatbot/5.png",
+    ],
     demoUrl: "http://localhost:5000/api/chat",
     codeUrl: "https://github.com/balochali/chatbot_python",
     status: "Completed",
@@ -33,31 +40,37 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    slug: "bubsy-rewards-app",
-    title: "Bubsy Rewards App",
-    category: "MERN",
-    tags: ["React Native", "Node.js", "Express", "Prisma", "PostgreSQL"],
+    slug: "restaurant-pos-system",
+    title: "Restaurant POS System",
+    category: "Python",
+    tags: ["Python", "PyQt6", "SQLite3", "UI/UX"],
     description:
-      "Reward-based mobile app that enables users to earn, track, and redeem Bubsy tokens for their community activity.",
+      "A Point of Sale system developed for Restaurant featuring live order management, category-based item control, and billing automation.",
     longDescription: `
-        The Bubsy Rewards App allows community members to earn rewards based on activity and engagement. 
-        Users can redeem points, review their progress in a dashboard, and connect with community events.
-        This project is part of the Bubsy ecosystem and integrates a scalable backend service using Prisma and PostgreSQL.
+        Desktop-based POS application built with PyQt6 including real-time order processing, billing automation and category-wise menu handling.
+        Designed to reduce operational errors and improve restaurant workflow.
     `,
     features: [
-      "Token-based reward system",
-      "Secure user authentication",
-      "Wallet based points storage",
-      "React Native mobile interface",
-      "Analytics dashboards for user performance",
+      "Live order management",
+      "Category-based menu selection",
+      "Automated billing and receipt generation",
+      "Local SQLite database",
+      "Easy-to-use UI for restaurant staff",
     ],
-    techStack: ["React Native", "Node.js", "Prisma", "PostgreSQL", "JWT"],
-    image: "/project-images/bubsy-rewards.png",
-    gallery: ["/projects/bubsyrewards.jpg"],
+    techStack: ["PyQt6", "SQLite3", "Python", "UI/UX"],
+    image: "/project-images/noshedehwari/restaurantpos.png",
+    gallery: [
+      "/project-images/noshedehwari/restaurantpos.png",
+      "/project-images/noshedehwari/1.png",
+      "/project-images/noshedehwari/2.png",
+      "/project-images/noshedehwari/3.png",
+      "/project-images/noshedehwari/4.png",
+      "/project-images/noshedehwari/5.png",
+    ],
     demoUrl: "#",
-    codeUrl: "https://github.com/balochali/bubsyrewards",
+    codeUrl: "https://github.com/balochali/pos_restaurant",
     status: "Completed",
-    featured: true,
+    featured: false,
   },
   {
     id: 3,
@@ -78,7 +91,14 @@ export const projects: Project[] = [
       "Database driven architecture using Prisma",
     ],
     techStack: ["React", "Node.js", "Express", "Prisma", "PostgreSQL"],
-    image: "/project-images/rexofficial.png",
+    image: "/project-images/rex-official/rexofficial.png",
+    gallery: [
+      "/project-images/rex-official/rexofficial.png",
+      "/project-images/rex-official/1.png",
+      "/project-images/rex-official/2.png",
+      "/project-images/rex-official/3.png",
+      "/project-images/rex-official/4.png",
+    ],
     demoUrl: "#",
     codeUrl: "https://github.com/balochali/rex-official",
     status: "Completed",
@@ -86,30 +106,33 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    slug: "restaurant-pos-system",
-    title: "Restaurant POS System",
-    category: "Python",
-    tags: ["Python", "PyQt6", "SQLite3", "UI/UX"],
+    slug: "bubsy-rewards-app",
+    title: "Bubsy Rewards App",
+    category: "MERN",
+    tags: ["React Native", "Node.js", "Express", "Prisma", "PostgreSQL"],
     description:
-      "A Point of Sale system developed for Restaurant featuring live order management, category-based item control, and billing automation.",
+      "Reward-based mobile app that enables users to earn, track, and redeem Bubsy tokens for their community activity.",
     longDescription: `
-        Desktop-based POS application built with PyQt6 including real-time order processing, billing automation and category-wise menu handling.
-        Designed to reduce operational errors and improve restaurant workflow.
+        The Bubsy Rewards App allows community members to earn rewards based on activity and engagement. 
+        Users can redeem points, review their progress in a dashboard, and connect with community events.
+        This project is part of the Bubsy ecosystem and integrates a scalable backend service using Prisma and PostgreSQL.
     `,
     features: [
-      "Live order management",
-      "Category-based menu selection",
-      "Automated billing and receipt generation",
-      "Local SQLite database",
-      "Easy-to-use UI for restaurant staff",
+      "Token-based reward system",
+      "Secure user authentication",
+      "Wallet based points storage",
+      "React Native mobile interface",
+      "Analytics dashboards for user performance",
     ],
-    techStack: ["PyQt6", "SQLite3", "Python", "UI/UX"],
-    image: "/project-images/restaurantpos.png",
+    techStack: ["React Native", "Node.js", "Prisma", "PostgreSQL", "JWT"],
+    image: "/project-images/bubsy-rewards/bubsy-rewards.png",
+    gallery: ["/project-images/bubsy-rewards/bubsy-rewards.png"],
     demoUrl: "#",
-    codeUrl: "https://github.com/balochali/pos_restaurant",
+    codeUrl: "https://github.com/balochali/bubsyrewards",
     status: "Completed",
-    featured: false,
+    featured: true,
   },
+
   {
     id: 5,
     slug: "bubsy-ai-telegram-community-bot",
@@ -133,7 +156,7 @@ export const projects: Project[] = [
     image: "/project-images/bubsyai.png",
     gallery: [
       "/project-images/bubsyai.png",
-      "/project-images/bubsy-rewards.png", // Using other project images as placeholders for now
+      "/project-images/bubsy-rewards.png",
       "/project-images/rexofficial.png",
     ],
     role: "Full Stack Developer",

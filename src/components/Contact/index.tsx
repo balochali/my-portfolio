@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { portfolioData } from "@/data/portfolioData";
+import { sendEmail } from "@/app/actions/contact";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -110,29 +111,54 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
+    if (!validateForm()) {
       setTerminalOutput(
         (prev) =>
           prev +
-          `$ send-message --to=${
-            portfolioData.socials
-              .find((s) => s.name === "Email")
-              ?.url.replace("mailto:", "") || "ali.baloch@example.com"
-          }\n` +
-          "Sending message...\n" +
-          "Message sent successfully! ✅\n" +
-          "Response time: ~24 hours\n" +
-          "$ _",
+          "$ send-message\nError: Validation failed. Please fill all fields correctly. ❌\n$ _\n",
       );
+      return;
+    }
 
-      setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setTerminalOutput(
+      (prev) => prev + "$ send-message\nConnecting to SMTP server...\n",
+    );
+
+    try {
+      const result = await sendEmail(formData);
+
+      if (result.success) {
+        setTerminalOutput(
+          (prev) =>
+            prev +
+            "Establishing handshake...\n" +
+            "Transmitting data packages...\n" +
+            "Message sent successfully! ✅\n" +
+            "Response expected within 24h.\n" +
+            "$ _\n",
+        );
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setTerminalOutput(
+          (prev) =>
+            prev +
+            `Error: ${result.error || "Failed to establish SMTP connection."} ❌\n` +
+            "Check .env.local configuration.\n" +
+            "$ _\n",
+        );
+      }
+    } catch (error: any) {
+      setTerminalOutput(
+        (prev) =>
+          prev +
+          `Critical Error: SYSTEM_HALT ❌\n` +
+          `${error.message}\n` +
+          "$ _\n",
+      );
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   const containerVariants: Variants = {
