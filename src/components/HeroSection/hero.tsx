@@ -1,305 +1,242 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { TypeAnimation } from "react-type-animation";
 import { portfolioData } from "@/data/portfolioData";
 
 const HeroSection = () => {
-  const roles = portfolioData.roles;
-  const skills = portfolioData.skills;
-  const socials = portfolioData.socials;
+  const [bootSequence, setBootSequence] = useState(0);
+  const [isBooted, setIsBooted] = useState(false);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  const bootMessages = [
+    "[    0.000000] Initializing portfolio_kernel_v4.2...",
+    "[    0.420815] Loading system_modules: { Next.js, React, Tailwind }",
+    "[    1.124502] Checking profile_integrity... OK",
+    "[    1.890211] Mounting user_identity: ALI_BALOCH",
+    "[    2.501932] Starting interactive_session...",
+  ];
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
+  useEffect(() => {
+    if (bootSequence < bootMessages.length) {
+      const timer = setTimeout(
+        () => {
+          setBootSequence((prev) => prev + 1);
+        },
+        400 + Math.random() * 600,
+      );
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => setIsBooted(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [bootSequence]);
 
   return (
     <section
       id="home"
       data-section="hero"
-      className="min-h-screen bg-black text-green-400 font-mono overflow-hidden relative"
+      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono overflow-hidden relative flex items-center justify-center p-6"
     >
-      {/* Simple grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
+      {/* Dynamic Background: Scanning Lines & Code Rain */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+      </div>
 
-      {/* Subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
-
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-6 sm:p-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
-        >
-          {/* Left Side - Main Content */}
+      {/* Boot Sequence Overlay */}
+      <AnimatePresence>
+        {!isBooted && (
           <motion.div
-            variants={itemVariants}
-            className="space-y-8 order-2 lg:order-1"
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+            className="absolute z-50 inset-0 bg-[#0d1117] flex flex-col justify-center px-10 md:px-20"
           >
-            {/* Main Terminal Content */}
-            <div className="space-y-6">
-              {/* Welcome Message */}
-              <motion.div variants={itemVariants}>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
-                  Hello, I&apos;m{" "}
-                  <span className="text-green-400">{portfolioData.name}</span>
-                </div>
-                <div className="text-lg text-gray-300">
-                  <TypeAnimation
-                    sequence={roles.flatMap((role) => [role, 2000])}
-                    wrapper="span"
-                    speed={50}
-                    deletionSpeed={70}
-                    repeat={Infinity}
-                  />
-                </div>
-              </motion.div>
+            <div className="max-w-4xl space-y-2">
+              {bootMessages.slice(0, bootSequence).map((msg, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-xs md:text-sm text-[#98c379] font-mono leading-relaxed"
+                >
+                  <span className="text-gray-600 mr-2">root@baloch:~$</span>
+                  {msg}
+                </motion.div>
+              ))}
+              {bootSequence < bootMessages.length && (
+                <motion.div
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity }}
+                  className="w-2 h-4 bg-[#61afef] inline-block ml-1"
+                />
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-              {/* About Section */}
-              <motion.div variants={itemVariants} className="space-y-3">
-                <div className="text-green-300">About:</div>
-                <div className="text-gray-300 leading-relaxed pl-4 border-l-2 border-green-400/30">
-                  {portfolioData.about}
-                </div>
-              </motion.div>
-
-              {/* Skills Section */}
-              <motion.div variants={itemVariants} className="space-y-3">
-                <div className="text-green-300">Skills:</div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pl-4">
-                  {skills.map((skill, index) => (
-                    <motion.div
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 1.5 + index * 0.1 }}
-                      className="text-sm cursor-pointer bg-gray-900/50 px-3 py-1 rounded border border-green-400/20 text-gray-300 hover:text-green-400 hover:border-green-400/50 transition-all duration-300"
-                    >
-                      {skill}
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Status */}
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center gap-2 text-sm"
-              >
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <span className="text-gray-300">
-                  Available for new projects
+      {/* Main Hero Content (IDE Splash Style) */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24 py-20">
+        {/* Left: Branding & Status */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={isBooted ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex-1 space-y-10 order-2 lg:order-1"
+        >
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 bg-[#282c34] border border-gray-700 rounded-md text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                Kernel: v4.2.0-LTS
+              </span>
+              <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-[10px] text-green-500 font-bold uppercase">
+                  Online
                 </span>
-              </motion.div>
+              </div>
+            </div>
 
-              {/* Action Buttons */}
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 pt-4"
+            <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">
+              <span className="text-[#61afef]">const</span> developer = <br />
+              <span className="text-[#e5c07b] drop-shadow-[0_0_15px_rgba(229,192,123,0.3)]">
+                "{portfolioData.name}"
+              </span>
+              _
+            </h1>
+
+            <div className="text-xl md:text-2xl text-gray-400 font-medium leading-relaxed max-w-2xl">
+              Building <span className="text-[#c678dd] italic">Scalable</span>{" "}
+              architectures and <br />
+              <span className="text-[#98c379] italic">
+                High-Performance
+              </span>{" "}
+              digital solutions.
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-6 pt-4">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("about")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="group relative px-8 py-4 bg-[#61afef] text-[#0d1117] font-black rounded-lg text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(97,175,239,0.4)]"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+              Initialize_Explorer
+            </button>
+
+            <a
+              href="/resume/ali_baloch.pdf"
+              className="px-8 py-4 border-2 border-gray-700 hover:border-[#61afef] text-gray-400 hover:text-[#61afef] font-bold rounded-lg text-sm tracking-widest uppercase transition-all flex items-center gap-3"
+            >
+              <span>Download_Resume</span>
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
               >
-                <motion.button
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 0 25px rgba(0,255,0,0.3)",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    const contactSection = document.querySelector(
-                      '[data-section="contact"]',
-                    );
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                  className="px-6 py-3 cursor-pointer bg-green-600 hover:bg-green-500 text-black font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  Get In Touch
-                  <span className="text-sm" role="img" aria-label="Arrow Right">
-                    →
-                  </span>
-                </motion.button>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+            </a>
+          </div>
 
-                <motion.a
-                  href="/resume/ali_baloch.pdf"
-                  download="Ali_Baloch_Resume.pdf"
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 0 25px rgba(0,255,0,0.2)",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-transparent border border-green-400 text-green-400 hover:bg-green-400/10 font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  Download Resume
-                  <span className="text-sm" role="img" aria-label="Arrow Down">
-                    ↓
-                  </span>
-                </motion.a>
-              </motion.div>
-
-              {/* Social Links */}
-              <motion.div variants={itemVariants} className="flex gap-4 pt-4">
-                {socials.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    target={social.name === "Email" ? "_self" : "_blank"}
-                    rel="noopener noreferrer"
-                    whileHover={{
-                      scale: 1.1,
-                      y: -2,
-                      color: "#00ff00",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 2.5 + index * 0.1 }}
-                    className="w-10 h-10 border border-green-400/30 rounded-lg flex items-center justify-center text-gray-400 hover:border-green-400 transition-all duration-300 text-sm font-bold"
-                  >
-                    <span role="img" aria-label={`${social.name} icon`}>
-                      {social.icon || social.name[0]}
-                    </span>
-                  </motion.a>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Profile Image */}
-          <motion.div
-            variants={itemVariants}
-            className="relative order-1 lg:order-2"
-          >
-            {/* Terminal Window for Image */}
-            <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between p-3 border-b border-green-400/20">
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-2">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  </div>
-                  <span className="text-xs text-gray-400">{`Ali Baloch.jpg`}</span>
-                </div>
-                <span className="text-xs text-green-400">●</span>
-              </div>
-
-              {/* Image Container */}
-              <div className="relative p-4">
-                <div className="relative group">
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-lg blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-
-                  {/* Main image */}
-                  <div className="relative rounded-lg overflow-hidden border border-green-400/20">
-                    <Image
-                      src="/hero-section/alibaloch.png"
-                      alt="Ali Baloch - Full Stack Developer"
-                      width={400}
-                      height={500}
-                      className="w-full h-auto aspect-square object-cover transition-transform duration-700 group-hover:scale-105  hover:grayscale-0"
-                      priority
-                    />
-
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-
-                    {/* Bottom info */}
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="text-white font-semibold">
-                        {portfolioData.name}
-                      </div>
-                      <div className="text-green-400 text-sm">
-                        {portfolioData.roles[0]}
-                      </div>
-                    </div>
-
-                    {/* Blinking cursor */}
-                    <motion.div
-                      animate={{ opacity: [1, 0, 1] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="absolute bottom-4 right-4 w-2 h-4 bg-green-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Simple terminal text */}
-                <div className="mt-4 space-y-1 text-xs text-gray-400">
-                  <div>Size: 400x500 pixels</div>
-                  <div>Status: Ready to collaborate</div>
-                  <div className="text-green-400">
-                    $ echo &quot;Let&apos;s build something amazing!&quot;
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating elements */}
-            <motion.div
-              animate={{
-                y: [-10, 10, -10],
-                rotate: [0, 5, 0, -5, 0],
-              }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="absolute -top-4 -right-4 w-16 h-16 bg-gray-900/80 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 text-xl"
-            >
-              <span role="img" aria-label="Code Icon">
-                &lt;/&gt;
-              </span>
-            </motion.div>
-
-            <motion.div
-              animate={{
-                y: [10, -10, 10],
-                rotate: [0, -5, 0, 5, 0],
-              }}
-              transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-4 -left-4 w-12 h-12 bg-gray-900/80 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 text-lg"
-            >
-              <span role="img" aria-label="Braces Icon">
-                {"{}"}
-              </span>
-            </motion.div>
-          </motion.div>
+          <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800/50">
+            {portfolioData.socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                className="group flex flex-col gap-1"
+              >
+                <span className="text-[10px] text-gray-600 font-bold tracking-widest uppercase group-hover:text-[#61afef] transition-colors">
+                  {social.name}
+                </span>
+                <span className="text-xs text-gray-400 group-hover:text-white transition-colors">
+                  /{social.name.toLowerCase()}
+                </span>
+              </a>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Simple scroll indicator */}
+        {/* Right: Immersive Profile Card (IDE Preview style) */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
+          initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+          animate={isBooted ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="flex-1 relative order-1 lg:order-2"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-green-400 text-sm"
-          >
-            ↓ Scroll Down
-          </motion.div>
+          <div className="relative group perspective-1000">
+            {/* Orbital Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#61afef]/30 via-[#c678dd]/20 to-transparent rounded-[2rem] blur-[80px] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+
+            {/* File Frame */}
+            <div className="relative bg-[#161b22] border border-gray-800 rounded-[2rem] p-4 shadow-2xl overflow-hidden group-hover:border-[#61afef]/40 transition-colors duration-500">
+              {/* Visual Header */}
+              <div className="flex items-center justify-between mb-4 px-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                <div className="flex gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500/50" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
+                  <div className="w-2 h-2 rounded-full bg-green-500/50" />
+                </div>
+                <span>PREVIEW: profile.png</span>
+              </div>
+
+              <div className="relative rounded-[1.5rem] overflow-hidden border border-gray-800 group-hover:border-[#61afef]/20 transition-colors">
+                {/* Scanline Effect Overlay */}
+                <div className="absolute inset-0 z-10 pointer-events-none bg-scanline opacity-10 group-hover:opacity-20 transition-opacity" />
+
+                <Image
+                  src="/hero-section/alibaloch.png"
+                  alt="Ali Baloch"
+                  width={500}
+                  height={600}
+                  className="w-full h-auto object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-1000 ease-in-out"
+                  priority
+                />
+
+                {/* Digital Metadata Overlay */}
+                <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent">
+                  <div className="space-y-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="text-[10px] text-[#61afef] font-bold tracking-[0.4em] uppercase">
+                      Authenticated_User
+                    </div>
+                    <h2 className="text-3xl font-black text-white">
+                      {portfolioData.name}
+                    </h2>
+                    <div className="flex gap-2 text-[10px] items-center">
+                      <span className="text-gray-500">TAGS:</span>
+                      <span className="px-2 py-0.5 bg-gray-800/80 rounded text-gray-400">
+                        #FullStack
+                      </span>
+                      <span className="px-2 py-0.5 bg-gray-800/80 rounded text-gray-400">
+                        #SysArch
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Footfooter */}
+              <div className="mt-6 flex items-center justify-between px-4 text-[10px] font-mono">
+                <div className="text-gray-600">RESOLUTION: 1080x1350</div>
+                <div className="text-[#98c379] animate-pulse">
+                  STATUS: ACTIVE
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
+      </div>
+
+      {/* Background Decor: Fixed Vertical Text */}
+      <div className="fixed left-4 top-1/2 -translate-y-1/2 -rotate-90 origin-left text-[10px] text-gray-800 font-bold tracking-[1em] uppercase hidden xl:block">
+        Portfolio_System_Operating_Nominal
       </div>
     </section>
   );

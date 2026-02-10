@@ -3,18 +3,17 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { Project } from "@/components/types/project";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+  onClick: (project: Project) => void;
 }
 
-const ProjectCard = ({ project, index }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
   const imagesToDisplay =
     project.gallery && project.gallery.length > 0
@@ -23,208 +22,138 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
   useEffect(() => {
     if (imagesToDisplay.length <= 1) return;
-
-    // Use a staggered delay based on project index to avoid all sliders changing simultaneously
-    const startDelay = index * 500;
-
+    const startDelay = index * 800;
     const timeout = setTimeout(() => {
       const autoplayInterval = setInterval(() => {
         setDirection(1);
         setCurrentImageIndex((prev) => (prev + 1) % imagesToDisplay.length);
-      }, 4000); // 4 seconds interval
-
+      }, 5000);
       return () => clearInterval(autoplayInterval);
     }, startDelay);
-
     return () => clearTimeout(timeout);
   }, [imagesToDisplay.length, index]);
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (imagesToDisplay.length > 1) {
-      setDirection(1);
-      setCurrentImageIndex((prev) => (prev + 1) % imagesToDisplay.length);
-    }
-  };
-
-  const prevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (imagesToDisplay.length > 1) {
-      setDirection(-1);
-      setCurrentImageIndex((prev) =>
-        prev === 0 ? imagesToDisplay.length - 1 : prev - 1,
-      );
-    }
-  };
-
   return (
-    <Link href={`/projects/${project.slug}`}>
-      <motion.div
-        layout
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.4 }}
-        whileHover={{ y: -10, scale: 1.02 }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="group relative h-full"
-      >
-        <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden hover:border-green-400/60 transition-all duration-500 hover:shadow-lg hover:shadow-green-400/10">
-          {/* Header */}
-          <div className="flex items-center justify-between p-3 border-b border-green-400/20">
-            <span className="text-xs text-gray-400">
-              {project.title.toLowerCase().replace(/\s+/g, "-")}.app
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -10 }}
+      onClick={() => onClick(project)}
+      className="group relative flex flex-col bg-[#161b22] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer hover:border-[#61afef]/40 transition-all duration-500 shadow-2xl hover:shadow-[#61afef]/5"
+    >
+      {/* Repository Header */}
+      <div className="flex items-center justify-between p-4 bg-[#0d1117] border-b border-gray-800">
+        <div className="flex items-center gap-3">
+          <div className="text-xl">📁</div>
+          <div className="flex flex-col">
+            <span className="text-xs font-black text-gray-200 tracking-tight group-hover:text-[#61afef] transition-colors uppercase">
+              {project.title.toLowerCase().replace(/\s+/g, "_")}
             </span>
-            <div className="flex items-center gap-2">
-              {project.featured && (
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-2 h-2 bg-yellow-400 rounded-full"
-                />
-              )}
-              <span
-                className={`text-xs px-2 py-1 rounded ${
-                  project.status === "Completed"
-                    ? "bg-green-600/20 text-green-400"
-                    : "bg-yellow-600/20 text-yellow-400"
-                }`}
-              >
-                {project.status}
+            <span className="text-[9px] text-gray-600 font-bold tracking-widest uppercase">
+              main_branch
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span
+            className={`text-[8px] font-black uppercase px-2 py-0.5 rounded ${project.status === "Completed" ? "bg-green-500/10 text-green-500" : "text-[#e5c07b] bg-[#e5c07b]/10"}`}
+          >
+            {project.status === "Completed" ? "stable" : "dev"}
+          </span>
+        </div>
+      </div>
+
+      {/* Content Area (As a Code Block) */}
+      <div className="relative flex-1 bg-[#0d1117] p-5 font-mono text-sm group-hover:bg-[#0d1117] transition-colors">
+        {/* Line Numbers Decoration */}
+        <div className="absolute left-0 top-0 bottom-0 w-8 border-r border-gray-800 bg-[#161b22]/30 flex flex-col items-center pt-5 text-[8px] text-gray-700 font-bold">
+          <div>01</div>
+          <div>02</div>
+          <div>03</div>
+          <div>04</div>
+        </div>
+
+        <div className="pl-6 space-y-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-[#c678dd]">const</span>
+              <span className="text-[#61afef]">description</span>
+              <span className="text-gray-500">=</span>
+              <span className="text-[#98c379] break-words line-clamp-1">
+                "{project.description}"
               </span>
             </div>
           </div>
 
-          {/* Image Slider */}
-          <div className="relative h-48 overflow-hidden bg-gray-900">
-            <AnimatePresence
-              initial={false}
-              custom={direction}
-              mode="popLayout"
-            >
+          {/* Preview Image Container */}
+          <div className="relative aspect-video rounded-xl overflow-hidden border border-gray-800 group-hover:border-[#61afef]/20 transition-all shadow-inner">
+            <AnimatePresence mode="wait">
               <motion.div
                 key={currentImageIndex}
-                custom={direction}
-                variants={{
-                  enter: (direction: number) => ({
-                    x: direction > 0 ? "100%" : "-100%",
-                    opacity: 0,
-                  }),
-                  center: {
-                    zIndex: 1,
-                    x: 0,
-                    opacity: 1,
-                  },
-                  exit: (direction: number) => ({
-                    zIndex: 0,
-                    x: direction < 0 ? "100%" : "-100%",
-                    opacity: 0,
-                  }),
-                }}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
                 className="absolute inset-0"
               >
                 <Image
                   src={imagesToDisplay[currentImageIndex]}
                   alt={project.title}
-                  className="w-full h-full object-cover"
-                  width={400}
-                  height={300}
+                  fill
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                 />
               </motion.div>
             </AnimatePresence>
-
-            {/* Slider Controls */}
-            {imagesToDisplay.length > 1 && (
-              <>
-                <div className="absolute inset-y-0 left-0 flex items-center pl-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={prevImage}
-                    className="w-8 h-8 bg-black/50 hover:bg-green-500 hover:text-black border border-green-400/30 rounded-full flex items-center justify-center transition-all backdrop-blur-sm"
-                  >
-                    <span>←</span>
-                  </button>
-                </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={nextImage}
-                    className="w-8 h-8 bg-black/50 hover:bg-green-500 hover:text-black border border-green-400/30 rounded-full flex items-center justify-center transition-all backdrop-blur-sm"
-                  >
-                    <span>→</span>
-                  </button>
-                </div>
-
-                {/* Dots / Pagination */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-                  {imagesToDisplay.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`h-1 rounded-full transition-all ${
-                        currentImageIndex === idx
-                          ? "w-4 bg-green-500"
-                          : "w-1 bg-gray-400"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/60 to-transparent" />
+            <div className="absolute bottom-3 left-3 flex gap-1 items-center">
+              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+              <span className="text-[10px] text-white font-bold tracking-widest drop-shadow-md uppercase">
+                Live_Preview
+              </span>
+            </div>
           </div>
 
-          {/* Project Info */}
-          <div className="p-4 space-y-4">
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-gray-300 text-sm leading-relaxed line-clamp-2">
-                {project.description}
-              </p>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+              <span className="text-[#e5c07b]">&gt;</span> tech_stack:
             </div>
-
-            <div className="space-y-2">
-              <div className="text-xs text-green-300 font-mono">
-                $ cat stack.json
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.slice(0, 4).map((tag, tagIndex) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] bg-gray-800/50 px-2 py-0.5 rounded border border-green-400/20 text-gray-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {project.tags.length > 4 && (
-                  <span className="text-[10px] text-gray-500">
-                    +{project.tags.length - 4} more
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="text-xs text-gray-500 space-y-1 border-t border-green-400/10 pt-3 font-mono">
-              <div className="flex items-center gap-2">
-                <span className="text-green-400">→</span>
-                <span>View Details</span>
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.slice(0, 3).map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-[9px] px-2 py-0.5 bg-[#161b22] border border-gray-800 text-gray-400 font-bold rounded group-hover:border-[#61afef]/20 transition-colors uppercase tracking-tight"
+                >
+                  {tag}
+                </span>
+              ))}
+              {project.tags.length > 3 && (
+                <span className="text-[9px] text-gray-600 font-bold">
+                  +{project.tags.length - 3} OTHERS
+                </span>
+              )}
             </div>
           </div>
         </div>
-      </motion.div>
-    </Link>
+      </div>
+
+      {/* Footer Info (Repository Stats) */}
+      <div className="p-4 bg-[#161b22] border-t border-gray-800 flex items-center justify-between text-[9px] font-mono text-gray-500 font-bold uppercase tracking-widest group-hover:text-gray-400 transition-colors">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1">
+            <span className="text-yellow-500/50">★</span> 12
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-gray-600">⌥</span> 4
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span>Last_push:</span>
+          <span className="text-[#98c379]">3d ago</span>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

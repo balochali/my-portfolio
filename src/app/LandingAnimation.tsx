@@ -14,65 +14,55 @@ export default function LandingAnimation() {
   const [showAnimation, setShowAnimation] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [terminalLines, setTerminalLines] = useState<string[]>([]);
-  const [isHydrated, setIsHydrated] = useState(false); // hydration check
+  const [isHydrated, setIsHydrated] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(0);
 
   useEffect(() => {
-    setIsHydrated(true); // client-side only
+    setIsHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!isHydrated) return;
 
-    // Check if already visited in this tab
     const hasVisited = sessionStorage.getItem("hasVisitedPortfolio");
-
     if (hasVisited) {
-      // Skip animation for in-app navigation
       setShowAnimation(false);
       setShowContent(true);
       return;
     }
 
-    // First visit: show animation
     sessionStorage.setItem("hasVisitedPortfolio", "true");
     setShowAnimation(true);
 
     const bootSequence = [
-      "$ Initializing portfolio system...",
-      "$ Loading developer profile...",
-      `$ name: '${portfolioData.name}'`,
-      `$ role: '${portfolioData.roles[0]}'`,
-      `$ skills: [${portfolioData.skills
-        .slice(0, 3)
-        .map((s) => `'${s}'`)
-        .join(", ")}]`,
-      `$ status: '${portfolioData.locationInfo.status}'`,
-      "$ Launching interface...",
-      `$ Welcome to ${portfolioData.name.split(" ")[0]}'s Portfolio!`,
+      "[    0.000000] Portfolio_Linux version 5.15.0-71-generic",
+      "[    0.124502] Initializing CPU_ID: ALI_BALOCH",
+      "[    0.481293] Memory: 16GB LPDDR5 [COMPLEX_UI_DETECTED]",
+      "[    1.021034] Mounting root_filesystem... OK",
+      "[    1.492021] Loading drivers: { Experience.ko, Projects.so, Skills.lib }",
+      "[    2.103942] Establishing secure_shell... Success",
+      "[    2.812390] Starting graphical_interface...",
+      `$ Welcome to the ${portfolioData.name} High-Fidelity Workspace!`,
     ];
 
-    // Typewriter effect
     let lineIndex = 0;
     const typewriterTimer = setInterval(() => {
       if (lineIndex < bootSequence.length) {
         setTerminalLines((prev) => [...prev, bootSequence[lineIndex]]);
         lineIndex++;
       }
-    }, 200);
+    }, 180);
 
-    // Update phases for progress bars / success section
     const phaseTimers = [
-      setTimeout(() => setCurrentPhase(1), 1200),
-      setTimeout(() => setCurrentPhase(2), 2200),
-      setTimeout(() => setCurrentPhase(3), 2800),
+      setTimeout(() => setCurrentPhase(1), 1000),
+      setTimeout(() => setCurrentPhase(2), 2000),
+      setTimeout(() => setCurrentPhase(3), 3000),
     ];
 
-    // Complete animation after all steps
     const completeTimer = setTimeout(() => {
       setShowAnimation(false);
       setShowContent(true);
-    }, 3500);
+    }, 4500);
 
     return () => {
       clearInterval(typewriterTimer);
@@ -81,17 +71,15 @@ export default function LandingAnimation() {
     };
   }, [isHydrated]);
 
-  // Prevent flash during SSR
   if (!isHydrated) return null;
 
   return (
     <>
-      {/* ===== Portfolio Content ===== */}
       {showContent && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <Header />
           <HeroSection />
@@ -99,152 +87,135 @@ export default function LandingAnimation() {
           <ProjectsSection />
           <SkillsSection />
           <ContactSection />
+          <footer className="bg-[#0d1117] py-12 border-t border-gray-800/50">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <div className="text-[10px] text-gray-600 font-bold tracking-[0.4em] uppercase mb-4">
+                System_Status: Operational // Build_0x2AF
+              </div>
+              <div className="text-xs text-gray-500 font-mono">
+                © {new Date().getFullYear()} {portfolioData.name}. Handcrafted
+                with [NEXT.JS + FRAMER_MOTION]
+              </div>
+            </div>
+          </footer>
         </motion.div>
       )}
 
-      {/* ===== Boot Animation ===== */}
       <AnimatePresence>
         {showAnimation && (
           <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="fixed inset-0 bg-black text-green-400 font-mono overflow-hidden z-50"
+            exit={{
+              opacity: 0,
+              scale: 1.2,
+              filter: "blur(40px)",
+              transition: { duration: 1.5, ease: "circIn" },
+            }}
+            className="fixed inset-0 bg-[#0d1117] text-gray-300 font-mono overflow-hidden z-50 flex items-center justify-center"
           >
-            {/* Background */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
-            <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
+            {/* Immersive Background */}
+            <div className="absolute inset-0 bg-scanline opacity-10" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#61afef]/5 via-transparent to-transparent" />
 
-            <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
-              <div className="max-w-4xl w-full">
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, ease: "backOut" }}
-                  className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden backdrop-blur-sm"
-                >
-                  {/* Header */}
-                  <div className="flex items-center justify-between p-4 border-b border-green-400/20">
-                    <div className="flex items-center gap-3">
-                      <div className="flex gap-2">
-                        <div className="w-3 h-3 bg-red-500 rounded-full" />
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                        <div className="w-3 h-3 bg-green-500 rounded-full" />
-                      </div>
-                      <span className="text-sm text-gray-400">
-                        portfolio-boot.sh
-                      </span>
+            <div className="max-w-3xl w-full p-8 relative">
+              {/* Decorative corners */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-gray-800" />
+              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-gray-800" />
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-gray-800" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-gray-800" />
+
+              <div className="space-y-6">
+                {/* System Header */}
+                <div className="flex items-center justify-between pb-6 border-b border-gray-800">
+                  <div className="flex items-center gap-4">
+                    <div className="flex gap-1.5">
+                      <div className="w-2 h-2 rounded-full bg-red-500/50" />
+                      <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
+                      <div className="w-2 h-2 rounded-full bg-green-500/50" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <motion.div
-                        animate={{ opacity: [1, 0.3, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-2 h-2 bg-green-400 rounded-full"
-                      />
-                      <span className="text-xs text-green-400">ONLINE</span>
-                    </div>
+                    <span className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                      Kernel_Loader_v4.2
+                    </span>
                   </div>
+                  <div className="text-[10px] text-[#61afef] font-bold">
+                    MODE: SUPERUSER
+                  </div>
+                </div>
 
-                  {/* Terminal Body */}
-                  <div className="p-6 space-y-2 min-h-[400px]">
-                    <div className="text-gray-400 text-sm mb-4 pb-2 border-b border-green-400/10">
-                      Portfolio System v2.0.1 | Node: v18.x | React: v18.x
-                    </div>
-
-                    {/* Boot Messages */}
-                    <div className="space-y-1">
-                      {terminalLines.map((line, index) => {
-                        if (!line) return null;
-                        return (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className={`text-sm ${
-                              line.includes("name:") || line.includes("role:")
-                                ? "text-white"
-                                : line.includes("skills:") ||
-                                  line.includes("status:")
-                                ? "text-blue-400"
-                                : line.includes("Welcome")
-                                ? "text-green-300 font-semibold"
-                                : "text-gray-300"
-                            }`}
-                          >
-                            {line}
-                            {index === terminalLines.length - 1 &&
-                              index < 7 && ( // show cursor until last line
-                                <motion.span
-                                  animate={{ opacity: [1, 0, 1] }}
-                                  transition={{
-                                    duration: 0.8,
-                                    repeat: Infinity,
-                                  }}
-                                  className="text-green-400 ml-1"
-                                >
-                                  |
-                                </motion.span>
-                              )}
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Success Section */}
-                    {currentPhase >= 2 && (
+                {/* Terminal Log */}
+                <div className="min-h-[200px] space-y-1.5">
+                  {terminalLines.map((line, i) => {
+                    if (!line) return null;
+                    return (
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="mt-6 pt-4 border-t border-green-400/20"
+                        key={i}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className={`text-xs md:text-sm font-mono leading-relaxed ${
+                          line.includes("Welcome")
+                            ? "text-[#98c379] font-black pt-4"
+                            : line.startsWith("[")
+                              ? "text-gray-500"
+                              : "text-gray-300"
+                        }`}
                       >
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-sm text-gray-400">
-                            Loading:
-                          </span>
-                          <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: "100%" }}
-                              transition={{ duration: 0.6, ease: "easeOut" }}
-                              className="h-full bg-gradient-to-r from-green-400 to-blue-400"
-                            />
-                          </div>
-                          <span className="text-sm text-green-400">100%</span>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 text-xs">
-                          {[
-                            "Server: Ready",
-                            "Database: Connected",
-                            "UI: Initialized",
-                            "Portfolio: Online",
-                          ].map((status, i) => (
-                            <div key={i} className="flex items-center gap-2">
-                              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                              <span className="text-gray-300">{status}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.8 }}
-                          className="mt-4 p-3 bg-green-400/10 border border-green-400/30 rounded text-center"
-                        >
-                          <div className="text-green-300 font-semibold">
-                            ✓ System Ready
-                          </div>
-                          <div className="text-xs text-gray-400 mt-1">
-                            Redirecting to portfolio...
-                          </div>
-                        </motion.div>
+                        {line}
                       </motion.div>
-                    )}
-                  </div>
-                </motion.div>
+                    );
+                  })}
+                  {terminalLines.length < 8 && (
+                    <motion.span
+                      animate={{ opacity: [1, 0] }}
+                      transition={{ duration: 0.5, repeat: Infinity }}
+                      className="inline-block w-2 h-4 bg-[#61afef] ml-1 align-middle"
+                    />
+                  )}
+                </div>
+
+                {/* Visual Progress Phase */}
+                {currentPhase >= 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="space-y-4 pt-8"
+                  >
+                    <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+                      <span>Interface_Initialization</span>
+                      <span>{Math.min(100, currentPhase * 33 + 34)}%</span>
+                    </div>
+                    <div className="h-1 bg-gray-900 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${currentPhase * 33 + 34}%` }}
+                        className="h-full bg-gradient-to-r from-[#61afef] to-[#c678dd]"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-6">
+                      {[
+                        { label: "DOM_SYNC", status: "OK" },
+                        {
+                          label: "SHADER_INIT",
+                          status: currentPhase >= 2 ? "OK" : "...",
+                        },
+                        {
+                          label: "NET_HANDSHAKE",
+                          status: currentPhase >= 3 ? "OK" : "...",
+                        },
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex flex-col gap-1">
+                          <span className="text-[8px] text-gray-600 font-bold uppercase">
+                            {item.label}
+                          </span>
+                          <span
+                            className={`text-[10px] font-bold ${item.status === "OK" ? "text-[#98c379]" : "text-gray-700 animate-pulse"}`}
+                          >
+                            {item.status}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </motion.div>

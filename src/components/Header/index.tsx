@@ -19,31 +19,16 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
   );
 
   const navItems = [
-    { name: "Home", href: "#home", command: "cd ~/", section: "home" },
+    { name: "Home.ts", href: "#home", section: "home", icon: "📄" },
+    { name: "About.md", href: "#about", section: "about", icon: "📖" },
     {
-      name: "About",
-      href: "#about",
-      command: "cat about.txt",
-      section: "about",
-    },
-    {
-      name: "Projects",
+      name: "Projects.json",
       href: "#projects",
-      command: "ls projects/",
       section: "projects",
+      icon: "📁",
     },
-    {
-      name: "Skills",
-      href: "#skills",
-      command: "cat skills.json",
-      section: "skills",
-    },
-    {
-      name: "Contact",
-      href: "#contact",
-      command: "ping contact",
-      section: "contact",
-    },
+    { name: "Skills.config", href: "#skills", section: "skills", icon: "⚙️" },
+    { name: "Contact.api", href: "#contact", section: "contact", icon: "📧" },
   ];
 
   useEffect(() => {
@@ -61,20 +46,14 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
 
     updateTime();
     const timeInterval = setInterval(updateTime, 1000);
-
     return () => clearInterval(timeInterval);
   }, []);
 
-  // Handle hash navigation on mount
   useEffect(() => {
     if (pathname === "/" && window.location.hash) {
       const hash = window.location.hash.replace("#", "");
-      // Add small delay to ensure rendering
-      setTimeout(() => {
-        scrollToSection(hash);
-      }, 100);
+      setTimeout(() => scrollToSection(hash), 100);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const [isVisible, setIsVisible] = useState(alwaysVisible);
@@ -83,86 +62,34 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
     const handleScroll = () => {
       if (alwaysVisible) {
         setIsVisible(true);
-        setScrolled(true); // Always show background for consistency
+        setScrolled(true);
         return;
       }
 
       const scrollY = window.scrollY;
-      const isScrolled = scrollY > 50;
-      setScrolled(isScrolled);
-
-      // Only track active sections on home page
-      if (pathname !== "/") {
-        setActiveSection("");
-        return;
-      }
-
-      // Show navbar only after scrolling down a bit (e.g., 100px)
-      // or when scrolling up (sticky behavior) - simplified to "show when not at top" as per request
+      setScrolled(scrollY > 50);
       setIsVisible(scrollY > 100);
 
-      // Get all sections
-      const heroSection = document.querySelector('[data-section="hero"]');
-      const aboutSection = document.querySelector('[data-section="about"]');
-      const projectsSection = document.querySelector(
-        '[data-section="projects"]',
-      );
-      const skillsSection = document.querySelector('[data-section="skills"]');
-      const contactSection = document.querySelector('[data-section="contact"]');
+      const sections = ["home", "about", "projects", "skills", "contact"];
+      let current = "home";
 
-      let currentSection = "home";
-
-      // Check each section from bottom to top
-      if (contactSection) {
-        const contactRect = contactSection.getBoundingClientRect();
-        const contactTop = contactRect.top + scrollY;
-        if (scrollY >= contactTop - 300) {
-          currentSection = "contact";
+      for (const section of sections) {
+        const element = document.querySelector(
+          `[data-section="${section === "home" ? "hero" : section}"]`,
+        );
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100) {
+            current = section;
+          }
         }
       }
-
-      if (skillsSection && currentSection === "home") {
-        const skillsRect = skillsSection.getBoundingClientRect();
-        const skillsTop = skillsRect.top + scrollY;
-        if (scrollY >= skillsTop - 300) {
-          currentSection = "skills";
-        }
-      }
-
-      if (projectsSection && currentSection === "home") {
-        const projectsRect = projectsSection.getBoundingClientRect();
-        const projectsTop = projectsRect.top + scrollY;
-        if (scrollY >= projectsTop - 300) {
-          currentSection = "projects";
-        }
-      }
-
-      if (aboutSection && currentSection === "home") {
-        const aboutRect = aboutSection.getBoundingClientRect();
-        const aboutTop = aboutRect.top + scrollY;
-        if (scrollY >= aboutTop - 300) {
-          currentSection = "about";
-        }
-      }
-
-      if (heroSection && currentSection === "home") {
-        const heroRect = heroSection.getBoundingClientRect();
-        const heroTop = heroRect.top + scrollY;
-        const heroHeight = heroRect.height;
-        if (scrollY >= heroTop && scrollY < heroTop + heroHeight - 300) {
-          currentSection = "home";
-        }
-      }
-
-      setActiveSection(currentSection);
+      setActiveSection(current);
     };
 
-    // Add scroll listener with a small delay to ensure sections are rendered
     const timer = setTimeout(() => {
       handleScroll();
-      if (!alwaysVisible) {
-        window.addEventListener("scroll", handleScroll);
-      }
+      if (!alwaysVisible) window.addEventListener("scroll", handleScroll);
     }, 100);
 
     return () => {
@@ -171,7 +98,6 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
     };
   }, [alwaysVisible, pathname]);
 
-  // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
     if (pathname !== "/") {
       setIsMenuOpen(false);
@@ -183,7 +109,7 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
     const element = document.querySelector(`[data-section="${targetSection}"]`);
 
     if (element) {
-      const headerHeight = 80; // Adjust based on your header height
+      const headerHeight = 100;
       const elementPosition =
         element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - headerHeight;
@@ -193,221 +119,130 @@ const Header = ({ alwaysVisible = false }: HeaderProps) => {
         behavior: "smooth",
       });
     }
-
-    setIsMenuOpen(false); // Close mobile menu if open
-  };
-
-  const headerVariants: Variants = {
-    hidden: { y: -100, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  };
-
-  const menuVariants: Variants = {
-    closed: {
-      opacity: 0,
-      height: 0,
-      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
-    },
-    open: {
-      opacity: 1,
-      height: "auto",
-      transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
-    },
-  };
-
-  const itemVariants: Variants = {
-    closed: { opacity: 0, x: -20 },
-    open: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: { delay: i * 0.1, duration: 0.3 },
-    }),
+    setIsMenuOpen(false);
   };
 
   return (
     <motion.header
-      variants={headerVariants}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
+      initial={{ y: -100 }}
+      animate={{ y: isVisible ? 0 : -100 }}
+      transition={{ duration: 0.5, ease: "circOut" }}
       className={`fixed top-0 left-0 right-0 z-50 font-mono transition-all duration-300 ${
-        scrolled
-          ? "bg-black/95 backdrop-blur-lg border-b border-green-400/20"
-          : "bg-black/80"
+        scrolled ? "bg-black/95 backdrop-blur-xl" : "bg-black/80"
       }`}
     >
-      {/* Terminal Window Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Terminal Header Bar */}
-        <div className="flex items-center justify-between h-16">
-          {/* Terminal Window Controls & Logo */}
-          <div className="flex items-center gap-4">
-            {/* Terminal Controls */}
-            <div className="flex items-center gap-3">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              </div>
-              <span className="text-gray-400 text-sm hidden sm:block">
-                portfolio.sh
-              </span>
-            </div>
-
-            {/* Logo/Brand */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => scrollToSection("home")}
-            >
-              <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-black font-bold text-sm">
-                AB
-              </div>
-              <span className="text-green-400 font-bold text-lg hidden sm:block">
-                baloch.dev
-              </span>
-            </motion.div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            {navItems.map((item, index) => {
-              const isActive = activeSection === item.section;
-              return (
-                <motion.button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.section)}
-                  className={`group relative px-4 py-2 transition-all duration-300 ${
-                    isActive
-                      ? "text-green-400"
-                      : "text-gray-300 hover:text-green-400"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 + 0.5 }}
-                >
-                  <span className="relative z-10">{item.name}</span>
-
-                  {/* Active/Hover background */}
-                  <motion.div
-                    className={`absolute inset-0 rounded border ${
-                      isActive
-                        ? "bg-green-400/20 border-green-400/30"
-                        : "border-green-400/20 opacity-0 group-hover:opacity-100 bg-green-400/10"
-                    }`}
-                    initial={false}
-                    transition={{ duration: 0.2 }}
-                  />
-
-                  {/* Terminal command tooltip */}
-                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-green-400 text-xs px-2 py-1 rounded border border-green-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                    $ {item.command}
-                  </div>
-                </motion.button>
-              );
-            })}
-          </nav>
-
-          {/* Right Side - Time & Menu Button */}
-          <div className="flex items-center gap-4">
-            {/* Time Display */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="hidden md:flex items-center gap-2 text-green-400 text-sm"
-            >
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              <span>{currentTime}</span>
-            </motion.div>
-
-            {/* Mobile Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden w-10 h-10 bg-gray-900/50 border border-green-400/30 rounded-lg flex items-center justify-center text-green-400 hover:border-green-400 transition-all duration-300"
-            >
-              <motion.div
-                animate={{ rotate: isMenuOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isMenuOpen ? "×" : "≡"}
-              </motion.div>
-            </motion.button>
+      {/* IDE Top Bar (Tab Layer) */}
+      <div className="bg-[#161b22] border-b border-gray-800 flex items-center overflow-x-auto no-scrollbar">
+        <div className="flex items-center px-4 gap-2 border-r border-gray-800 pr-6 h-10 hidden md:flex">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500/80 shadow-[0_0_10px_rgba(239,68,68,0.2)]" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-[0_0_10px_rgba(234,179,8,0.2)]" />
+            <div className="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_10px_rgba(34,197,94,0.2)]" />
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              variants={menuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="lg:hidden border-t border-green-400/20 bg-black/95 overflow-hidden"
-            >
-              <div className="py-4 space-y-2">
-                {navItems.map((item, index) => {
-                  const isActive = activeSection === item.section;
-                  return (
-                    <motion.button
-                      key={item.name}
-                      custom={index}
-                      variants={itemVariants}
-                      initial="closed"
-                      animate="open"
-                      exit="closed"
-                      onClick={() => scrollToSection(item.section)}
-                      className={`flex items-center justify-between px-4 py-3 transition-all duration-300 border-l-2 w-full text-left ${
-                        isActive
-                          ? "text-green-400 bg-green-400/5 border-green-400"
-                          : "text-gray-300 hover:text-green-400 hover:bg-green-400/5 border-transparent hover:border-green-400"
-                      }`}
-                    >
-                      <span>{item.name}</span>
-                      <span className="text-xs text-green-400/60">
-                        $ {item.command}
-                      </span>
-                    </motion.button>
-                  );
-                })}
-
-                {/* Mobile Time Display */}
-                <motion.div
-                  custom={navItems.length}
-                  variants={itemVariants}
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
-                  className="flex items-center justify-between px-4 py-3 border-t border-green-400/20 mt-4"
-                >
-                  <span className="text-gray-400 text-sm">System Time</span>
-                  <span className="text-green-400 text-sm">{currentTime}</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <nav className="flex items-center h-10">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.section;
+            return (
+              <button
+                key={item.name}
+                onClick={() => scrollToSection(item.section)}
+                className={`flex items-center gap-2 px-6 h-full text-xs font-semibold border-r border-gray-800 transition-all duration-300 relative group min-w-[120px] ${
+                  isActive
+                    ? "bg-[#0d1117] text-gray-200"
+                    : "text-gray-500 hover:bg-[#0d1117]/50 hover:text-gray-300"
+                }`}
+              >
+                <span className="opacity-50 group-hover:opacity-100 transition-opacity">
+                  {item.icon}
+                </span>
+                {item.name}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute top-0 left-0 right-0 h-[2px] bg-[#61afef] shadow-[0_0_10px_rgba(97,175,239,0.5)]"
+                  />
+                )}
+                {isActive && !isMenuOpen && (
+                  <span className="ml-2 text-[10px] text-gray-600">×</span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
-      {/* Terminal Command Line Effect */}
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{ width: "100%" }}
-        transition={{
-          delay: 1.2,
-          duration: 1.5,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        }}
-        className="h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"
-      />
+      {/* Breadcrumb Bar */}
+      <div className="bg-[#0d1117] border-b border-gray-800 h-8 flex items-center px-6 text-[10px] text-gray-500 gap-2">
+        <span className="hover:text-gray-300 cursor-pointer">portfolio</span>
+        <span>&gt;</span>
+        <span className="hover:text-gray-300 cursor-pointer">src</span>
+        <span>&gt;</span>
+        <span className="hover:text-gray-300 cursor-pointer">components</span>
+        <span>&gt;</span>
+        <span className="text-gray-300 font-bold uppercase tracking-widest">
+          {activeSection === "home"
+            ? "Hero.tsx"
+            : `${activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}.tsx`}
+        </span>
+
+        <div className="ml-auto hidden sm:flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+            <span className="text-gray-600">CONNECTED</span>
+          </div>
+          <div className="text-gray-600">PKT (UTC +5)</div>
+          <div className="text-gray-400 font-bold">{currentTime}</div>
+        </div>
+      </div>
+
+      {/* IDE Status Bottom Strip (Mobile Trigger) */}
+      <div className="lg:hidden h-2 bg-gradient-to-r from-transparent via-[#61afef]/30 to-transparent" />
+
+      {/* Mobile Menu Button (Floating style for IDE feel) */}
+      <button
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className="lg:hidden fixed bottom-6 right-6 w-12 h-12 bg-[#161b22] border border-gray-700 rounded-full flex items-center justify-center text-gray-400 shadow-2xl z-50 hover:text-green-500 transition-colors"
+      >
+        <span className="text-2xl">{isMenuOpen ? "×" : "≡"}</span>
+      </button>
+
+      {/* Mobile Overlay Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            className="lg:hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-[49] flex flex-col pt-32 p-8 gap-6"
+          >
+            <div className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em] mb-4">
+              Navigation_Explorer
+            </div>
+            {navItems.map((item, i) => (
+              <button
+                key={item.href}
+                onClick={() => scrollToSection(item.section)}
+                className="flex items-center justify-between text-2xl font-black tracking-tighter text-gray-600 hover:text-green-500 transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-sm text-gray-800">0{i + 1}.</span>
+                  {item.name
+                    .replace(".ts", "")
+                    .replace(".md", "")
+                    .replace(".json", "")
+                    .replace(".config", "")
+                    .replace(".api", "")}
+                </div>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-sm text-green-500 font-mono tracking-widest uppercase">
+                  Go_To
+                </span>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };

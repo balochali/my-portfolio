@@ -1,22 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  Variants,
-  AnimatePresence,
-} from "framer-motion";
-import Link from "next/link";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projectData";
-import Image from "next/image";
 import ProjectCard from "./ProjectCard";
+import ProjectDetails from "./ProjectDetails";
+import Portal from "../Portal";
+import { Project } from "@/components/types/project";
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(3);
-  const { scrollY } = useScroll();
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const filters = [
     "All",
@@ -45,119 +40,126 @@ const ProjectsSection = () => {
 
   const visibleProjects = filteredProjects.slice(0, visibleCount);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <section
       id="projects"
       data-section="projects"
-      className="min-h-screen bg-black text-green-400 font-mono py-20 relative overflow-hidden"
+      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono py-24 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.05)_1px,transparent_1px)] bg-[size:50px_50px] opacity-30"></div>
-      <div className="absolute inset-0 bg-gradient-radial from-green-500/3 via-transparent to-transparent"></div>
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-[radial-gradient(#161b22_1px,transparent_1px)] bg-[size:40px_40px] opacity-50" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-green-600/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8">
-        {/* Header */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="text-center mb-16"
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-4xl sm:text-5xl font-bold text-white mb-4"
-          >
-            My <span className="text-green-400">Projects</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-gray-300 max-w-2xl mx-auto"
-          >
-            {`$ ls -la projects/ | grep -E "(real|innovative)"`}
-          </motion.p>
-        </motion.div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        {/* Workspace Header */}
+        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-xl shadow-inner">
+                📁
+              </div>
+              <div>
+                <h2 className="text-3xl font-black text-white tracking-tighter uppercase">
+                  Project_Workspace
+                </h2>
+                <div className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                  Repository_Explorer.exe
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 max-w-xl font-mono leading-relaxed">
+              Indexing available repositories... <br />
+              <span className="text-green-500/50">{`$ git branch -a --list "featured/*"`}</span>
+            </p>
+          </div>
 
-        {/* Filters */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          className="flex flex-wrap justify-center gap-2 mb-12"
-        >
-          {filters.map((filter) => (
-            <motion.button
-              key={filter}
-              variants={itemVariants}
-              onClick={() => {
-                setActiveFilter(filter);
-                setVisibleCount(6); // Reset visible count on filter change
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-2 rounded-lg border transition-all duration-300 text-sm font-semibold ${
-                activeFilter === filter
-                  ? "bg-green-600 text-black border-green-400 shadow-lg shadow-green-400/25"
-                  : "bg-gray-900/50 text-gray-300 border-green-400/30 hover:border-green-400/60 hover:text-green-400"
-              }`}
-            >
-              {filter}
-            </motion.button>
-          ))}
-        </motion.div>
+          <div className="flex flex-wrap gap-2">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setVisibleCount(6);
+                }}
+                className={`px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 ${
+                  activeFilter === filter
+                    ? "bg-[#61afef]/10 text-[#61afef] border-[#61afef]/30 shadow-[0_0_15px_rgba(97,175,239,0.1)]"
+                    : "bg-[#161b22] text-gray-500 border-gray-800 hover:border-gray-600 hover:text-gray-300"
+                }`}
+              >
+                <span className="mr-2 opacity-50">
+                  {activeFilter === filter ? "●" : "○"}
+                </span>
+                {filter}
+              </button>
+            ))}
+          </div>
+        </div>
 
+        {/* Project Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
             {visibleProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                onClick={setSelectedProject}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
 
         {/* View More Button */}
         {visibleCount < filteredProjects.length && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="mt-12 text-center cursor-pointer"
-          >
-            <motion.button
+          <div className="mt-16 text-center">
+            <button
               onClick={() => setVisibleCount(filteredProjects.length)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 cursor-pointer bg-transparent border border-green-400 text-green-400 rounded-lg font-semibold hover:bg-green-400/10 transition-all duration-300 shadow-[0_0_10px_rgba(74,222,128,0.2)] hover:shadow-[0_0_20px_rgba(74,222,128,0.4)]"
+              className="px-8 py-3 bg-[#161b22] border border-gray-800 text-gray-400 font-bold rounded-xl hover:text-white hover:border-[#61afef]/50 transition-all text-xs tracking-[0.2em] uppercase group"
             >
-              View More Projects
-            </motion.button>
-          </motion.div>
+              Load_Additional_Repositories
+              <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform">
+                →
+              </span>
+            </button>
+          </div>
         )}
       </div>
+
+      {/* Project Modal - Portaled to root for global priority */}
+      <Portal>
+        <AnimatePresence>
+          {selectedProject && (
+            <div className="fixed inset-0 w-full h-full z-[9999] flex items-center justify-center p-4 md:p-8 overflow-hidden pointer-events-none">
+              {/* Backdrop Layer */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedProject(null)}
+                className="absolute inset-0 bg-[#0d1117]/95 backdrop-blur-xl cursor-pointer pointer-events-auto"
+              />
+
+              {/* Content Layer */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                className="relative w-full max-w-6xl z-50 pointer-events-auto shadow-[0_0_100px_rgba(0,0,0,0.8)]"
+              >
+                <ProjectDetails
+                  project={selectedProject}
+                  onClose={() => setSelectedProject(null)}
+                />
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+      </Portal>
     </section>
   );
 };

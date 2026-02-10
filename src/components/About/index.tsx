@@ -1,36 +1,95 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, useInView, Variants } from "framer-motion";
-import { useRef } from "react";
+import { motion, Variants } from "framer-motion";
 import { portfolioData } from "@/data/portfolioData";
-import Overview from "./Overview";
-import Experience from "./Experience";
-import Education from "./Education";
-import Achievements from "./Achievements";
+import Overview, { OverviewSidebar } from "./Overview";
+import Experience, { ExperienceSidebar } from "./Experience";
+import Education, { EducationSidebar } from "./Education";
+import Achievements, { AchievementsSidebar } from "./Achievements";
 import Stats from "./Stats";
 
 const AboutSection = () => {
-  const [activeTab, setActiveTab] = useState("overview");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const TerminalWindow = ({
+    title,
+    children,
+    sidebar,
+    status,
+  }: {
+    title: string;
+    children: React.ReactNode;
+    sidebar?: React.ReactNode;
+    status?: string;
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
+      className="bg-[#0d1117] rounded-xl border border-gray-800 overflow-hidden mb-16 last:mb-0 shadow-2xl"
+    >
+      {/* Terminal Header */}
+      <div className="flex items-center justify-between p-3 border-b border-gray-800 bg-[#161b22]">
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2 ml-2">
+            <div className="w-3 h-3 bg-[#ff5f56] rounded-full shadow-inner"></div>
+            <div className="w-3 h-3 bg-[#ffbd2e] rounded-full shadow-inner"></div>
+            <div className="w-3 h-3 bg-[#27c93f] rounded-full shadow-inner"></div>
+          </div>
+          <div className="flex items-center gap-2 px-4 py-1.5 bg-[#0d1117] rounded-md border border-gray-700">
+            <span className="text-[10px] text-gray-400 font-mono flex items-center gap-2">
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13 3L16.29 6.29L17.29 5.29L18.71 6.71L17.71 7.71L21 11V13L17.71 16.29L18.71 17.29L17.29 18.71L16.29 17.71L13 21H11L7.71 17.71L6.71 18.71L5.29 17.29L6.29 16.29L3 13V11L6.29 7.71L5.29 6.71L6.71 5.29L7.71 6.29L11 3H13M12 5L9 8L12 11L15 8L12 5M7 10L4 13L7 16L10 13L7 10M17 10L14 13L17 16L20 13L17 10M12 15L9 18L12 21L15 18L12 15Z" />
+              </svg>
+              {title}
+            </span>
+          </div>
+        </div>
+        {status && (
+          <div className="flex items-center gap-2 mr-2">
+            <div className="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
+              <span className="text-[10px] text-yellow-500 font-bold uppercase tracking-wider">
+                {status}
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
 
-  const tabs = [
-    { id: "overview", label: "overview.js", icon: "📋", aria: "Overview" },
-    {
-      id: "experience",
-      label: "experience.json",
-      icon: "💼",
-      aria: "Experience",
-    },
-    { id: "education", label: "education.md", icon: "🎓", aria: "Education" },
-    {
-      id: "achievements",
-      label: "achievements.txt",
-      icon: "🏆",
-      aria: "Achievements",
-    },
-  ];
+      <div className="flex flex-col md:flex-row min-h-[450px]">
+        {/* Sidebar */}
+        {sidebar && (
+          <div className="w-full md:w-64 border-r border-gray-800 bg-[#0d1117]/50 p-6">
+            {sidebar}
+          </div>
+        )}
+
+        {/* Main Content Area */}
+        <div className="flex-1 bg-[#0d1117] relative p-6 font-mono text-sm overflow-x-auto">
+          {/* Subtle line numbers or decoration could go here */}
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/20"></div>
+          {children}
+        </div>
+      </div>
+
+      {/* Terminal Footer */}
+      <div className="border-t border-gray-800 p-3 bg-[#161b22] font-mono">
+        <div className="flex items-center justify-between text-[10px] text-gray-500 uppercase tracking-widest">
+          <div className="flex items-center gap-4 ml-2">
+            <span className="flex items-center gap-1">
+              <span className="text-green-500">master</span>*
+            </span>
+            <span>UTF-8</span>
+          </div>
+          <div className="flex items-center gap-2 mr-2">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full opacity-50"></span>
+            <span>CONNECTED</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -59,126 +118,87 @@ const AboutSection = () => {
     <section
       id="about"
       data-section="about"
-      className="min-h-screen bg-black text-green-400 font-mono relative py-20"
+      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono relative py-24"
     >
-      {/* Grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
-
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-radial from-green-500/5 via-transparent to-transparent"></div>
+      {/* Dynamic Background: Scanning Lines & Code Rain */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+      </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8">
         <motion.div
-          ref={ref}
-          variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={containerVariants}
         >
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-              About <span className="text-green-400">Me</span>
-            </div>
-            <div className="text-gray-300 text-lg">
-              {`console.log("Getting to know ${
-                portfolioData.name.split(" ")[0]
-              } behind the code");`}
-            </div>
-          </motion.div>
-
-          {/* Terminal Window */}
           <motion.div
             variants={itemVariants}
-            className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden"
+            className="text-center mb-16 px-4"
           >
-            {/* Terminal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-green-400/20">
-              <div className="flex items-center gap-3">
-                <div className="flex gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                </div>
-                <span className="text-xs text-gray-400">terminal</span>
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-[#161b22] border border-gray-800 flex items-center justify-center text-2xl shadow-2xl">
+                👤
               </div>
-              <motion.div
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-xs text-green-400"
-              >
-                ●
-              </motion.div>
-            </div>
-
-            {/* Tab Navigation */}
-            <div className="relative border-b border-green-400/20">
-              {/* Fade indicators for mobile scroll */}
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none sm:hidden"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none sm:hidden"></div>
-
-              <div className="flex overflow-x-auto overflow-y-hidden scrollbar-hide no-scrollbar touch-pan-x translate-z-0">
-                <div className="flex min-w-full px-2 sm:px-0">
-                  {tabs.map((tab) => (
-                    <motion.button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      whileHover={{ backgroundColor: "rgba(0,255,0,0.1)" }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`px-4 py-3 text-sm cursor-pointer font-medium border-r border-green-400/20 transition-all duration-100 flex items-center gap-2 whitespace-nowrap flex-shrink-0 relative ${
-                        activeTab === tab.id
-                          ? "bg-green-400/10 text-green-400"
-                          : "text-gray-400 hover:text-green-300"
-                      }`}
-                    >
-                      <span
-                        className="text-xs"
-                        role="img"
-                        aria-label={tab.aria}
-                      >
-                        {tab.icon}
-                      </span>
-                      <span className="hidden xs:inline">{tab.label}</span>
-                      <span className="xs:hidden">
-                        {tab.label.split(".")[0]}
-                      </span>
-                      {activeTab === tab.id && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
-                        />
-                      )}
-                    </motion.button>
-                  ))}
+              <div className="text-left">
+                <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter uppercase">
+                  About_Identity
+                </h2>
+                <div className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                  Biometric_Profile.v4
                 </div>
               </div>
             </div>
-
-            {/* Tab Content */}
-            <div className="p-6 min-h-[500px]">
-              {activeTab === "overview" && <Overview />}
-              {activeTab === "experience" && <Experience />}
-              {activeTab === "education" && <Education />}
-              {activeTab === "achievements" && <Achievements />}
-            </div>
-
-            {/* Terminal Footer */}
-            <div className="border-t border-green-400/20 p-3 bg-gray-900/30">
-              <div className="flex items-center justify-between text-xs text-gray-400">
-                <div className="flex items-center gap-4">
-                  <span>Lines: 42</span>
-                  <span>Characters: 1,337</span>
-                  <span>Language: JavaScript</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                  <span>Ready</span>
-                </div>
-              </div>
+            <div className="text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed border-l-2 border-[#61afef]/30 pl-6">
+              {`$ query --target user_profile --identity "ALI BALOCH"`} <br />
+              {`Fetching encrypted career nodes and educational records...`}
             </div>
           </motion.div>
 
+          {/* Sequential Content Blocks */}
+          <div className="space-y-12">
+            <TerminalWindow
+              title="System_Status.log"
+              sidebar={<OverviewSidebar />}
+              status="STABLE"
+            >
+              <Overview />
+            </TerminalWindow>
+
+            <TerminalWindow
+              title="git_log.sh"
+              sidebar={<ExperienceSidebar />}
+              status="SYNCED"
+            >
+              <Experience />
+            </TerminalWindow>
+
+            <TerminalWindow
+              title="Education.tsx"
+              sidebar={<EducationSidebar />}
+              status="PROVED"
+            >
+              <Education />
+            </TerminalWindow>
+
+            <TerminalWindow
+              title="Test_Report.xml"
+              sidebar={<AchievementsSidebar />}
+              status="PASSED"
+            >
+              <Achievements />
+            </TerminalWindow>
+          </div>
+
           {/* Fun Stats */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16"
+          >
             <Stats />
           </motion.div>
         </motion.div>
