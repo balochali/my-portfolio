@@ -1,7 +1,7 @@
 export const experiences = [
   {
     company: "Rex Official",
-    position: "Co-Founder & Web Developer",
+    position: "Web Developer",
     duration: "May 2025 – Present",
     description:
       "Leading web development initiatives and digital strategy for Rex Official. Responsible for building and maintaining the brand’s online presence, e-commerce platform, and performance optimization.",
