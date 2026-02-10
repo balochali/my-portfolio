@@ -38,6 +38,14 @@ export const ExperienceSidebar = () => {
 const Experience = () => {
   return (
     <div className="relative pl-8 sm:pl-12 py-4">
+      {/* Human Readable Heading */}
+      <div className="flex items-center gap-4 mb-10 -ml-8 sm:-ml-12">
+        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+          02_EXPERIENCE
+        </h2>
+        <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
+      </div>
+
       {/* Immersive Branch Line */}
       <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#61afef] via-[#c678dd] to-[#98c379] opacity-20" />
 

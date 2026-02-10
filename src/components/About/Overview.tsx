@@ -55,6 +55,14 @@ export const OverviewSidebar = () => {
 const Overview = () => {
   return (
     <div className="space-y-8">
+      {/* Human Readable Heading */}
+      <div className="flex items-center gap-4 mb-2">
+        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+          01_OVERVIEW
+        </h2>
+        <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
+      </div>
+
       {/* System Banner */}
       <div className="bg-[#161b22] border-y border-gray-800 p-4 -mx-6 flex items-center justify-between">
         <div className="flex items-center gap-4 text-[10px] font-mono font-bold tracking-widest">

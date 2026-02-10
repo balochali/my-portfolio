@@ -58,6 +58,14 @@ const Education = () => {
 
   return (
     <div className="space-y-10">
+      {/* Human Readable Heading */}
+      <div className="flex items-center gap-4 mb-2">
+        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+          03_EDUCATION
+        </h2>
+        <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
+      </div>
+
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-[#c678dd] font-black italic">
           <span>interface</span>

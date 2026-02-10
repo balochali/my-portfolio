@@ -54,6 +54,14 @@ export const AchievementsSidebar = () => {
 const Achievements = () => {
   return (
     <div className="font-mono space-y-8 py-2">
+      {/* Human Readable Heading */}
+      <div className="flex items-center gap-4 mb-2">
+        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+          04_ACHIEVEMENTS
+        </h2>
+        <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
+      </div>
+
       {/* Header Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-sm">
         <div className="space-y-2">
