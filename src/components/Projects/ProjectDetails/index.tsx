@@ -7,7 +7,7 @@ import { Project } from "@/components/types/project";
 
 interface ProjectDetailsProps {
   project: Project;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const ProjectDetails = ({ project, onClose }: ProjectDetailsProps) => {
@@ -116,12 +116,14 @@ const ProjectDetails = ({ project, onClose }: ProjectDetailsProps) => {
               </div>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-600 transition-all font-bold"
-          >
-            ×
-          </button>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-600 transition-all font-bold"
+            >
+              ×
+            </button>
+          )}
         </div>
 
         {/* Meta Body */}
