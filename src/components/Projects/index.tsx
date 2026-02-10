@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { projects } from "@/data/projectData";
 import Image from "next/image";
+import ProjectCard from "./ProjectCard";
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -134,111 +135,7 @@ const ProjectsSection = () => {
         >
           <AnimatePresence mode="popLayout">
             {visibleProjects.map((project, index) => (
-              <Link href={`/projects/${project.slug}`} key={project.id}>
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  variants={itemVariants}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative h-full"
-                >
-                  <div className="bg-gray-900/50 rounded-lg border border-green-400/30 overflow-hidden hover:border-green-400/60 transition-all duration-500 hover:shadow-lg hover:shadow-green-400/10">
-                    {/* Header */}
-                    <div className="flex items-center justify-between p-3 border-b border-green-400/20">
-                      <span className="text-xs text-gray-400">
-                        {project.title.toLowerCase().replace(/\s+/g, "-")}.app
-                      </span>
-                      <div className="flex items-center gap-2">
-                        {project.featured && (
-                          <motion.div
-                            animate={{ scale: [1, 1.1, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="w-2 h-2 bg-yellow-400 rounded-full"
-                          />
-                        )}
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
-                            project.status === "Completed"
-                              ? "bg-green-600/20 text-green-400"
-                              : "bg-yellow-600/20 text-yellow-400"
-                          }`}
-                        >
-                          {project.status}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Image + Overlay */}
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        width={100}
-                        height={100}
-                      />
-
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                        <motion.button
-                          onClick={(e) => {
-                            e.preventDefault(); // Prevent Link navigation
-                            window.open(project.codeUrl, "_blank");
-                          }}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="px-4 py-2 bg-transparent border border-green-400 text-green-400 rounded-lg font-semibold text-sm hover:bg-green-400/10 transition-colors"
-                        >
-                          View Code
-                        </motion.button>
-                      </div>
-                    </div>
-
-                    {/* Project Info */}
-                    <div className="p-4 space-y-4">
-                      <div>
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
-                          {project.title}
-                        </h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          {project.description}
-                        </p>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="text-xs text-green-300">
-                          Tech Stack:
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tags.map((tag, tagIndex) => (
-                            <motion.span
-                              key={tag}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{
-                                delay: index * 0.1 + tagIndex * 0.05,
-                              }}
-                              className="text-xs bg-gray-800/50 px-2 py-1 rounded border border-green-400/20 text-gray-300 hover:text-green-400 hover:border-green-400/50 transition-all duration-300"
-                            >
-                              {tag}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="text-xs text-gray-500 space-y-1 border-t border-green-400/10 pt-3">
-                        <div>$ python app.py</div>
-                        <div className="text-green-400">
-                          → Flask API running on localhost:5000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </AnimatePresence>
         </motion.div>

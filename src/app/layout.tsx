@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Portfolio - Ali Baloch",
+  description: "Full Stack Developer Portfolio",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -7,12 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <title>Portfolio - Ali Baloch</title>
-      </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
