@@ -60,7 +60,7 @@ const Experience = () => {
             <div className="space-y-2 md:space-y-3">
               <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <span className="text-[9px] md:text-[10px] font-mono text-gray-600 bg-[#161b22] px-1.5 md:px-2 py-0.5 rounded border border-gray-800 shadow-inner">
-                  hash_{Math.random().toString(16).slice(2, 8)}
+                  hash_{((index + 7) * 4321).toString(16).slice(0, 6)}
                 </span>
                 <span className="text-[9px] md:text-[10px] font-mono text-[#61afef] font-bold uppercase tracking-tighter bg-[#61afef]/5 px-2 rounded">
                   {exp.duration}

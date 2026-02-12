@@ -111,7 +111,10 @@ const Header = () => {
   };
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       className={`fixed top-0 left-0 right-0 z-50 font-mono transition-all duration-300 ${
         scrolled ? "bg-black/95 backdrop-blur-xl" : "bg-black/80"
       }`}
@@ -238,7 +241,7 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 

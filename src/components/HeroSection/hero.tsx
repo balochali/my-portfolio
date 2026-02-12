@@ -1,37 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { portfolioData } from "@/data/portfolioData";
 
 const HeroSection = () => {
-  const [bootSequence, setBootSequence] = useState(0);
-  const [isBooted, setIsBooted] = useState(false);
-
-  const bootMessages = [
-    "[    0.000000] Initializing portfolio_kernel_v4.2...",
-    "[    0.420815] Loading system_modules: { Next.js, React, Tailwind }",
-    "[    1.124502] Checking profile_integrity... OK",
-    "[    1.890211] Mounting user_identity: ALI_BALOCH",
-    "[    2.501932] Starting interactive_session...",
-  ];
-
-  useEffect(() => {
-    if (bootSequence < bootMessages.length) {
-      const timer = setTimeout(
-        () => {
-          setBootSequence((prev) => prev + 1);
-        },
-        400 + Math.random() * 600,
-      );
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(() => setIsBooted(true), 500);
-      return () => clearTimeout(timer);
-    }
-  }, [bootSequence]);
-
   return (
     <section
       id="home"
@@ -44,43 +18,12 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
       </div>
 
-      {/* Boot Sequence Overlay */}
-      <AnimatePresence>
-        {!isBooted && (
-          <motion.div
-            exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
-            className="absolute z-50 inset-0 bg-[#0d1117] flex flex-col justify-center px-10 md:px-20"
-          >
-            <div className="max-w-4xl space-y-2">
-              {bootMessages.slice(0, bootSequence).map((msg, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="text-xs md:text-sm text-[#98c379] font-mono leading-relaxed"
-                >
-                  <span className="text-gray-600 mr-2">root@baloch:~$</span>
-                  {msg}
-                </motion.div>
-              ))}
-              {bootSequence < bootMessages.length && (
-                <motion.div
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                  className="w-2 h-4 bg-[#61afef] inline-block ml-1"
-                />
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Hero Content (IDE Splash Style) */}
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-24 py-10 md:py-20 overflow-x-hidden lg:overflow-visible">
         {/* Left: Branding & Status */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
-          animate={isBooted ? { opacity: 1, x: 0 } : {}}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex-1 space-y-6 md:space-y-10 order-2 lg:order-1 w-full"
         >
@@ -168,7 +111,7 @@ const HeroSection = () => {
         {/* Right: Immersive Profile Card (IDE Preview style) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-          animate={isBooted ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           className="flex-1 relative order-1 lg:order-2"
         >
