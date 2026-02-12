@@ -88,31 +88,31 @@ const ContactSection = () => {
       <div className="absolute inset-0 bg-scanline opacity-5 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#61afef]/5 rounded-full blur-[150px] -mr-64 -mb-64" />
 
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
           {/* Left: Interactive CLI Theme Section */}
-          <div className="space-y-12">
-            <div className="space-y-4">
+          <div className="space-y-8 md:space-y-12">
+            <div className="space-y-3 md:space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-xl shadow-inner">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-lg md:text-xl shadow-inner">
                   📡
                 </div>
                 <div>
-                  <h2 className="text-3xl font-black text-white tracking-tighter uppercase">
+                  <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase">
                     Connect_Node
                   </h2>
-                  <div className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                  <div className="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
                     Communication_Protocol.v1
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-gray-500 max-w-lg leading-relaxed">
+              <p className="text-xs md:text-sm text-gray-500 max-w-lg leading-relaxed">
                 Initializing secure socket connection... <br />
                 <span className="text-[#98c379]">{`Ready to receive data packages from local and remote nodes.`}</span>
               </p>
             </div>
 
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 md:gap-6 lg:gap-8">
               {portfolioData.contactMethods.map((method, i) => (
                 <motion.a
                   key={method.name}
@@ -121,19 +121,19 @@ const ContactSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="group flex items-start gap-6 p-6 bg-[#161b22]/30 border border-gray-800 rounded-2xl hover:border-[#61afef]/30 hover:bg-[#161b22]/50 transition-all"
+                  className="group flex items-start gap-4 md:gap-6 p-4 md:p-6 bg-[#161b22]/30 border border-gray-800 rounded-xl md:rounded-2xl hover:border-[#61afef]/30 hover:bg-[#161b22]/50 transition-all overflow-hidden"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#0d1117] border border-gray-800 flex items-center justify-center text-xl group-hover:border-[#61afef]/20 transition-colors">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[#0d1117] border border-gray-800 flex items-center justify-center text-lg md:text-xl group-hover:border-[#61afef]/20 transition-colors flex-shrink-0">
                     {method.icon}
                   </div>
-                  <div className="flex-1">
-                    <div className="text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] mb-1">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[9px] md:text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] mb-1 truncate">
                       {method.name}
                     </div>
-                    <div className="text-gray-200 font-bold tracking-tight mb-2">
+                    <div className="text-gray-200 font-bold tracking-tight mb-1.5 md:mb-2 truncate">
                       {method.value}
                     </div>
-                    <div className="text-xs text-gray-500 font-mono">
+                    <div className="text-[10px] md:text-xs text-gray-500 font-mono truncate">
                       <span className="text-[#c678dd]">$</span> open{" "}
                       <span className="text-[#98c379]">
                         {method.command.replace("mailto:", "").split("?")[0]}
@@ -144,10 +144,10 @@ const ContactSection = () => {
               ))}
             </div>
 
-            <div className="pt-8 border-t border-gray-800/50 flex items-center justify-between text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-              <div className="flex items-center gap-4">
+            <div className="pt-6 md:pt-8 border-t border-gray-800/50 flex flex-wrap items-center justify-between gap-4 text-[9px] md:text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+              <div className="flex items-center gap-3 md:gap-4">
                 <span>SSL: SECURE</span>
-                <span>ENCRYPTION: AES-256</span>
+                <span className="hidden xs:inline">ENCRYPTION: AES-256</span>
               </div>
               <div className="text-gray-400">{currentTime}</div>
             </div>
@@ -156,47 +156,47 @@ const ContactSection = () => {
           {/* Right: The CLI Form Shell */}
           <div className="relative">
             {/* Immersive Terminal Window */}
-            <div className="bg-[#161b22] border border-gray-800 rounded-[2.5rem] shadow-3xl overflow-hidden relative">
+            <div className="bg-[#161b22] border border-gray-800 rounded-2xl md:rounded-[2.5rem] shadow-3xl overflow-hidden relative">
               {/* Terminal Top Bar */}
-              <div className="bg-[#0d1117] border-b border-gray-800 px-8 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/30" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/30" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/30" />
+              <div className="bg-[#0d1117] border-b border-gray-800 px-6 md:px-8 py-3 md:py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="flex gap-1 md:gap-1.5">
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/30" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/30" />
+                    <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/30" />
                   </div>
-                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                  <span className="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">
                     cli_message_v2.sh
                   </span>
                 </div>
-                <div className="text-[10px] text-[#61afef] font-bold animate-pulse">
+                <div className="text-[9px] md:text-[10px] text-[#61afef] font-bold animate-pulse flex-shrink-0">
                   RUNNING
                 </div>
               </div>
 
               <form
                 onSubmit={handleSubmit}
-                className="p-8 md:p-12 space-y-8 bg-[#0d1117]/40 backdrop-blur-sm"
+                className="p-6 md:p-12 space-y-6 md:space-y-8 bg-[#0d1117]/40 backdrop-blur-sm"
               >
                 {/* Name Input */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-tighter">
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-center flex-wrap gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
                     <span className="text-[#61afef]">visitor@portfolio</span>
-                    <span className="text-gray-400">:</span>
-                    <span className="text-[#c678dd]">~</span>
+                    <span className="text-gray-400 hidden xs:inline">:</span>
+                    <span className="text-[#c678dd] hidden xs:inline">~</span>
                     <span className="text-gray-400">$</span>
-                    <span className="text-gray-300">input_name --required</span>
+                    <span className="text-gray-300">input_name</span>
                   </div>
                   <div className="relative">
                     <input
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.name ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-4 py-3 text-white transition-all`}
+                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.name ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
                       placeholder="_"
                     />
                     {errors.name && (
-                      <span className="absolute -bottom-5 left-0 text-[9px] text-red-500 font-bold uppercase">
+                      <span className="absolute -bottom-4 left-0 text-[8px] md:text-[9px] text-red-500 font-bold uppercase">
                         {errors.name}
                       </span>
                     )}
@@ -204,23 +204,21 @@ const ContactSection = () => {
                 </div>
 
                 {/* Email Input */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-tighter">
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
                     <span className="text-[#c678dd]">$</span>
-                    <span className="text-gray-300">
-                      input_email --validate
-                    </span>
+                    <span className="text-gray-300">input_email</span>
                   </div>
                   <div className="relative">
                     <input
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.email ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-4 py-3 text-white transition-all`}
+                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.email ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
                       placeholder="_"
                     />
                     {errors.email && (
-                      <span className="absolute -bottom-5 left-0 text-[9px] text-red-500 font-bold uppercase">
+                      <span className="absolute -bottom-4 left-0 text-[8px] md:text-[9px] text-red-500 font-bold uppercase">
                         {errors.email}
                       </span>
                     )}
@@ -228,8 +226,8 @@ const ContactSection = () => {
                 </div>
 
                 {/* Message Input */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-tighter">
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
                     <span className="text-[#c678dd]">$</span>
                     <span className="text-gray-300">cat &gt; message.txt</span>
                   </div>
@@ -239,11 +237,11 @@ const ContactSection = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       rows={4}
-                      className={`w-full bg-[#161b22]/50 border border-gray-800 rounded-xl focus:border-[#61afef] focus:bg-[#161b22] outline-none px-6 py-5 text-white transition-all resize-none shadow-inner`}
+                      className={`w-full bg-[#161b22]/50 border border-gray-800 rounded-lg md:rounded-xl focus:border-[#61afef] focus:bg-[#161b22] outline-none px-4 md:px-6 py-4 md:py-5 text-white transition-all resize-none shadow-inner text-sm`}
                       placeholder="Type your message here..."
                     />
                     {errors.message && (
-                      <span className="absolute -bottom-5 left-0 text-[9px] text-red-500 font-bold uppercase">
+                      <span className="absolute -bottom-4 left-0 text-[8px] md:text-[9px] text-red-500 font-bold uppercase">
                         {errors.message}
                       </span>
                     )}
@@ -251,11 +249,11 @@ const ContactSection = () => {
                 </div>
 
                 {/* Submit Logic */}
-                <div className="pt-6">
+                <div className="pt-4 md:pt-6">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-5 rounded-2xl font-black text-sm tracking-[0.3em] uppercase transition-all flex items-center justify-center gap-4 overflow-hidden relative group
+                    className={`w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-[11px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all flex items-center justify-center gap-3 md:gap-4 overflow-hidden relative group
                            ${
                              submitStatus === "success"
                                ? "bg-green-500 text-[#0d1117]"
@@ -281,32 +279,36 @@ const ContactSection = () => {
                           key="handshake"
                           initial={{ y: 20 }}
                           animate={{ y: 0 }}
-                          className="flex items-center gap-3"
+                          className="flex items-center gap-2 md:gap-3"
                         >
-                          <span className="w-2 h-2 bg-[#0d1117] rounded-full animate-ping" />
-                          ESTABLISHING_HANDSHAKE...
+                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#0d1117] rounded-full animate-ping" />
+                          HANDSHAKE...
                         </motion.span>
                       )}
                       {submitStatus === "transmitting" && (
                         <span
                           key="transmitting"
-                          className="flex items-center gap-3"
+                          className="flex items-center gap-2 md:gap-3"
                         >
-                          <span className="w-20 h-1 bg-[#0d1117]/20 rounded-full overflow-hidden relative">
+                          <span className="w-12 md:w-20 h-0.5 md:h-1 bg-[#0d1117]/20 rounded-full overflow-hidden relative">
                             <motion.div
                               animate={{ x: ["-100%", "100%"] }}
                               transition={{ repeat: Infinity, duration: 1 }}
                               className="absolute inset-0 bg-[#0d1117]"
                             />
                           </span>
-                          PACKET_SENT
+                          SENDING
                         </span>
                       )}
                       {submitStatus === "success" && (
-                        <span key="success">DATA_LINK_ESTABLISHED_OK</span>
+                        <span key="success" className="text-[10px] md:text-xs">
+                          DATA_LINK_OK
+                        </span>
                       )}
                       {submitStatus === "error" && (
-                        <span key="error">NETWORK_TIMEOUT_TRY_AGAIN</span>
+                        <span key="error" className="text-[10px] md:text-xs">
+                          NET_TIMEOUT
+                        </span>
                       )}
                     </AnimatePresence>
                   </button>
@@ -314,12 +316,13 @@ const ContactSection = () => {
               </form>
 
               {/* Command Info Bar */}
-              <div className="bg-[#161b22] border-t border-gray-800 p-4 px-8 flex items-center justify-between text-[8px] text-gray-600 font-bold uppercase tracking-widest">
-                <div className="flex gap-4">
-                  <span>HELP: F1</span>
-                  <span>CLEAR: ESC</span>
+              <div className="bg-[#161b22] border-t border-gray-800 p-3 md:p-4 px-6 md:px-8 flex items-center justify-between text-[7px] md:text-[8px] text-gray-700 font-bold uppercase tracking-widest">
+                <div className="flex gap-3 md:gap-4">
+                  <span className="hidden xs:inline">HELP: F1</span>
+                  <span className="hidden xs:inline">CLEAR: ESC</span>
+                  <span className="xs:hidden">SH: V2.1</span>
                 </div>
-                <div>ID: 0x7E...4A2</div>
+                <div className="truncate ml-2">ID: 0x7E...4A2</div>
               </div>
             </div>
           </div>

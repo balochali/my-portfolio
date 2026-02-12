@@ -75,32 +75,6 @@ export default function LandingAnimation() {
 
   return (
     <>
-      {showContent && (
-        <motion.div
-          initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        >
-          <Header />
-          <HeroSection />
-          <AboutSection />
-          <ProjectsSection />
-          <SkillsSection />
-          <ContactSection />
-          <footer className="bg-[#0d1117] py-12 border-t border-gray-800/50">
-            <div className="max-w-7xl mx-auto px-6 text-center">
-              <div className="text-[10px] text-gray-600 font-bold tracking-[0.4em] uppercase mb-4">
-                System_Status: Operational // Build_0x2AF
-              </div>
-              <div className="text-xs text-gray-500 font-mono">
-                © {new Date().getFullYear()} {portfolioData.name}. Handcrafted
-                with [NEXT.JS + FRAMER_MOTION]
-              </div>
-            </div>
-          </footer>
-        </motion.div>
-      )}
-
       <AnimatePresence>
         {showAnimation && (
           <motion.div
@@ -110,7 +84,7 @@ export default function LandingAnimation() {
               filter: "blur(40px)",
               transition: { duration: 1.5, ease: "circIn" },
             }}
-            className="fixed inset-0 bg-[#0d1117] text-gray-300 font-mono overflow-hidden z-50 flex items-center justify-center"
+            className="fixed inset-0 bg-[#0d1117] text-gray-300 font-mono overflow-hidden z-[100] flex items-center justify-center"
           >
             {/* Immersive Background */}
             <div className="absolute inset-0 bg-scanline opacity-10" />
@@ -221,6 +195,34 @@ export default function LandingAnimation() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {showContent && (
+        <>
+          <Header />
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
+            <HeroSection />
+            <AboutSection />
+            <ProjectsSection />
+            <SkillsSection />
+            <ContactSection />
+            <footer className="bg-[#0d1117] py-12 border-t border-gray-800/50">
+              <div className="max-w-7xl mx-auto px-6 text-center">
+                <div className="text-[10px] text-gray-600 font-bold tracking-[0.4em] uppercase mb-4">
+                  System_Status: Operational // Build_0x2AF
+                </div>
+                <div className="text-xs text-gray-500 font-mono">
+                  © {new Date().getFullYear()} {portfolioData.name}. Handcrafted
+                  with [NEXT.JS + FRAMER_MOTION]
+                </div>
+              </div>
+            </footer>
+          </motion.div>
+        </>
+      )}
     </>
   );
 }

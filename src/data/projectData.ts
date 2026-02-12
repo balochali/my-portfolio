@@ -235,8 +235,8 @@ It processes real-time messages using Kafka and provides analytics dashboards.
     image: "/project-images/bubsyai.png",
     gallery: [
       "/project-images/bubsyai.png",
-      "/project-images/bubsy-rewards.png",
-      "/project-images/rexofficial.png",
+      "/project-images/bubsy-rewards/bubsy-rewards.png",
+      "/project-images/rex-official/rexofficial.png",
     ],
     role: "Full Stack Developer",
     duration: "3 Months",

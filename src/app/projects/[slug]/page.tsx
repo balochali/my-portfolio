@@ -9,7 +9,6 @@ export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((p) => p.slug === slug);
 
-  console.log(slug);
   if (!project) return <div>Project Not Found</div>;
 
   return (

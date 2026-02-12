@@ -37,53 +37,53 @@ export const ExperienceSidebar = () => {
 
 const Experience = () => {
   return (
-    <div className="relative pl-8 sm:pl-12 py-4">
+    <div className="relative pl-6 sm:pl-12 py-2 md:py-4">
       {/* Human Readable Heading */}
-      <div className="flex items-center gap-4 mb-10 -ml-8 sm:-ml-12">
-        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+      <div className="flex items-center gap-4 mb-6 md:mb-10 -ml-6 sm:-ml-12">
+        <h2 className="text-xl md:text-2xl font-black text-white tracking-tight uppercase">
           02_EXPERIENCE
         </h2>
         <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
       </div>
 
       {/* Immersive Branch Line */}
-      <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#61afef] via-[#c678dd] to-[#98c379] opacity-20" />
+      <div className="absolute left-3 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#61afef] via-[#c678dd] to-[#98c379] opacity-20" />
 
-      <div className="space-y-12">
+      <div className="space-y-8 md:space-y-12">
         {experiences.map((exp, index) => (
           <div key={index} className="relative group">
             {/* The Commit Node */}
-            <div className="absolute -left-[28px] sm:-left-[36px] top-1 w-6 h-6 rounded-full bg-[#0d1117] border-2 border-[#61afef] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(97,175,239,0.3)] group-hover:scale-110 group-hover:border-[#61afef] transition-all">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#61afef] group-hover:animate-ping" />
+            <div className="absolute -left-[23px] sm:-left-[36px] top-1 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#0d1117] border-2 border-[#61afef] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(97,175,239,0.3)] group-hover:scale-110 group-hover:border-[#61afef] transition-all">
+              <div className="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-[#61afef] group-hover:animate-ping" />
             </div>
 
-            <div className="space-y-3">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-[10px] font-mono text-gray-600 bg-[#161b22] px-2 py-0.5 rounded border border-gray-800 shadow-inner">
+            <div className="space-y-2 md:space-y-3">
+              <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                <span className="text-[9px] md:text-[10px] font-mono text-gray-600 bg-[#161b22] px-1.5 md:px-2 py-0.5 rounded border border-gray-800 shadow-inner">
                   hash_{Math.random().toString(16).slice(2, 8)}
                 </span>
-                <span className="text-[10px] font-mono text-[#61afef] font-bold uppercase tracking-tighter bg-[#61afef]/5 px-2 rounded">
+                <span className="text-[9px] md:text-[10px] font-mono text-[#61afef] font-bold uppercase tracking-tighter bg-[#61afef]/5 px-2 rounded">
                   {exp.duration}
                 </span>
               </div>
 
-              <div className="bg-[#161b22]/40 rounded-2xl border border-gray-800 p-6 group-hover:border-[#61afef]/30 transition-all duration-500 shadow-xl group-hover:shadow-[#61afef]/5 relative overflow-hidden">
+              <div className="bg-[#161b22]/40 rounded-xl md:rounded-2xl border border-gray-800 p-4 md:p-6 group-hover:border-[#61afef]/30 transition-all duration-500 shadow-xl group-hover:shadow-[#61afef]/5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-[#61afef]/10" />
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 md:gap-4 mb-3 md:mb-4">
                   <div>
-                    <h3 className="text-lg font-black text-white tracking-tight uppercase group-hover:text-[#61afef] transition-colors leading-none">
+                    <h3 className="text-base md:text-lg font-black text-white tracking-tight uppercase group-hover:text-[#61afef] transition-colors leading-tight">
                       {exp.position}
                     </h3>
-                    <div className="text-xs text-gray-500 font-mono mt-2">
+                    <div className="text-[10px] md:text-xs text-gray-500 font-mono mt-1 md:mt-2">
                       @ <span className="text-[#e5c07b]">{exp.company}</span>
                     </div>
                   </div>
-                  <div className="flex -space-x-2">
+                  <div className="flex -space-x-1.5 md:-space-x-2">
                     {[1, 2, 3].map((i) => (
                       <div
                         key={i}
-                        className="w-6 h-6 rounded-full border-2 border-[#0d1117] bg-[#161b22] flex items-center justify-center text-[8px] text-gray-600 font-bold"
+                        className="w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-[#0d1117] bg-[#161b22] flex items-center justify-center text-[7px] md:text-[8px] text-gray-600 font-bold"
                       >
                         U{i}
                       </div>
@@ -91,15 +91,15 @@ const Experience = () => {
                   </div>
                 </div>
 
-                <div className="text-sm text-gray-400 leading-relaxed font-mono relative pl-4 border-l border-gray-800 group-hover:border-[#61afef]/20 transition-colors">
+                <div className="text-xs md:text-sm text-gray-400 leading-relaxed font-mono relative pl-3 md:pl-4 border-l border-gray-800 group-hover:border-[#61afef]/20 transition-colors">
                   {exp.description}
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-2">
+                <div className="mt-4 md:mt-6 flex flex-wrap gap-1.5 md:gap-2">
                   {exp.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-[9px] font-bold uppercase tracking-widest px-3 py-1 bg-[#61afef]/5 text-[#61afef]/70 border border-[#61afef]/10 rounded-full group-hover:border-[#61afef]/30 transition-all"
+                      className="text-[8px] md:text-[9px] font-bold uppercase tracking-widest px-2 md:px-3 py-1 bg-[#61afef]/5 text-[#61afef]/70 border border-[#61afef]/10 rounded-full group-hover:border-[#61afef]/30 transition-all"
                     >
                       {tech}
                     </span>
@@ -112,9 +112,12 @@ const Experience = () => {
       </div>
 
       {/* Head pointer */}
-      <div className="mt-12 flex items-center gap-3 text-[10px] font-mono text-gray-600 pl-4 border-l-2 border-dashed border-gray-800">
+      <div className="mt-8 md:mt-12 flex items-center gap-2 md:gap-3 text-[9px] md:text-[10px] font-mono text-gray-600 pl-3 md:pl-4 border-l-2 border-dashed border-gray-800">
         <span className="animate-pulse text-[#61afef]">●</span>
-        <span>(HEAD -&gt; master, origin/master) // build:stable</span>
+        <span className="truncate">
+          {" "}
+          (HEAD -&gt; master, origin/master) // build:stable
+        </span>
       </div>
     </div>
   );

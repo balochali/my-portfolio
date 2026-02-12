@@ -76,38 +76,39 @@ const HeroSection = () => {
       </AnimatePresence>
 
       {/* Main Hero Content (IDE Splash Style) */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24 py-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-24 py-10 md:py-20 overflow-x-hidden lg:overflow-visible">
         {/* Left: Branding & Status */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={isBooted ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-1 space-y-10 order-2 lg:order-1"
+          className="flex-1 space-y-6 md:space-y-10 order-2 lg:order-1 w-full"
         >
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="px-3 py-1 bg-[#282c34] border border-gray-700 rounded-md text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+              <span className="px-2 md:px-3 py-1 bg-[#282c34] border border-gray-700 rounded-md text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
                 Kernel: v4.2.0-LTS
               </span>
-              <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
+              <div className="flex items-center gap-2 px-2 md:px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] text-green-500 font-bold uppercase">
+                <span className="text-[9px] md:text-[10px] text-green-500 font-bold uppercase">
                   Online
                 </span>
               </div>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">
-              <span className="text-[#61afef]">const</span> developer = <br />
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter leading-none break-words">
+              <span className="text-[#61afef]">const</span> developer ={" "}
+              <br className="hidden sm:block" />
               <span className="text-[#e5c07b] drop-shadow-[0_0_15px_rgba(229,192,123,0.3)]">
                 "{portfolioData.name}"
               </span>
               _
             </h1>
 
-            <div className="text-xl md:text-2xl text-gray-400 font-medium leading-relaxed max-w-2xl">
+            <div className="text-lg md:text-2xl text-gray-400 font-medium leading-relaxed max-w-2xl">
               Building <span className="text-[#c678dd] italic">Scalable</span>{" "}
-              architectures and <br />
+              architectures and <br className="hidden sm:block" />
               <span className="text-[#98c379] italic">
                 High-Performance
               </span>{" "}
@@ -115,14 +116,14 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-6 pt-4">
+          <div className="flex flex-wrap gap-4 md:gap-6 pt-2">
             <button
               onClick={() =>
                 document
                   .getElementById("about")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="group relative px-8 py-4 bg-[#61afef] text-[#0d1117] font-black rounded-lg text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(97,175,239,0.4)]"
+              className="group relative flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 bg-[#61afef] text-[#0d1117] font-black rounded-lg text-xs md:text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(97,175,239,0.4)]"
             >
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
               Initialize_Explorer
@@ -130,7 +131,7 @@ const HeroSection = () => {
 
             <a
               href="/resume/ali_baloch.pdf"
-              className="px-8 py-4 border-2 border-gray-700 hover:border-[#61afef] text-gray-400 hover:text-[#61afef] font-bold rounded-lg text-sm tracking-widest uppercase transition-all flex items-center gap-3"
+              className="flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 border-2 border-gray-700 hover:border-[#61afef] text-gray-400 hover:text-[#61afef] font-bold rounded-lg text-xs md:text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-3"
             >
               <span>Download_Resume</span>
               <svg
@@ -145,7 +146,7 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800/50">
+          <div className="grid grid-cols-2 xs:grid-cols-3 gap-6 md:gap-8 pt-6 md:pt-8 border-t border-gray-800/50">
             {portfolioData.socials.map((social) => (
               <a
                 key={social.name}
@@ -153,10 +154,10 @@ const HeroSection = () => {
                 target="_blank"
                 className="group flex flex-col gap-1"
               >
-                <span className="text-[10px] text-gray-600 font-bold tracking-widest uppercase group-hover:text-[#61afef] transition-colors">
+                <span className="text-[9px] md:text-[10px] text-gray-600 font-bold tracking-widest uppercase group-hover:text-[#61afef] transition-colors">
                   {social.name}
                 </span>
-                <span className="text-xs text-gray-400 group-hover:text-white transition-colors">
+                <span className="text-xs text-gray-400 group-hover:text-white transition-colors truncate">
                   /{social.name.toLowerCase()}
                 </span>
               </a>

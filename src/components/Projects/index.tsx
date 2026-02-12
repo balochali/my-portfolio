@@ -50,30 +50,30 @@ const ProjectsSection = () => {
       <div className="absolute inset-0 bg-[radial-gradient(#161b22_1px,transparent_1px)] bg-[size:40px_40px] opacity-50" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-green-600/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
         {/* Workspace Header */}
-        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="space-y-4">
+        <div className="mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+          <div className="space-y-3 md:space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-xl shadow-inner">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-lg shadow-inner">
                 📁
               </div>
               <div>
-                <h2 className="text-3xl font-black text-white tracking-tighter uppercase">
+                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase">
                   Project_Workspace
                 </h2>
-                <div className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                <div className="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
                   Repository_Explorer.exe
                 </div>
               </div>
             </div>
-            <p className="text-sm text-gray-500 max-w-xl font-mono leading-relaxed">
+            <p className="text-xs md:text-sm text-gray-500 max-w-xl font-mono leading-relaxed">
               Indexing available repositories... <br />
-              <span className="text-green-500/50">{`$ git branch -a --list "featured/*"`}</span>
+              <span className="text-green-500/50 hidden sm:inline">{`$ git branch -a --list "featured/*"`}</span>
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap md:flex-nowrap md:overflow-x-auto gap-2 pb-2 no-scrollbar">
             {filters.map((filter) => (
               <button
                 key={filter}
@@ -81,13 +81,13 @@ const ProjectsSection = () => {
                   setActiveFilter(filter);
                   setVisibleCount(6);
                 }}
-                className={`px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 ${
+                className={`px-3 md:px-4 py-1.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 flex-shrink-0 ${
                   activeFilter === filter
                     ? "bg-[#61afef]/10 text-[#61afef] border-[#61afef]/30 shadow-[0_0_15px_rgba(97,175,239,0.1)]"
                     : "bg-[#161b22] text-gray-500 border-gray-800 hover:border-gray-600 hover:text-gray-300"
                 }`}
               >
-                <span className="mr-2 opacity-50">
+                <span className="mr-1.5 md:mr-2 opacity-50">
                   {activeFilter === filter ? "●" : "○"}
                 </span>
                 {filter}
@@ -99,7 +99,7 @@ const ProjectsSection = () => {
         {/* Project Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {visibleProjects.map((project, index) => (

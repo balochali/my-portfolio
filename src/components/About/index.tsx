@@ -26,19 +26,23 @@ const AboutSection = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="bg-[#0d1117] rounded-xl border border-gray-800 overflow-hidden mb-16 last:mb-0 shadow-2xl"
+      className="bg-[#0d1117] rounded-xl border border-gray-800 overflow-hidden mb-8 md:mb-16 last:mb-0 shadow-2xl"
     >
       {/* Terminal Header */}
-      <div className="flex items-center justify-between p-3 border-b border-gray-800 bg-[#161b22]">
-        <div className="flex items-center gap-4">
-          <div className="flex gap-2 ml-2">
-            <div className="w-3 h-3 bg-[#ff5f56] rounded-full shadow-inner"></div>
-            <div className="w-3 h-3 bg-[#ffbd2e] rounded-full shadow-inner"></div>
-            <div className="w-3 h-3 bg-[#27c93f] rounded-full shadow-inner"></div>
+      <div className="flex items-center justify-between p-2 md:p-3 border-b border-gray-800 bg-[#161b22]">
+        <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex gap-1.5 md:gap-2 ml-1 md:ml-2">
+            <div className="w-2.5 h-2.5 bg-[#ff5f56] rounded-full shadow-inner"></div>
+            <div className="w-2.5 h-2.5 bg-[#ffbd2e] rounded-full shadow-inner"></div>
+            <div className="w-2.5 h-2.5 bg-[#27c93f] rounded-full shadow-inner"></div>
           </div>
-          <div className="flex items-center gap-2 px-4 py-1.5 bg-[#0d1117] rounded-md border border-gray-700">
-            <span className="text-[10px] text-gray-400 font-mono flex items-center gap-2">
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+          <div className="flex items-center gap-2 px-3 md:px-4 py-1.5 bg-[#0d1117] rounded-md border border-gray-700 max-w-[150px] md:max-w-none">
+            <span className="text-[9px] md:text-[10px] text-gray-400 font-mono flex items-center gap-2 truncate">
+              <svg
+                className="w-3 h-3 flex-shrink-0"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M13 3L16.29 6.29L17.29 5.29L18.71 6.71L17.71 7.71L21 11V13L17.71 16.29L18.71 17.29L17.29 18.71L16.29 17.71L13 21H11L7.71 17.71L6.71 18.71L5.29 17.29L6.29 16.29L3 13V11L6.29 7.71L5.29 6.71L6.71 5.29L7.71 6.29L11 3H13M12 5L9 8L12 11L15 8L12 5M7 10L4 13L7 16L10 13L7 10M17 10L14 13L17 16L20 13L17 10M12 15L9 18L12 21L15 18L12 15Z" />
               </svg>
               {title}
@@ -46,10 +50,10 @@ const AboutSection = () => {
           </div>
         </div>
         {status && (
-          <div className="flex items-center gap-2 mr-2">
-            <div className="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
-              <span className="text-[10px] text-yellow-500 font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 mr-1 md:mr-2">
+            <div className="px-2 md:px-3 py-0.5 md:py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full flex items-center gap-1.5 md:gap-2">
+              <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
+              <span className="text-[8px] md:text-[10px] text-yellow-500 font-bold uppercase tracking-wider">
                 {status}
               </span>
             </div>
@@ -57,16 +61,16 @@ const AboutSection = () => {
         )}
       </div>
 
-      <div className="flex flex-col md:flex-row min-h-[450px]">
+      <div className="flex flex-col md:flex-row md:min-h-[450px]">
         {/* Sidebar */}
         {sidebar && (
-          <div className="w-full md:w-64 border-r border-gray-800 bg-[#0d1117]/50 p-6">
+          <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-gray-800 bg-[#0d1117]/50 p-4 md:p-6">
             {sidebar}
           </div>
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 bg-[#0d1117] relative p-6 font-mono text-sm overflow-x-auto">
+        <div className="flex-1 bg-[#0d1117] relative p-4 md:p-6 font-mono text-sm overflow-x-auto">
           {/* Subtle line numbers or decoration could go here */}
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/20"></div>
           {children}

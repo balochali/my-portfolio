@@ -56,7 +56,7 @@ export const portfolioData = {
       name: "GitHub",
       value: "/balochali",
       icon: "🐙",
-      command: "https://github.com/alibaloch-dev",
+      command: "https://github.com/balochali",
       description: "Code repositories",
       available: true,
     },

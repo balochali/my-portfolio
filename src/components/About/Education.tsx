@@ -57,53 +57,55 @@ const Education = () => {
   const primaryEdu = education[0];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6 md:space-y-10">
       {/* Human Readable Heading */}
       <div className="flex items-center gap-4 mb-2">
-        <h2 className="text-2xl font-black text-white tracking-tight uppercase">
+        <h2 className="text-xl md:text-2xl font-black text-white tracking-tight uppercase">
           03_EDUCATION
         </h2>
         <div className="h-px flex-1 bg-gradient-to-r from-gray-800 to-transparent" />
       </div>
 
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-[#c678dd] font-black italic">
+      <div className="space-y-3 md:space-y-4">
+        <div className="flex items-center gap-2 text-[#c678dd] font-black italic text-xs md:text-sm">
           <span>interface</span>
           <span className="text-[#e5c07b]">DegreeSpecification</span>
           <span className="text-gray-500">{`{`}</span>
         </div>
 
-        <div className="pl-6 space-y-4">
-          <div className="relative p-6 bg-[#161b22]/30 rounded-2xl border border-gray-800 overflow-hidden">
+        <div className="pl-4 md:pl-6 space-y-4">
+          <div className="relative p-4 md:p-6 bg-[#161b22]/30 rounded-xl md:rounded-2xl border border-gray-800 overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-[#61afef]/5 rounded-full blur-3xl" />
-            <h2 className="text-xl md:text-2xl font-black text-white tracking-tight leading-tight uppercase relative z-10">
+            <h2 className="text-lg md:text-2xl font-black text-white tracking-tight leading-tight uppercase relative z-10 break-words">
               {primaryEdu.degree}
             </h2>
-            <div className="flex items-center gap-2 mt-3 relative z-10">
-              <span className="text-[#98c379] font-bold">institution:</span>
-              <span className="text-[#d19a66] font-mono">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 md:gap-2 mt-2 md:mt-3 relative z-10">
+              <span className="text-[#98c379] font-bold text-[10px] md:text-xs">
+                institution:
+              </span>
+              <span className="text-[#d19a66] font-mono text-[10px] md:text-xs break-all">
                 "{primaryEdu.institution}"
               </span>
             </div>
           </div>
         </div>
 
-        <div className="text-gray-500 font-black ml-2">{`}`}</div>
+        <div className="text-gray-500 font-black ml-2 text-xs md:text-sm">{`}`}</div>
       </div>
 
       <div className="relative">
-        <div className="absolute left-4 top-0 bottom-0 w-px bg-gray-800/50" />
-        <div className="space-y-10 pl-4">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-[#c678dd] text-[10px] font-bold uppercase tracking-widest italic">
+        <div className="absolute left-3 md:left-4 top-0 bottom-0 w-px bg-gray-800/50" />
+        <div className="space-y-8 md:space-y-10 pl-3 md:pl-4">
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex items-center gap-2 text-[#c678dd] text-[9px] md:text-[10px] font-bold uppercase tracking-widest italic">
               <span>const</span>
               <span className="text-[#61afef]">academic_highlights</span>
               <span className="text-gray-500 font-normal">= [</span>
             </div>
 
-            <div className="ml-4 p-8 bg-[#161b22]/30 rounded-3xl border border-gray-800 shadow-xl relative overflow-hidden">
+            <div className="ml-2 md:ml-4 p-5 md:p-8 bg-[#161b22]/30 rounded-2xl md:rounded-3xl border border-gray-800 shadow-xl relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#61afef]/20" />
-              <ul className="space-y-6">
+              <ul className="space-y-4 md:space-y-6">
                 {[
                   "Specializing in Software Engineering & Modern Architectures",
                   "Expertise in full-stack development and distributed systems",
@@ -111,9 +113,9 @@ const Education = () => {
                 ].map((highlight, i) => (
                   <li
                     key={i}
-                    className="flex gap-4 text-sm text-gray-400 group"
+                    className="flex gap-3 md:gap-4 text-xs md:text-sm text-gray-400 group"
                   >
-                    <span className="text-[#61afef] font-black mt-0.5 group-hover:scale-125 transition-transform">
+                    <span className="text-[#61afef] font-black mt-0.5 group-hover:scale-125 transition-transform flex-shrink-0">
                       ▹
                     </span>
                     <span className="leading-relaxed group-hover:text-gray-200 transition-colors">
@@ -123,28 +125,28 @@ const Education = () => {
                 ))}
               </ul>
             </div>
-            <div className="text-gray-500 font-normal italic ml-2">{`];`}</div>
+            <div className="text-gray-500 font-normal italic ml-2 text-[10px] md:text-xs">{`];`}</div>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-[#c678dd] text-[10px] font-bold uppercase tracking-widest italic">
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex items-center gap-2 text-[#c678dd] text-[9px] md:text-[10px] font-bold uppercase tracking-widest italic">
               <span>export</span>
               <span className="text-[#c678dd]">const</span>
               <span className="text-[#61afef]">recognition_stack</span>
               <span className="text-gray-500 font-normal">= {`{`}</span>
             </div>
 
-            <div className="ml-4 grid grid-cols-1 md:grid-cols-2 gap-4 uppercase font-bold text-[10px] tracking-widest">
-              <div className="p-5 bg-[#0d1117] rounded-xl border border-gray-800 flex items-center gap-4 group hover:border-[#61afef]/30 transition-all shadow-inner">
-                <div className="w-8 h-8 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-[#98c379] group-hover:text-[#61afef]">
+            <div className="ml-2 md:ml-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 uppercase font-bold text-[9px] md:text-[10px] tracking-widest">
+              <div className="p-4 md:p-5 bg-[#0d1117] rounded-xl border border-gray-800 flex items-center gap-3 md:gap-4 group hover:border-[#61afef]/30 transition-all shadow-inner">
+                <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-[#98c379] group-hover:text-[#61afef] flex-shrink-0">
                   ✓
                 </div>
                 <div className="text-gray-400 group-hover:text-white transition-colors">
                   High_Grade_Achieved
                 </div>
               </div>
-              <div className="p-5 bg-[#0d1117] rounded-xl border border-gray-800 flex items-center gap-4 group hover:border-[#61afef]/30 transition-all shadow-inner">
-                <div className="w-8 h-8 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-[#98c379] group-hover:text-[#61afef]">
+              <div className="p-4 md:p-5 bg-[#0d1117] rounded-xl border border-gray-800 flex items-center gap-3 md:gap-4 group hover:border-[#61afef]/30 transition-all shadow-inner">
+                <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-[#98c379] group-hover:text-[#61afef] flex-shrink-0">
                   ✓
                 </div>
                 <div className="text-gray-400 group-hover:text-white transition-colors">
@@ -152,7 +154,7 @@ const Education = () => {
                 </div>
               </div>
             </div>
-            <div className="text-gray-500 font-normal italic ml-2">{`};`}</div>
+            <div className="text-gray-500 font-normal italic ml-2 text-[10px] md:text-xs">{`};`}</div>
           </div>
         </div>
       </div>
