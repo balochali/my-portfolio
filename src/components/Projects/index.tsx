@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projectData";
 import ProjectCard from "./ProjectCard";
@@ -25,8 +25,8 @@ const ProjectsSection = () => {
     "Blockchain",
   ];
 
-  const filteredProjects =
-    activeFilter === "All"
+  const filteredProjects = useMemo(() => {
+    return activeFilter === "All"
       ? projects
       : projects.filter(
           (project) =>
@@ -37,6 +37,7 @@ const ProjectsSection = () => {
               tag.toLowerCase().includes(activeFilter.toLowerCase()),
             ),
         );
+  }, [activeFilter]);
 
   const visibleProjects = filteredProjects.slice(0, visibleCount);
 
@@ -47,8 +48,11 @@ const ProjectsSection = () => {
       className="min-h-screen bg-[#0d1117] text-gray-300 font-mono py-24 relative overflow-hidden"
     >
       {/* Background Decor */}
-      <div className="absolute inset-0 bg-[radial-gradient(#161b22_1px,transparent_1px)] bg-[size:40px_40px] opacity-50" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-green-600/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+      </div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#61afef]/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
         {/* Workspace Header */}

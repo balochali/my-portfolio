@@ -22,15 +22,21 @@ const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
 
   useEffect(() => {
     if (imagesToDisplay.length <= 1) return;
+
+    let autoplayInterval: NodeJS.Timeout;
     const startDelay = index * 800;
+
     const timeout = setTimeout(() => {
-      const autoplayInterval = setInterval(() => {
+      autoplayInterval = setInterval(() => {
         setDirection(1);
         setCurrentImageIndex((prev) => (prev + 1) % imagesToDisplay.length);
       }, 5000);
-      return () => clearInterval(autoplayInterval);
     }, startDelay);
-    return () => clearTimeout(timeout);
+
+    return () => {
+      clearTimeout(timeout);
+      if (autoplayInterval) clearInterval(autoplayInterval);
+    };
   }, [imagesToDisplay.length, index]);
 
   return (
@@ -41,7 +47,7 @@ const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
       viewport={{ once: true }}
       whileHover={{ y: -10 }}
       onClick={() => onClick(project)}
-      className="group relative flex flex-col bg-[#161b22] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer hover:border-[#61afef]/40 transition-all duration-500 shadow-2xl hover:shadow-[#61afef]/5"
+      className="group relative flex flex-col bg-[#161b22] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer hover:border-[#61afef]/40 transition-all duration-500 shadow-2xl hover:shadow-[#61afef]/5 will-change-transform"
     >
       {/* Repository Header */}
       <div className="flex items-center justify-between p-3 md:p-4 bg-[#0d1117] border-b border-gray-800">
