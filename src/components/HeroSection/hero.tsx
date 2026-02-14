@@ -101,7 +101,7 @@ const HeroSection = () => {
                   {social.name}
                 </span>
                 <span className="text-xs text-gray-400 group-hover:text-white transition-colors truncate">
-                  /{social.name.toLowerCase()}
+                  {social.text.toLowerCase()}
                 </span>
               </a>
             ))}

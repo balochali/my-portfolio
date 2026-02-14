@@ -23,16 +23,19 @@ export const portfolioData = {
       name: "GitHub",
       url: "https://github.com/balochali",
       icon: "🐙",
+      text: "/balochali",
     },
     {
       name: "LinkedIn",
       url: "https://www.linkedin.com/in/balochali/",
       icon: "💼",
+      text: "/in/balochali",
     },
     {
       name: "Email",
       url: "mailto:alibaloshi018@gmail.com",
       icon: "📧",
+      text: "alibaloshi018@gmail.com",
     },
   ],
   contactMethods: [
