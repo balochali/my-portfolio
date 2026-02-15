@@ -82,11 +82,11 @@ const ContactSection = () => {
     <section
       id="contact"
       data-section="contact"
-      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono py-24 relative overflow-hidden flex items-center"
+      className="min-h-screen bg-background-primary text-text-secondary font-mono py-24 relative overflow-hidden flex items-center"
     >
       {/* Background Decor */}
       <div className="absolute inset-0 bg-scanline opacity-5 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#61afef]/5 rounded-full blur-[150px] -mr-64 -mb-64" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px] -mr-64 -mb-64" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
@@ -94,21 +94,21 @@ const ContactSection = () => {
           <div className="space-y-8 md:space-y-12">
             <div className="space-y-3 md:space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-lg md:text-xl shadow-inner">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-background-secondary border border-border-primary flex items-center justify-center text-lg md:text-xl shadow-inner">
                   📡
                 </div>
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase">
+                  <h2 className="text-2xl md:text-3xl font-black text-text-primary tracking-tighter uppercase">
                     Connect_Node
                   </h2>
-                  <div className="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                  <div className="text-[9px] md:text-[10px] text-text-secondary font-bold tracking-widest uppercase">
                     Communication_Protocol.v1
                   </div>
                 </div>
               </div>
-              <p className="text-xs md:text-sm text-gray-500 max-w-lg leading-relaxed">
+              <p className="text-xs md:text-sm text-text-secondary max-w-lg leading-relaxed">
                 Initializing secure socket connection... <br />
-                <span className="text-[#98c379]">{`Ready to receive data packages from local and remote nodes.`}</span>
+                <span className="text-green-500">{`Ready to receive data packages from local and remote nodes.`}</span>
               </p>
             </div>
 
@@ -121,21 +121,21 @@ const ContactSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="group flex items-start gap-4 md:gap-6 p-4 md:p-6 bg-[#161b22]/30 border border-gray-800 rounded-xl md:rounded-2xl hover:border-[#61afef]/30 hover:bg-[#161b22]/50 transition-all overflow-hidden"
+                  className="group flex items-start gap-4 md:gap-6 p-4 md:p-6 bg-background-secondary/30 border border-border-primary rounded-xl md:rounded-2xl hover:border-accent/30 hover:bg-background-secondary/50 transition-all overflow-hidden"
                 >
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[#0d1117] border border-gray-800 flex items-center justify-center text-lg md:text-xl group-hover:border-[#61afef]/20 transition-colors flex-shrink-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-background-primary border border-border-primary flex items-center justify-center text-lg md:text-xl group-hover:border-accent/20 transition-colors flex-shrink-0">
                     {method.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[9px] md:text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] mb-1 truncate">
+                    <div className="text-[9px] md:text-[10px] text-text-secondary font-bold uppercase tracking-[0.2em] mb-1 truncate">
                       {method.name}
                     </div>
-                    <div className="text-gray-200 font-bold tracking-tight mb-1.5 md:mb-2 truncate">
+                    <div className="text-text-primary font-bold tracking-tight mb-1.5 md:mb-2 truncate">
                       {method.value}
                     </div>
-                    <div className="text-[10px] md:text-xs text-gray-500 font-mono truncate">
-                      <span className="text-[#c678dd]">$</span> open{" "}
-                      <span className="text-[#98c379]">
+                    <div className="text-[10px] md:text-xs text-text-secondary font-mono truncate">
+                      <span className="text-accent-secondary">$</span> open{" "}
+                      <span className="text-green-500">
                         {method.command.replace("mailto:", "").split("?")[0]}
                       </span>
                     </div>
@@ -144,55 +144,59 @@ const ContactSection = () => {
               ))}
             </div>
 
-            <div className="pt-6 md:pt-8 border-t border-gray-800/50 flex flex-wrap items-center justify-between gap-4 text-[9px] md:text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+            <div className="pt-6 md:pt-8 border-t border-border-primary/50 flex flex-wrap items-center justify-between gap-4 text-[9px] md:text-[10px] font-bold text-text-secondary uppercase tracking-widest">
               <div className="flex items-center gap-3 md:gap-4">
                 <span>SSL: SECURE</span>
                 <span className="hidden xs:inline">ENCRYPTION: AES-256</span>
               </div>
-              <div className="text-gray-400">{currentTime}</div>
+              <div className="text-text-secondary">{currentTime}</div>
             </div>
           </div>
 
           {/* Right: The CLI Form Shell */}
           <div className="relative">
             {/* Immersive Terminal Window */}
-            <div className="bg-[#161b22] border border-gray-800 rounded-2xl md:rounded-[2.5rem] shadow-3xl overflow-hidden relative">
+            <div className="bg-background-secondary border border-border-primary rounded-2xl md:rounded-[2.5rem] shadow-3xl overflow-hidden relative">
               {/* Terminal Top Bar */}
-              <div className="bg-[#0d1117] border-b border-gray-800 px-6 md:px-8 py-3 md:py-4 flex items-center justify-between">
+              <div className="bg-background-primary border-b border-border-primary px-6 md:px-8 py-3 md:py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3 md:gap-4">
                   <div className="flex gap-1 md:gap-1.5">
                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/30" />
                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/30" />
                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/30" />
                   </div>
-                  <span className="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">
+                  <span className="text-[9px] md:text-[10px] text-text-secondary font-bold uppercase tracking-widest truncate">
                     cli_message_v2.sh
                   </span>
                 </div>
-                <div className="text-[9px] md:text-[10px] text-[#61afef] font-bold animate-pulse flex-shrink-0">
+                <div className="text-[9px] md:text-[10px] text-accent font-bold animate-pulse flex-shrink-0">
                   RUNNING
                 </div>
               </div>
 
               <form
                 onSubmit={handleSubmit}
-                className="p-6 md:p-12 space-y-6 md:space-y-8 bg-[#0d1117]/40 backdrop-blur-sm"
+                className="p-6 md:p-12 space-y-6 md:space-y-8 bg-background-primary/40 backdrop-blur-sm"
               >
                 {/* Name Input */}
                 <div className="space-y-3 md:space-y-4">
-                  <div className="flex items-center flex-wrap gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
-                    <span className="text-[#61afef]">visitor@portfolio</span>
-                    <span className="text-gray-400 hidden xs:inline">:</span>
-                    <span className="text-[#c678dd] hidden xs:inline">~</span>
-                    <span className="text-gray-400">$</span>
-                    <span className="text-gray-300">input_name</span>
+                  <div className="flex items-center flex-wrap gap-1.5 text-[10px] md:text-xs font-bold text-text-secondary uppercase tracking-tighter">
+                    <span className="text-accent">visitor@portfolio</span>
+                    <span className="text-text-secondary hidden xs:inline">
+                      :
+                    </span>
+                    <span className="text-accent-secondary hidden xs:inline">
+                      ~
+                    </span>
+                    <span className="text-text-secondary">$</span>
+                    <span className="text-text-secondary">input_name</span>
                   </div>
                   <div className="relative">
                     <input
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.name ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
+                      className={`w-full bg-background-secondary/50 border-b-2 ${errors.name ? "border-red-500" : "border-border-primary"} focus:border-accent outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
                       placeholder="_"
                     />
                     {errors.name && (
@@ -205,16 +209,16 @@ const ContactSection = () => {
 
                 {/* Email Input */}
                 <div className="space-y-3 md:space-y-4">
-                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
-                    <span className="text-[#c678dd]">$</span>
-                    <span className="text-gray-300">input_email</span>
+                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-text-secondary uppercase tracking-tighter">
+                    <span className="text-accent-secondary">$</span>
+                    <span className="text-text-secondary">input_email</span>
                   </div>
                   <div className="relative">
                     <input
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full bg-[#161b22]/50 border-b-2 ${errors.email ? "border-red-500" : "border-gray-800"} focus:border-[#61afef] outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
+                      className={`w-full bg-background-secondary/50 border-b-2 ${errors.email ? "border-red-500" : "border-border-primary"} focus:border-accent outline-none px-3 md:px-4 py-2 md:py-3 text-white transition-all text-sm`}
                       placeholder="_"
                     />
                     {errors.email && (
@@ -227,9 +231,11 @@ const ContactSection = () => {
 
                 {/* Message Input */}
                 <div className="space-y-3 md:space-y-4">
-                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-tighter">
-                    <span className="text-[#c678dd]">$</span>
-                    <span className="text-gray-300">cat &gt; message.txt</span>
+                  <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-text-secondary uppercase tracking-tighter">
+                    <span className="text-accent-secondary">$</span>
+                    <span className="text-text-secondary">
+                      cat &gt; message.txt
+                    </span>
                   </div>
                   <div className="relative">
                     <textarea
@@ -237,7 +243,7 @@ const ContactSection = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       rows={4}
-                      className={`w-full bg-[#161b22]/50 border border-gray-800 rounded-lg md:rounded-xl focus:border-[#61afef] focus:bg-[#161b22] outline-none px-4 md:px-6 py-4 md:py-5 text-white transition-all resize-none shadow-inner text-sm`}
+                      className={`w-full bg-background-secondary/50 border border-border-primary rounded-lg md:rounded-xl focus:border-accent focus:bg-background-secondary outline-none px-4 md:px-6 py-4 md:py-5 text-white transition-all resize-none shadow-inner text-sm`}
                       placeholder="Type your message here..."
                     />
                     {errors.message && (
@@ -256,10 +262,10 @@ const ContactSection = () => {
                     className={`w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-[11px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all flex items-center justify-center gap-3 md:gap-4 overflow-hidden relative group
                            ${
                              submitStatus === "success"
-                               ? "bg-green-500 text-[#0d1117]"
+                               ? "bg-green-500 text-background-primary"
                                : submitStatus === "error"
                                  ? "bg-red-500 text-white"
-                                 : "bg-[#61afef] text-[#0d1117] hover:shadow-[0_0_30px_rgba(97,175,239,0.3)]"
+                                 : "bg-accent text-background-primary hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.3)]"
                            }
                         `}
                   >
@@ -281,7 +287,7 @@ const ContactSection = () => {
                           animate={{ y: 0 }}
                           className="flex items-center gap-2 md:gap-3"
                         >
-                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#0d1117] rounded-full animate-ping" />
+                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-background-primary rounded-full animate-ping" />
                           HANDSHAKE...
                         </motion.span>
                       )}
@@ -290,11 +296,11 @@ const ContactSection = () => {
                           key="transmitting"
                           className="flex items-center gap-2 md:gap-3"
                         >
-                          <span className="w-12 md:w-20 h-0.5 md:h-1 bg-[#0d1117]/20 rounded-full overflow-hidden relative">
+                          <span className="w-12 md:w-20 h-0.5 md:h-1 bg-background-primary/20 rounded-full overflow-hidden relative">
                             <motion.div
                               animate={{ x: ["-100%", "100%"] }}
                               transition={{ repeat: Infinity, duration: 1 }}
-                              className="absolute inset-0 bg-[#0d1117]"
+                              className="absolute inset-0 bg-background-primary"
                             />
                           </span>
                           SENDING
@@ -316,7 +322,7 @@ const ContactSection = () => {
               </form>
 
               {/* Command Info Bar */}
-              <div className="bg-[#161b22] border-t border-gray-800 p-3 md:p-4 px-6 md:px-8 flex items-center justify-between text-[7px] md:text-[8px] text-gray-700 font-bold uppercase tracking-widest">
+              <div className="bg-background-secondary border-t border-border-primary p-3 md:p-4 px-6 md:px-8 flex items-center justify-between text-[7px] md:text-[8px] text-text-secondary font-bold uppercase tracking-widest">
                 <div className="flex gap-3 md:gap-4">
                   <span className="hidden xs:inline">HELP: F1</span>
                   <span className="hidden xs:inline">CLEAR: ESC</span>

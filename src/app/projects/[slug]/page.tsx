@@ -12,7 +12,7 @@ export default function ProjectPage() {
   if (!project) return <div>Project Not Found</div>;
 
   return (
-    <main className="min-h-screen bg-[#0d1117] pt-24 pb-12 px-4 md:px-8 flex flex-col items-center justify-center">
+    <main className="min-h-screen bg-background-primary pt-24 pb-12 px-4 md:px-8 flex flex-col items-center justify-center">
       <Header />
       <div className="w-full max-w-7xl">
         <ProjectDetails project={project} />

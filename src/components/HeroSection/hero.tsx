@@ -10,12 +10,12 @@ const HeroSection = () => {
     <section
       id="home"
       data-section="hero"
-      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono overflow-hidden relative flex items-center justify-center p-6"
+      className="min-h-screen bg-background-primary text-text-secondary font-mono overflow-hidden relative flex items-center justify-center p-6"
     >
       {/* Dynamic Background: Scanning Lines & Code Rain */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+        <div className="absolute inset-0 bg-[linear-gradient(var(--accent-secondary)/0.1_1px,transparent_1px),linear-gradient(90deg,var(--accent-secondary)/0.1_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent animate-scanline" />
       </div>
 
       {/* Main Hero Content (IDE Splash Style) */}
@@ -29,7 +29,7 @@ const HeroSection = () => {
         >
           <div className="space-y-3 md:space-y-4">
             <div className="flex flex-wrap items-center gap-2 md:gap-3">
-              <span className="px-2 md:px-3 py-1 bg-[#282c34] border border-gray-700 rounded-md text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+              <span className="px-2 md:px-3 py-1 bg-background-secondary border border-border-primary rounded-md text-[9px] md:text-[10px] text-text-secondary font-bold tracking-widest uppercase">
                 Kernel: v4.2.0-LTS
               </span>
               <div className="flex items-center gap-2 px-2 md:px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
@@ -40,21 +40,20 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter leading-none break-words">
-              <span className="text-[#61afef]">const</span> developer ={" "}
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-text-primary tracking-tighter leading-none break-words">
+              <span className="text-accent">const</span> developer ={" "}
               <br className="hidden sm:block" />
-              <span className="text-[#e5c07b] drop-shadow-[0_0_15px_rgba(229,192,123,0.3)]">
+              <span className="text-accent-secondary drop-shadow-[0_0_15px_rgba(var(--accent-secondary-rgb),0.3)]">
                 "{portfolioData.name}"
               </span>
               _
             </h1>
 
-            <div className="text-lg md:text-2xl text-gray-400 font-medium leading-relaxed max-w-2xl">
-              Building <span className="text-[#c678dd] italic">Scalable</span>{" "}
+            <div className="text-lg md:text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl">
+              Building{" "}
+              <span className="text-accent-secondary italic">Scalable</span>{" "}
               architectures and <br className="hidden sm:block" />
-              <span className="text-[#98c379] italic">
-                High-Performance
-              </span>{" "}
+              <span className="text-accent italic">High-Performance</span>{" "}
               digital solutions.
             </div>
           </div>
@@ -66,7 +65,7 @@ const HeroSection = () => {
                   .getElementById("about")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="group relative flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 bg-[#61afef] text-[#0d1117] font-black rounded-lg text-xs md:text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(97,175,239,0.4)]"
+              className="group relative flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 bg-accent text-background-primary font-black rounded-lg text-xs md:text-sm tracking-widest uppercase overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.4)]"
             >
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
               Initialize_Explorer
@@ -74,7 +73,7 @@ const HeroSection = () => {
 
             <a
               href="/resume/ali_baloch.pdf"
-              className="flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 border-2 border-gray-700 hover:border-[#61afef] text-gray-400 hover:text-[#61afef] font-bold rounded-lg text-xs md:text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-3"
+              className="flex-1 sm:flex-none px-6 md:px-8 py-3 md:py-4 border-2 border-border-primary hover:border-accent text-text-secondary hover:text-accent font-bold rounded-lg text-xs md:text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-3"
             >
               <span>Download_Resume</span>
               <svg
@@ -89,7 +88,7 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="grid grid-cols-2 xs:grid-cols-3 gap-6 md:gap-8 pt-6 md:pt-8 border-t border-gray-800/50">
+          <div className="grid grid-cols-2 xs:grid-cols-3 gap-6 md:gap-8 pt-6 md:pt-8 border-t border-border-primary/50">
             {portfolioData.socials.map((social) => (
               <a
                 key={social.name}
@@ -97,10 +96,10 @@ const HeroSection = () => {
                 target="_blank"
                 className="group flex flex-col gap-1"
               >
-                <span className="text-[9px] md:text-[10px] text-gray-600 font-bold tracking-widest uppercase group-hover:text-[#61afef] transition-colors">
+                <span className="text-[9px] md:text-[10px] text-text-secondary font-bold tracking-widest uppercase group-hover:text-accent transition-colors">
                   {social.name}
                 </span>
-                <span className="text-xs text-gray-400 group-hover:text-white transition-colors truncate">
+                <span className="text-xs text-text-secondary group-hover:text-text-primary transition-colors truncate">
                   {social.text.toLowerCase()}
                 </span>
               </a>
@@ -117,12 +116,12 @@ const HeroSection = () => {
         >
           <div className="relative group perspective-1000">
             {/* Orbital Glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#61afef]/30 via-[#c678dd]/20 to-transparent rounded-[2rem] blur-[80px] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-accent/30 via-accent-secondary/20 to-transparent rounded-[2rem] blur-[80px] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
 
             {/* File Frame */}
-            <div className="relative bg-[#161b22] border border-gray-800 rounded-[2rem] p-4 shadow-2xl overflow-hidden group-hover:border-[#61afef]/40 transition-colors duration-500">
+            <div className="relative bg-background-secondary border border-border-primary rounded-[2rem] p-4 shadow-2xl overflow-hidden group-hover:border-accent/40 transition-colors duration-500">
               {/* Visual Header */}
-              <div className="flex items-center justify-between mb-4 px-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+              <div className="flex items-center justify-between mb-4 px-4 text-[10px] text-text-secondary font-bold uppercase tracking-widest">
                 <div className="flex gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500/50" />
                   <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
@@ -131,7 +130,7 @@ const HeroSection = () => {
                 <span>PREVIEW: profile.png</span>
               </div>
 
-              <div className="relative rounded-[1.5rem] overflow-hidden border border-gray-800 group-hover:border-[#61afef]/20 transition-colors">
+              <div className="relative rounded-[1.5rem] overflow-hidden border border-border-primary group-hover:border-accent/20 transition-colors">
                 {/* Scanline Effect Overlay */}
                 <div className="absolute inset-0 z-10 pointer-events-none bg-scanline opacity-10 group-hover:opacity-20 transition-opacity" />
 
@@ -145,20 +144,20 @@ const HeroSection = () => {
                 />
 
                 {/* Digital Metadata Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent">
+                <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-background-primary via-transparent to-transparent">
                   <div className="space-y-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="text-[10px] text-[#61afef] font-bold tracking-[0.4em] uppercase">
+                    <div className="text-[10px] text-accent font-bold tracking-[0.4em] uppercase">
                       Authenticated_User
                     </div>
-                    <h2 className="text-3xl font-black text-white">
+                    <h2 className="text-3xl font-black text-text-primary">
                       {portfolioData.name}
                     </h2>
                     <div className="flex gap-2 text-[10px] items-center">
-                      <span className="text-gray-500">TAGS:</span>
-                      <span className="px-2 py-0.5 bg-gray-800/80 rounded text-gray-400">
+                      <span className="text-text-secondary">TAGS:</span>
+                      <span className="px-2 py-0.5 bg-background-secondary/80 rounded text-text-secondary">
                         #FullStack
                       </span>
-                      <span className="px-2 py-0.5 bg-gray-800/80 rounded text-gray-400">
+                      <span className="px-2 py-0.5 bg-background-secondary/80 rounded text-text-secondary">
                         #SysArch
                       </span>
                     </div>
@@ -168,8 +167,8 @@ const HeroSection = () => {
 
               {/* Technical Footfooter */}
               <div className="mt-6 flex items-center justify-between px-4 text-[10px] font-mono">
-                <div className="text-gray-600">RESOLUTION: 1080x1350</div>
-                <div className="text-[#98c379] animate-pulse">
+                <div className="text-text-secondary">RESOLUTION: 1080x1350</div>
+                <div className="text-text-primary animate-pulse">
                   STATUS: ACTIVE
                 </div>
               </div>
@@ -179,7 +178,7 @@ const HeroSection = () => {
       </div>
 
       {/* Background Decor: Fixed Vertical Text */}
-      <div className="fixed left-4 top-1/2 -translate-y-1/2 -rotate-90 origin-left text-[10px] text-gray-800 font-bold tracking-[1em] uppercase hidden xl:block">
+      <div className="fixed left-4 top-1/2 -translate-y-1/2 -rotate-90 origin-left text-[10px] text-text-secondary font-bold tracking-[1em] uppercase hidden xl:block">
         Portfolio_System_Operating_Nominal
       </div>
     </section>

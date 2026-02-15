@@ -1,17 +1,49 @@
 @import "tailwindcss";
 
-/* Accessibility: Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@theme {
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-border-primary: var(--border-primary);
+
+  --animate-scanline: scanline 8s linear infinite;
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
   }
 }
 
+:root {
+  --background-primary: #ffffff;
+  --background-secondary: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --accent: #61afef;
+  --accent-rgb: 97, 175, 239;
+  --accent-secondary: #c678dd;
+  --accent-secondary-rgb: 198, 120, 221;
+  --border-primary: #e5e7eb;
+}
+
+.dark {
+  --background-primary: #0d1117;
+  --background-secondary: #161b22;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --accent: #61afef;
+  --accent-rgb: 97, 175, 239;
+  --accent-secondary: #c678dd;
+  --accent-secondary-rgb: 198, 120, 221;
+  --border-primary: #30363d;
+}
 
 @layer utilities {
   .bg-scanline {

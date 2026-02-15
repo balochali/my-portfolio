@@ -26,18 +26,18 @@ const AboutSection = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="bg-[#0d1117] rounded-xl border border-gray-800 overflow-hidden mb-8 md:mb-16 last:mb-0 shadow-2xl"
+      className="bg-background-secondary rounded-xl border border-border-primary overflow-hidden mb-8 md:mb-16 last:mb-0 shadow-2xl"
     >
       {/* Terminal Header */}
-      <div className="flex items-center justify-between p-2 md:p-3 border-b border-gray-800 bg-[#161b22]">
+      <div className="flex items-center justify-between p-2 md:p-3 border-b border-border-primary bg-background-secondary/50">
         <div className="flex items-center gap-2 md:gap-4">
           <div className="flex gap-1.5 md:gap-2 ml-1 md:ml-2">
             <div className="w-2.5 h-2.5 bg-[#ff5f56] rounded-full shadow-inner"></div>
             <div className="w-2.5 h-2.5 bg-[#ffbd2e] rounded-full shadow-inner"></div>
             <div className="w-2.5 h-2.5 bg-[#27c93f] rounded-full shadow-inner"></div>
           </div>
-          <div className="flex items-center gap-2 px-3 md:px-4 py-1.5 bg-[#0d1117] rounded-md border border-gray-700 max-w-[150px] md:max-w-none">
-            <span className="text-[9px] md:text-[10px] text-gray-400 font-mono flex items-center gap-2 truncate">
+          <div className="flex items-center gap-2 px-3 md:px-4 py-1.5 bg-background-primary rounded-md border border-border-primary max-w-[150px] md:max-w-none">
+            <span className="text-[9px] md:text-[10px] text-text-secondary font-mono flex items-center gap-2 truncate">
               <svg
                 className="w-3 h-3 flex-shrink-0"
                 viewBox="0 0 24 24"
@@ -64,13 +64,13 @@ const AboutSection = () => {
       <div className="flex flex-col md:flex-row md:min-h-[450px]">
         {/* Sidebar */}
         {sidebar && (
-          <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-gray-800 bg-[#0d1117]/50 p-4 md:p-6">
+          <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-border-primary bg-background-secondary/50 p-4 md:p-6">
             {sidebar}
           </div>
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 bg-[#0d1117] relative p-4 md:p-6 font-mono text-sm overflow-x-auto">
+        <div className="flex-1 bg-background-primary relative p-4 md:p-6 font-mono text-sm overflow-x-auto">
           {/* Subtle line numbers or decoration could go here */}
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/20"></div>
           {children}
@@ -78,8 +78,8 @@ const AboutSection = () => {
       </div>
 
       {/* Terminal Footer */}
-      <div className="border-t border-gray-800 p-3 bg-[#161b22] font-mono">
-        <div className="flex items-center justify-between text-[10px] text-gray-500 uppercase tracking-widest">
+      <div className="border-t border-border-primary p-3 bg-background-secondary/50 font-mono">
+        <div className="flex items-center justify-between text-[10px] text-text-secondary uppercase tracking-widest">
           <div className="flex items-center gap-4 ml-2">
             <span className="flex items-center gap-1">
               <span className="text-green-500">master</span>*
@@ -122,12 +122,12 @@ const AboutSection = () => {
     <section
       id="about"
       data-section="about"
-      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono relative py-24"
+      className="min-h-screen bg-background-primary text-text-secondary font-mono relative py-24"
     >
       {/* Dynamic Background: Scanning Lines & Code Rain */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+        <div className="absolute inset-0 bg-[linear-gradient(var(--accent-secondary)/0.1_1px,transparent_1px),linear-gradient(90deg,var(--accent-secondary)/0.1_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent animate-scanline" />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8">
@@ -143,19 +143,19 @@ const AboutSection = () => {
             className="text-center mb-16 px-4"
           >
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-[#161b22] border border-gray-800 flex items-center justify-center text-2xl shadow-2xl">
+              <div className="w-12 h-12 rounded-2xl bg-background-secondary border border-border-primary flex items-center justify-center text-2xl shadow-2xl">
                 👤
               </div>
               <div className="text-left">
-                <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter uppercase">
+                <h2 className="text-4xl sm:text-5xl font-black text-text-primary tracking-tighter uppercase">
                   About_Identity
                 </h2>
-                <div className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                <div className="text-[10px] text-text-secondary font-bold tracking-widest uppercase">
                   Biometric_Profile.v4
                 </div>
               </div>
             </div>
-            <div className="text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed border-l-2 border-[#61afef]/30 pl-6">
+            <div className="text-text-secondary text-sm max-w-2xl mx-auto leading-relaxed border-l-2 border-accent/30 pl-6">
               {`$ query --target user_profile --identity "ALI BALOCH"`} <br />
               {`Fetching encrypted career nodes and educational records...`}
             </div>

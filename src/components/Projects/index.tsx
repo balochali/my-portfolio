@@ -45,33 +45,33 @@ const ProjectsSection = () => {
     <section
       id="projects"
       data-section="projects"
-      className="min-h-screen bg-[#0d1117] text-gray-300 font-mono py-24 relative overflow-hidden"
+      className="min-h-screen bg-background-primary text-text-secondary font-mono py-24 relative overflow-hidden"
     >
       {/* Background Decor */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(97,175,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(97,175,239,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#61afef]/5 to-transparent animate-scanline" />
+        <div className="absolute inset-0 bg-[linear-gradient(var(--accent-rgb)/0.1_1px,transparent_1px),linear-gradient(90deg,var(--accent-rgb)/0.1_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent animate-scanline" />
       </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#61afef]/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
         {/* Workspace Header */}
         <div className="mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
           <div className="space-y-3 md:space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#161b22] border border-gray-800 flex items-center justify-center text-lg shadow-inner">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-background-secondary border border-border-primary flex items-center justify-center text-lg shadow-inner">
                 📁
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase">
+                <h2 className="text-2xl md:text-3xl font-black text-text-primary tracking-tighter uppercase">
                   Project_Workspace
                 </h2>
-                <div className="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                <div className="text-[9px] md:text-[10px] text-text-secondary font-bold tracking-widest uppercase">
                   Repository_Explorer.exe
                 </div>
               </div>
             </div>
-            <p className="text-xs md:text-sm text-gray-500 max-w-xl font-mono leading-relaxed">
+            <p className="text-xs md:text-sm text-text-secondary max-w-xl font-mono leading-relaxed">
               Indexing available repositories... <br />
               <span className="text-green-500/50 hidden sm:inline">{`$ git branch -a --list "featured/*"`}</span>
             </p>
@@ -87,8 +87,8 @@ const ProjectsSection = () => {
                 }}
                 className={`px-3 md:px-4 py-1.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase border transition-all duration-300 flex-shrink-0 ${
                   activeFilter === filter
-                    ? "bg-[#61afef]/10 text-[#61afef] border-[#61afef]/30 shadow-[0_0_15px_rgba(97,175,239,0.1)]"
-                    : "bg-[#161b22] text-gray-500 border-gray-800 hover:border-gray-600 hover:text-gray-300"
+                    ? "bg-accent/10 text-accent border-accent/30 shadow-[0_0_15px_rgba(var(--accent-rgb),0.1)]"
+                    : "bg-background-secondary text-text-secondary border-border-primary hover:border-gray-600 hover:text-text-primary"
                 }`}
               >
                 <span className="mr-1.5 md:mr-2 opacity-50">
@@ -122,7 +122,7 @@ const ProjectsSection = () => {
           <div className="mt-16 text-center">
             <button
               onClick={() => setVisibleCount(filteredProjects.length)}
-              className="px-8 py-3 bg-[#161b22] border border-gray-800 text-gray-400 font-bold rounded-xl hover:text-white hover:border-[#61afef]/50 transition-all text-xs tracking-[0.2em] uppercase group"
+              className="px-8 py-3 bg-background-secondary border border-border-primary text-text-secondary font-bold rounded-xl hover:text-text-primary hover:border-accent/50 transition-all text-xs tracking-[0.2em] uppercase group"
             >
               Load_Additional_Repositories
               <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform">
@@ -144,7 +144,7 @@ const ProjectsSection = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedProject(null)}
-                className="absolute inset-0 bg-[#0d1117]/95 backdrop-blur-xl cursor-pointer pointer-events-auto"
+                className="absolute inset-0 bg-background-primary/95 backdrop-blur-xl cursor-pointer pointer-events-auto"
               />
 
               {/* Content Layer */}
