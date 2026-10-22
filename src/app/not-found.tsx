@@ -1,16 +1,3 @@
-export default function NotFound() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-      <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
-      <p className="text-gray-400">
-        The page you are looking for does not exist.
-      </p>
-      <a
-        href="/"
-        className="mt-6 px-4 py-2 bg-green-600 text-black rounded hover:bg-green-500 transition-colors"
-      >
-        Go Home
-      </a>
-    </div>
-  );
-}
+import Link from "next/link";
+import Header from "@/components/Header";
+export default function NotFound() { return <><Header /><main id="main-content" className="not-found wrap"><p className="eyebrow">404 — A LITTLE OFF TRACK</p><h1>This page took<br />a different path.</h1><p>Let’s get you back to the work.</p><Link className="button ink" href="/">Back to home ↗</Link></main></>; }

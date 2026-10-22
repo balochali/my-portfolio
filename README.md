@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ali Baloch — Portfolio
 
-## Getting Started
+A responsive Next.js portfolio with a Three.js waving portrait, project filters, individual case studies, screenshot galleries, career timeline, and server-side email contact form.
 
-First, run the development server:
+## Local development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Run `npm install`.
+2. Copy `.env.example` to `.env.local` and configure your SMTP provider.
+3. Run `npm run dev` and open http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run `npm run build` for a production build, then `npm start`. `npm run typecheck` checks TypeScript and `npm run lint` runs ESLint.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Projects: `src/data/projectData.ts`
+- Experience and education: `src/data/aboutData.ts`
+- Social profiles: `src/data/portfolioData.ts`
+- Main page and skills: `src/components/Portfolio.tsx`
+- Design and responsive styles: `src/app/globals.css`
+- Resume: `public/resume/ali_baloch.pdf`
 
-## Learn More
+Project demo links are shown only for HTTPS URLs. Replace placeholders with genuine public URLs when available. Existing career dates and project descriptions are preserved; review them before publishing.
 
-To learn more about Next.js, take a look at the following resources:
+## Contact form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The server action uses SMTP_PASS, SMTP_FROM, and CONTACT_EMAIL. Legacy SMTP_PASSWORD, EMAIL_FROM, and EMAIL_TO are also supported. It validates fields on the server, uses a verified sender plus reply-to, and sends plain-text email. Errors never expose SMTP details. A honeypot and a per-email, per-process one-minute cooldown provide basic abuse resistance. For multi-instance public deployment, add shared rate limiting or a bot challenge through your hosting provider.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Motion and accessibility
 
-## Deploy on Vercel
+Three.js loads separately from the page, caps pixel density, pauses outside the viewport or hidden tabs, and disposes GPU resources on unmount. Reduced-motion preferences disable continuous animation. If WebGL is unavailable, the original SVG portrait remains. Native links, labeled form fields, keyboard navigation, and manual gallery controls keep the content accessible.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Personal avatar
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The illustrated portrait is drawn from Ali's graduation photo. The editable SVG body and arm are in public/avatar/. WavingAvatar.tsx renders these as separate Three.js layers and rotates the shoulder joint for a short greeting on arrival. The Say hello button replays the wave. Reduced-motion visitors see a stationary greeting. Plus Jakarta Sans is hosted locally with its OFL license in public/fonts/.
+

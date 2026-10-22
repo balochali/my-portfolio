@@ -1,0 +1,22 @@
+@media (prefers-reduced-motion: no-preference) {
+  .skill-tiles li, .certificate-card, .about-stat-grid > div,
+  .career-stats > div, .company-choice, .company-progression button {
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
+  }
+  .skills-category-filters button, .career-view button, .filter-row button {
+    transition: background-color .22s ease, color .22s ease, box-shadow .22s ease;
+  }
+  .button > span, .career-role-arrow, .company-project > span {
+    display: inline-block;
+    transition: transform .25s ease;
+  }
+  .button:hover > span, .company-project:hover > span { transform: translate(3px, -3px); }
+  .company-choice:hover .career-role-arrow { transform: translate(3px, -3px); }
+  @media (hover: hover) {
+    .skill-tiles li:hover { transform: translateY(-3px); box-shadow: 0 5px 0 #12141012; }
+    .certificate-card:hover, .about-stat-grid > div:hover, .career-stats > div:hover {
+      transform: translateY(-5px); box-shadow: 0 8px 0 #1214100d;
+    }
+    .company-choice:hover { transform: translateX(4px); }
+  }
+}

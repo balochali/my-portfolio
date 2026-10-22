@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="680" viewBox="0 0 600 680">
+<g stroke="#212323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<!-- Graduation gown, drawn from Ali's supplied photograph. -->
+<path d="M207 345Q153 351 119 398L74 612 164 639 186 571 180 680H470L456 425Q448 371 387 347Z" fill="#282e33"/>
+<path d="M128 407L107 580 162 595 180 455" fill="#343b40"/>
+<path d="M96 577L165 593 158 622 89 605Z" fill="#efefdf"/>
+<path d="M106 615L92 651Q85 670 105 674L146 669 157 626" fill="#c98c62"/>
+<path d="M118 642L111 665M134 647L130 668" fill="none" stroke="#a36b4e" stroke-width="3"/>
+<path d="M240 321L237 367 296 409 350 366 345 317" fill="#c58b61"/>
+<path d="M244 328Q287 350 343 323L343 343Q290 369 239 346" fill="#b37753" stroke="none"/>
+<path d="M238 357L297 399 350 357 371 388 310 563 224 386Z" fill="#f1e3d0"/>
+<g stroke="#ba8c76" stroke-width="4"><path d="M238 377L349 377M246 398L342 398M257 420L334 420M266 443L327 443M276 466L319 466M286 489L315 489M254 375L287 481M278 389L304 513M304 397L317 470M330 383L335 414"/></g>
+<path d="M213 342L235 356 299 527 360 355 384 345 422 380 349 588 307 654 223 488 177 378Z" fill="#f5f5ed"/>
+<path d="M210 347L228 357 299 548 360 355 379 348 395 366 325 601 307 648 221 481 195 367Z" fill="#34475e"/>
+<path d="M222 382L277 522M374 382L330 537M193 519L189 653M426 456L446 655" stroke="#64707b" stroke-width="3" fill="none"/>
+<!-- Ears, face, hair, and short beard. -->
+<path d="M207 210Q183 201 189 235Q190 263 212 266M372 209Q393 202 390 236Q389 261 369 267" fill="#cf966e"/>
+<path d="M199 226L205 245M380 224L374 245" fill="none" stroke="#a76d50" stroke-width="3"/>
+<path d="M212 150Q289 108 365 154L376 216 367 285Q354 335 295 346Q237 340 216 300L204 236Z" fill="#d7a078"/>
+<path d="M214 175Q207 206 213 259Q222 310 259 322Q222 309 218 276L219 179Z" fill="#bd805b" stroke="none"/>
+<path d="M359 189L365 256Q365 301 329 325Q357 311 367 286L376 219Z" fill="#e6b58c" stroke="none"/>
+<path d="M212 177L210 214 224 197 231 170 242 166 226 199 248 179 262 159 350 166 362 191 373 211 370 166Q292 127 212 177Z" fill="#24292b"/>
+<path d="M232 213Q248 203 266 210M312 210Q335 199 350 211" stroke="#292c2b" stroke-width="7" fill="none"/>
+<path d="M231 232Q247 217 264 230Q249 242 231 232M312 230Q329 216 348 228Q331 240 312 230" fill="#fff7eb" stroke-width="2.5"/>
+<ellipse cx="250" cy="229" rx="5.8" ry="7" fill="#2d2d2a" stroke="none"/><ellipse cx="330" cy="227" rx="5.8" ry="7" fill="#2d2d2a" stroke="none"/>
+<circle cx="252" cy="227" r="1.8" fill="white" stroke="none"/><circle cx="332" cy="225" r="1.8" fill="white" stroke="none"/>
+<path d="M289 232L281 260Q290 267 301 261" fill="none" stroke="#a76e50" stroke-width="3"/>
+<path d="M273 266Q279 261 284 264M301 264Q306 260 310 265" fill="none" stroke="#9d654c" stroke-width="3"/>
+<path d="M224 271Q230 292 249 300L257 286Q287 277 318 284L335 296Q354 287 364 266L362 297Q344 333 298 341Q256 340 234 311Z" fill="#30332f" stroke="none"/>
+<path d="M263 285Q279 272 292 280Q306 272 323 283L321 291 293 286 265 293Z" fill="#30332f" stroke="none"/>
+<path d="M262 299Q290 318 323 295Q298 334 272 317Z" fill="#d7a078" stroke="none"/>
+<path d="M264 297Q293 309 321 294" fill="none" stroke="#884e3e" stroke-width="3"/>
+<path d="M270 299Q293 303 315 297L310 304Q292 312 276 307Z" fill="#fff4df" stroke="none"/>
+<!-- Mortarboard and tassel. -->
+<path d="M204 111Q291 64 369 114L374 177Q292 146 211 185Z" fill="#353e43"/>
+<path d="M208 115Q254 84 300 91L295 150Q249 155 211 181Z" fill="#444e53" stroke="none"/>
+<path d="M172 47L411 72 347 129 166 100 131 84Z" fill="#252d32"/>
+<path d="M172 47L411 72 348 119 166 93 131 84Z" fill="#30393f"/>
+<path d="M282 88L178 104 167 191" stroke="#e9e7d8" stroke-width="5" fill="none"/>
+<circle cx="282" cy="88" r="6" fill="#22292d"/>
+<path d="M167 191L157 281Q169 292 180 279L171 191Z" fill="#eeede1" stroke-width="2"/>
+<path d="M164 205L162 274M169 205L170 280M174 212L176 274" stroke="#cbcbbb" stroke-width="2"/>
+</g></svg>

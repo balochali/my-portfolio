@@ -53,7 +53,7 @@ export const education = [
   {
     degree: "Bachelor of Science in Computer Science",
     institution: "Sukkur IBA University",
-    year: "2024",
+    year: "2022",
     grade: "CGPA: 2.8+",
   },
   {
