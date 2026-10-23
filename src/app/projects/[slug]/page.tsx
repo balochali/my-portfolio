@@ -1,29 +1,123 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Header from "@/components/Header";
 import ProjectGallery from "@/components/ProjectGallery";
+import { Footer } from "@/components/SiteElements";
 import { projects } from "@/data/projectData";
+import { business, isReady } from "@/data/business";
+import { pageMetadata } from "@/data/seo";
 type PageProps = { params: Promise<{ slug: string }> };
-export function generateStaticParams() { return projects.map(project => ({ slug: project.slug })); }
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
+}
+export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const project = projects.find(item => item.slug === slug);
-  return { title: project?.title || "Project not found", description: project?.description };
+  const p = projects.find((p) => p.slug === slug);
+  return p
+    ? pageMetadata(
+        `${p.title} | Ali Baloch`,
+        p.description,
+        `/projects/${p.slug}`,
+        p.image,
+      )
+    : { title: "Project not found", robots: { index: false } };
 }
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
-  const index = projects.findIndex(item => item.slug === slug);
-  if (index < 0) notFound();
-  const project = projects[index];
-  const next = projects[(index + 1) % projects.length];
-  const live = /^https:\/\//.test(project.demoUrl);
-  return <><Header /><main id="main-content" className="wrap case-page">
-    <Link className="case-back" href="/#projects">← Back to all projects</Link>
-    <div className="case-header"><p className="eyebrow">{project.category} / {project.status}</p><h1>{project.title}</h1><p>{project.description}</p></div>
-    <dl className="case-facts"><div><dt>My role</dt><dd>{project.role}</dd></div><div><dt>Timeline</dt><dd>{project.duration}</dd></div><div><dt>Built with</dt><dd>{(project.techStack || project.tags).slice(0, 4).join(" · ")}</dd></div></dl>
-    <ProjectGallery title={project.title} images={project.gallery?.length ? project.gallery : [project.image]} />
-    <div className="case-content"><div><h2>Behind the project</h2><p>{project.longDescription?.trim() || project.description}</p>{project.challenge && <><h2>The challenge</h2><p>{project.challenge}</p></>}{project.solution && <><h2>The approach</h2><p>{project.solution}</p></>}</div><aside><h2>What it does</h2><ul>{project.features?.map(feature => <li key={feature}>{feature}</li>)}</ul><h2>The toolkit</h2><div className="tags">{(project.techStack || project.tags).map(tech => <span key={tech}>{tech}</span>)}</div><div className="case-links">{live && <a className="button blue" href={project.demoUrl} target="_blank" rel="noreferrer">Visit project ↗</a>}{/^https:\/\//.test(project.codeUrl) && <a className="button outline" href={project.codeUrl} target="_blank" rel="noreferrer">View code ↗</a>}</div></aside></div>
-    <Link className="next-project" href={`/projects/${next.slug}`}><span><small>UP NEXT</small>{next.title}</span><span aria-hidden="true">↗</span></Link>
-  </main></>;
+  const p = projects.find((p) => p.slug === slug);
+  if (!p) notFound();
+  const proof = business.projectProof[slug];
+  return (
+    <>
+      <Header />
+      <main id="main-content" className="wrap case-page">
+        <Link className="text-link" href="/projects">
+          ← All projects
+        </Link>
+        <header className="case-header">
+          <p className="eyebrow">
+            {p.category} · {p.status}
+          </p>
+          <h1>{p.title}</h1>
+          <p>{p.description}</p>
+        </header>
+        <dl className="case-facts">
+          <div>
+            <dt>My role</dt>
+            <dd>{p.role}</dd>
+          </div>
+          <div>
+            <dt>Project timeline</dt>
+            <dd>{p.duration}</dd>
+          </div>
+        </dl>
+        <ProjectGallery
+          title={p.title}
+          images={p.gallery?.length ? p.gallery : [p.image]}
+        />
+        <div className="case-content">
+          <div>
+            <section>
+              <h2>Overview</h2>
+              <p>{p.longDescription?.trim() || p.description}</p>
+            </section>
+            {p.challenge && (
+              <section>
+                <h2>The problem</h2>
+                <p>{p.challenge}</p>
+              </section>
+            )}
+            <section>
+              <h2>What I built</h2>
+              <p>{p.solution}</p>
+              <ul>
+                {p.features?.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+            </section>
+            {proof && isReady(proof.results) && (
+              <section>
+                <h2>Results</h2>
+                <p>{proof.results}</p>
+              </section>
+            )}
+            {proof && isReady(proof.testimonial) && (
+              <section>
+                <h2>Client feedback</h2>
+                <blockquote>{proof.testimonial}</blockquote>
+              </section>
+            )}
+          </div>
+          <aside>
+            <h2>Tech stack</h2>
+            <div className="tags">
+              {(p.techStack || p.tags).map((t) => (
+                <span key={t}>{t}</span>
+              ))}
+            </div>
+            <div className="case-links">
+              {/^https:\/\//.test(p.demoUrl) && (
+                <a className="button primary" href={p.demoUrl}>
+                  Live site / demo ↗
+                </a>
+              )}
+              {/^https:\/\//.test(p.codeUrl) && (
+                <a className="button secondary" href={p.codeUrl}>
+                  View code ↗
+                </a>
+              )}
+            </div>
+          </aside>
+        </div>
+        <section className="closing">
+          <h2>Want something like this?</h2>
+          <Link className="button secondary" href="/#contact">
+            Let’s talk ↗
+          </Link>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
 }
