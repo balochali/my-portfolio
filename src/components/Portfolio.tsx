@@ -15,11 +15,11 @@ export default function Portfolio() {
             <div>
               <p className="eyebrow">ALI BALOCH · CUSTOM BUSINESS SOFTWARE</p>
               <h1>
-                Better tools for
+                E-commerce &
                 <br />
-                your growing
+                POS tools for
                 <br />
-                <span className="highlight">business.</span>
+                <span className="highlight">growing businesses.</span>
               </h1>
               <p className="hero-description">
                 I build custom e-commerce stores, POS systems and web
@@ -51,6 +51,7 @@ export default function Portfolio() {
                 height={730}
                 sizes="(max-width: 800px) 90vw, 45vw"
                 priority
+                fetchPriority="high"
               />
               <figcaption>
                 <strong>Business records. Connected.</strong>

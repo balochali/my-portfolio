@@ -17,6 +17,7 @@ export default function ProjectGallery({
           alt={`${title}, screenshot ${active + 1}`}
           fill
           priority
+          fetchPriority="high"
           sizes="(max-width: 700px) 90vw, 85vw"
         />
       </div>

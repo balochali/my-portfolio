@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
+import { pageMetadata } from "@/data/seo";
+export const metadata = { ...pageMetadata("Page not found | Ali Baloch", "Return to Ali Baloch’s business software portfolio.", "/404"), robots: { index: false, follow: true } };
 export default function NotFound() {
   return (
     <>
