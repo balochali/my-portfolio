@@ -17,5 +17,6 @@ export interface Project {
   role?: string; // Role in the project
   duration?: string; // Duration of the project
   challenge?: string; // Problem statement
+  problem?: string; // One plain-language line for buyers: what this solved
   solution?: string; // Solution details
 }

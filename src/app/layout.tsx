@@ -1,9 +1,51 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
+import { site } from "@/data/offerData";
+
 export const metadata: Metadata = {
-  title: { default: "Ali Baloch — Full-Stack Developer", template: "%s | Ali Baloch" },
-  description: "Ali Baloch is a full-stack developer in Karachi building thoughtful web applications with React, Next.js, Node.js, and PostgreSQL. Explore projects and get in touch.",
-  openGraph: { title: "Ali Baloch — Full-Stack Developer", description: "Thoughtful code. Meaningful digital experiences. Explore my work in web, AI, and backend engineering.", type: "website" },
-  twitter: { card: "summary", title: "Ali Baloch — Full-Stack Developer" },
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: "%s | Ali Baloch" },
+  description: site.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    url: "/",
+    title: site.shareTitle,
+    description: site.shareDescription,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Ali Baloch, MERN developer for web apps, dashboards and POS systems" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.shareTitle,
+    description: site.shareDescription,
+    images: ["/og.png"],
+  },
 };
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="en"><body>{children}</body></html>; }
+
+export const viewport: Viewport = { themeColor: "#f2f4f7" };
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  jobTitle: "Full-stack MERN developer",
+  url: site.url,
+  email: `mailto:${site.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Karachi", addressCountry: "PK" },
+  sameAs: [site.linkedin, site.github],
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+        {children}
+      </body>
+    </html>
+  );
+}
