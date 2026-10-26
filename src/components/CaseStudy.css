@@ -30,13 +30,10 @@
 .case-stack { font-family: var(--mono); font-size: 14px; color: var(--ink) !important; }
 .case-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
 
-.case-hire { background: var(--night); color: #fff; border-radius: 14px; padding: clamp(24px, 4vw, 44px); margin-top: clamp(40px, 6vw, 72px); }
+.case-hire { border-radius: clamp(24px, 3vw, 40px); padding: clamp(24px, 4vw, 44px); margin-top: clamp(40px, 6vw, 72px); }
 .case-hire h2 { font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.025em; font-weight: 800; margin-bottom: 8px; }
 .case-hire p { color: #b7c1cc; margin-bottom: 22px; }
 .case-hire-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.case-hire .button { border-color: #fff; color: #fff; }
-.case-hire .button:hover { background: #fff; color: var(--ink); }
-.case-hire .button.primary { background: var(--cobalt); border-color: var(--cobalt); }
 
 .case-next { display: flex; flex-direction: column; gap: 2px; margin-top: 32px; padding-block: 22px; border-top: 1px solid var(--line); text-decoration: none; }
 .case-next small { color: var(--mute); font-size: 14px; }

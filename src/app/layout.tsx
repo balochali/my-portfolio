@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/800.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#070c18" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -46,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         {/* Marks the page as script-enabled before first paint so reveal animations never leave content hidden without JS. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-        <noscript><style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style></noscript>
+        <noscript><style>{"[data-reveal]{opacity:1!important;translate:none!important;scale:none!important}"}</style></noscript>
       </head>
       <body>
         <MotionInit />

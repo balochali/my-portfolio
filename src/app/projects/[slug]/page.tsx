@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: PageProps) {
           </aside>
         </div>
 
-        <section className="case-hire" aria-labelledby="case-hire-title">
+        <section className="case-hire dark" aria-labelledby="case-hire-title">
           <h2 id="case-hire-title">Need something like this?</h2>
           <p>Tell me what you want built and I’ll reply with questions or a plan.</p>
           <div className="case-hire-actions">

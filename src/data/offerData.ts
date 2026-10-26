@@ -27,12 +27,13 @@ export const emailLink = (subject = "Project enquiry") =>
   `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
 
 export const hero = {
-  headline: "I build the web apps, dashboards and POS systems small businesses run on.",
-  lede: "I'm a full-stack MERN developer in Karachi. I help shops, restaurants and startups replace spreadsheets and paperwork with software that works every day.",
-  proof: { strong: "3+ years", rest: "building production apps. Currently at Rex Official." },
+  role: "Full-Stack MERN Developer",
+  tagline: "I build web apps, dashboards and POS systems that shops, restaurants and startups run on.",
+  status: "Available for new projects",
+  proof: "3+ years building production apps. Currently at Rex Official.",
 };
 
-/** Shown on the hero order slip and as the contact form's "what do you need" options. */
+/** Shown as the contact form's "what do you need" options. */
 export const needs = [
   "A web app",
   "A dashboard or admin panel",

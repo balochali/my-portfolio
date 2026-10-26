@@ -31,6 +31,14 @@ export default function MotionInit() {
   }, [pathname]);
 
   useEffect(() => {
+    const root = document.documentElement;
+    const update = () => root.classList.toggle("scrolled", window.scrollY > 8);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
     let frame = 0;
     const onMove = (event: PointerEvent) => {

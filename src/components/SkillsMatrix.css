@@ -1,8 +1,8 @@
-.skills { background: var(--paper); }
+.skills { background: var(--soft); }
 .skill-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 10px clamp(24px, 5vw, 72px); padding-block: 22px; border-top: 1px solid var(--line); align-items: center; }
 .skill-row:last-child { border-bottom: 1px solid var(--line); }
-.skill-row dt { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+.skill-row dt { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
 .skill-row dd { display: flex; flex-wrap: wrap; gap: 10px; }
-.skill-row dd span { font-family: var(--mono); font-size: 14px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; transition: transform 0.25s var(--ease), border-color 0.2s, background 0.2s, color 0.2s; }
-.skill-row dd span:hover { transform: translateY(-3px); border-color: var(--cobalt); background: var(--cobalt); color: #fff; }
+.skill-row dd span { font-size: 14.5px; font-weight: 600; padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff; box-shadow: 0 8px 18px -14px rgba(0, 0, 0, 0.35); transition: transform 0.4s var(--land), background 0.2s, color 0.2s, border-color 0.2s; }
+.skill-row dd span:hover { transform: translateY(-4px); background: var(--ink); color: #fff; border-color: var(--ink); }
 @media (max-width: 860px) { .skill-row { grid-template-columns: 1fr; } }
