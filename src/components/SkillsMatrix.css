@@ -1,4 +1,4 @@
-.skills { background: var(--soft); }
+
 .skill-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 10px clamp(24px, 5vw, 72px); padding-block: 22px; border-top: 1px solid var(--line); align-items: center; }
 .skill-row:last-child { border-bottom: 1px solid var(--line); }
 .skill-row dt { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }

@@ -1,5 +1,14 @@
 .hero { position: relative; }
 .hero-stage { --name-size: clamp(54px, 13.4vw, 198px); max-width: 1320px; margin: 0 auto; padding-inline: var(--pad); }
+/* Desktop: the hero fills the first screen (below the sticky bar); the portrait fades out at its feet instead of ending on a hard edge. */
+@media (min-width: 961px) {
+  .hero { min-height: calc(100svh - 72px); display: flex; }
+  .hero-stage { display: flex; flex-direction: column; width: 100%; }
+  .hero .hero-body { --ph: clamp(440px, calc(100svh - 72px - var(--name-size) * 0.78), 780px); flex: 1; grid-template-columns: minmax(0, 1fr) calc(var(--ph) * 0.9875) minmax(0, 1fr); }
+  /* Portrait grows to reach from under the name to the bottom of the screen (capped so the side text keeps its room). */
+  .hero .portrait img { width: auto; max-width: none; height: var(--ph); }
+}
+.portrait { -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); }
 
 /* The name: first word outlined, second word solid */
 .name {

@@ -4,7 +4,7 @@ import "./SkillsMatrix.css";
 
 export default function SkillsMatrix() {
   return (
-    <section className="section skills" id="skills" aria-labelledby="skills-title">
+    <section className="section soft skills" id="skills" aria-labelledby="skills-title">
       <div className="wrap">
         <div className="section-head" data-reveal="rise">
           <h2 className="section-title" id="skills-title"><span className="out">What I</span> <span>build with</span></h2>

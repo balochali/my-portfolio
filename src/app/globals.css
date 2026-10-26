@@ -47,7 +47,8 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--pad); }
 .section { padding-block: clamp(64px, 9vw, 120px); }
-.soft { background: var(--soft); }
+/* Grey sections fade in from and out to white, so colour never changes at a hard line. */
+.soft { background: linear-gradient(to bottom, #fff 0, var(--soft) clamp(120px, 16vw, 240px), var(--soft) calc(100% - clamp(120px, 16vw, 240px)), #fff 100%); }
 .section-head { max-width: none; margin-bottom: clamp(36px, 5vw, 64px); }
 /* Same pattern as the hero name: first words outlined, the rest solid */
 .section-title { font-family: var(--name); font-size: clamp(30px, 5vw, 64px); line-height: 1.02; letter-spacing: 0.01em; font-weight: 800; text-transform: uppercase; text-wrap: balance; margin-bottom: 16px; }
