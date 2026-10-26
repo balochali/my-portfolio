@@ -8,7 +8,7 @@ export default function ContactSection() {
   return (
     <section className="contact" id="contact" aria-labelledby="contact-title">
       <div className="wrap">
-        <div className="contact-card dark" data-reveal="pop">
+        <div className="contact-card" data-reveal="pop">
           <div className="contact-copy" data-reveal="left" style={stagger(1)}>
             <h2 className="section-title" id="contact-title"><span className="out">Tell me</span> <span>what you need built</span></h2>
             <p className="contact-lede">Send a few lines about your project and I’ll reply with questions or a plan.</p>
