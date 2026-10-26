@@ -1,0 +1,8 @@
+.marquee { background: var(--night-2); border-block: 1px solid var(--night-line); overflow: hidden; padding-block: 20px; }
+.marquee .track { display: flex; width: max-content; animation: marquee 60s linear infinite; mask-image: none; }
+.marquee:hover .track { animation-play-state: paused; }
+.marquee ul { display: flex; flex: none; }
+.marquee li { display: flex; align-items: center; font-family: var(--mono); font-size: 15px; color: var(--mute-night); white-space: nowrap; transition: color 0.2s; }
+.marquee li::after { content: ""; width: 7px; height: 7px; margin-inline: 28px; background: var(--amber); transform: rotate(45deg); border-radius: 1px; opacity: 0.8; }
+.marquee li:hover { color: #fff; }
+@keyframes marquee { to { transform: translateX(-50%); } }

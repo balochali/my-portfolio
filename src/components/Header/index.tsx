@@ -7,7 +7,7 @@ export default function Header() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="site-header">
         <div className="wrap">
-          <Link className="wordmark" href="/" aria-label="Ali Baloch, home">Ali Baloch</Link>
+          <Link className="wordmark" href="/" aria-label="Ali Baloch, home"><span className="wordmark-dot" aria-hidden="true" />Ali Baloch</Link>
           <nav className="site-nav" aria-label="Sections">
             <Link href="/#projects">Projects</Link>
             <Link href="/#services">Services</Link>
@@ -20,6 +20,7 @@ export default function Header() {
           </nav>
           <Link className="button primary small" href="/#contact">Hire me</Link>
         </div>
+        <div className="progress" aria-hidden="true" />
       </header>
     </>
   );

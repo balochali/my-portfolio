@@ -4,6 +4,7 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
 import { site } from "@/data/offerData";
+import MotionInit from "@/components/MotionInit";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#f2f4f7" };
+export const viewport: Viewport = { themeColor: "#070c18" };
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -41,8 +42,14 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Marks the page as script-enabled before first paint so reveal animations never leave content hidden without JS. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <noscript><style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style></noscript>
+      </head>
       <body>
+        <MotionInit />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
         {children}
       </body>

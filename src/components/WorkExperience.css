@@ -1,10 +1,13 @@
-.experience { background: var(--slip); border-block: 1px solid var(--line); }
-.job { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr); gap: 12px clamp(24px, 5vw, 72px); padding-block: 28px; border-top: 1px solid var(--line); }
+.experience { background: #fff; border-top: 1px solid var(--line); }
+.experience ol { position: relative; }
+.job { position: relative; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 12px clamp(24px, 5vw, 72px); padding-block: 30px; border-top: 1px solid var(--line); }
 .job:first-child { border-top: 0; padding-top: 0; }
-.job-who h3 { font-size: 22px; letter-spacing: -0.02em; font-weight: 700; }
-.job-who p { color: var(--mute); font-size: 15px; font-family: var(--mono); }
-.job-roles { display: grid; gap: 20px; }
-.job-roles h4 { font-size: 17px; font-weight: 700; }
-.job-roles h4 span { font-weight: 400; color: var(--mute); font-size: 14px; margin-left: 8px; }
+.job-who h3 { font-size: 24px; letter-spacing: -0.025em; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+.job-who h3::before { content: ""; width: 12px; height: 12px; border-radius: 4px; background: var(--cobalt); box-shadow: 0 0 0 5px rgba(61, 90, 254, 0.14); flex: none; transition: transform 0.4s var(--ease), background 0.3s; }
+.job:hover .job-who h3::before { transform: rotate(45deg) scale(1.15); background: var(--amber); }
+.job-who p { color: var(--mute); font-size: 14px; font-family: var(--mono); margin: 4px 0 0 24px; }
+.job-roles { display: grid; gap: 22px; }
+.job-roles h4 { font-size: 18px; font-weight: 700; }
+.job-roles h4 span { font-weight: 400; color: var(--mute); font-size: 14px; margin-left: 8px; font-family: var(--mono); }
 .job-roles p { color: var(--mute); margin-top: 4px; max-width: 62ch; }
 @media (max-width: 860px) { .job { grid-template-columns: 1fr; } .job-roles h4 span { display: block; margin: 2px 0 0; } }

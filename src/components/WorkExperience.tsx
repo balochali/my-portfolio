@@ -1,4 +1,5 @@
 import { experiences } from "@/data/aboutData";
+import { stagger } from "./motion";
 import "./WorkExperience.css";
 
 type Job = (typeof experiences)[number];
@@ -21,13 +22,13 @@ export default function WorkExperience() {
   return (
     <section className="section experience" id="experience" aria-labelledby="experience-title">
       <div className="wrap">
-        <div className="section-head">
+        <div className="section-head" data-reveal="rise">
           <h2 className="section-title" id="experience-title">Where I’ve worked</h2>
           <p>Three years of building and shipping for companies, alongside my own projects.</p>
         </div>
         <ol>
-          {companies.map(company => (
-            <li className="job" key={company.name}>
+          {companies.map((company, index) => (
+            <li className="job" key={company.name} data-reveal="rise" style={stagger(index % 2, 70)}>
               <div className="job-who">
                 <h3>{company.name}</h3>
                 <p>{period(company.roles)}</p>
