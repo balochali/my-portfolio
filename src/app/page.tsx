@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import Services from "@/components/Services";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -14,7 +13,6 @@ export default function Page() {
       <Header />
       <main id="main-content">
         <Hero />
-        <Marquee />
         <FeaturedProjects />
         <Services />
         <SkillsMatrix />

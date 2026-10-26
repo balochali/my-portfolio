@@ -17,7 +17,7 @@ export default function Services() {
     <section className="section services" id="services" aria-labelledby="services-title">
       <div className="wrap">
         <div className="section-head" data-reveal="down">
-          <h2 className="section-title" id="services-title">What you can hire me for<sup>[{String(services.length).padStart(2, "0")}]</sup></h2>
+          <h2 className="section-title" id="services-title"><span className="out">What you can</span> <span>hire me for</span><sup>[{String(services.length).padStart(2, "0")}]</sup></h2>
           <p>Pick one, or bring something bigger and we’ll split it into steps.</p>
         </div>
         <ul className="service-grid">

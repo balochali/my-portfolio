@@ -48,10 +48,13 @@ button, input, textarea { font: inherit; color: inherit; }
 .wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--pad); }
 .section { padding-block: clamp(64px, 9vw, 120px); }
 .soft { background: var(--soft); }
-.section-head { max-width: 62ch; margin-bottom: clamp(36px, 5vw, 64px); }
-.section-title { font-size: clamp(32px, 4.6vw, 56px); line-height: 1.04; letter-spacing: -0.04em; font-weight: 800; text-wrap: balance; margin-bottom: 14px; }
+.section-head { max-width: none; margin-bottom: clamp(36px, 5vw, 64px); }
+/* Same pattern as the hero name: first words outlined, the rest solid */
+.section-title { font-family: var(--name); font-size: clamp(30px, 5vw, 64px); line-height: 1.02; letter-spacing: 0.01em; font-weight: 800; text-transform: uppercase; text-wrap: balance; margin-bottom: 16px; }
+.section-title .out { color: transparent; -webkit-text-stroke: clamp(1.5px, 0.18vw, 2.5px) var(--ink); }
+.dark .section-title .out { -webkit-text-stroke-color: #fff; }
 .section-title sup { font-size: 0.3em; font-weight: 500; letter-spacing: 0; color: var(--faint); margin-left: 0.5em; vertical-align: super; }
-.section-head p { color: var(--mute); font-size: 18px; }
+.section-head p { color: var(--mute); font-size: 18px; max-width: 46ch; }
 .dark { background: var(--night); color: #fff; }
 .dark .section-head p { color: var(--mute-night); }
 

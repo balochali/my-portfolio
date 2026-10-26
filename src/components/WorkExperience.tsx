@@ -23,7 +23,7 @@ export default function WorkExperience() {
     <section className="section experience" id="experience" aria-labelledby="experience-title">
       <div className="wrap">
         <div className="section-head" data-reveal="rise">
-          <h2 className="section-title" id="experience-title">Where I’ve worked</h2>
+          <h2 className="section-title" id="experience-title"><span className="out">Where I’ve</span> <span>worked</span></h2>
           <p>Three years of building and shipping for companies, alongside my own projects.</p>
         </div>
         <ol>

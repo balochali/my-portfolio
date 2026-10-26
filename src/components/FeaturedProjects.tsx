@@ -16,7 +16,7 @@ export default function FeaturedProjects() {
     <section className="section soft projects" id="projects" aria-labelledby="projects-title">
       <div className="wrap">
         <div className="section-head" data-reveal="down">
-          <h2 className="section-title" id="projects-title">Projects that solved a real problem<sup>[{String(featured.length).padStart(2, "0")}]</sup></h2>
+          <h2 className="section-title" id="projects-title"><span className="out">Projects that</span> <span>solved a real problem</span><sup>[{String(featured.length).padStart(2, "0")}]</sup></h2>
           <p>Four pieces of work: what each one was for, and what it was built with.</p>
         </div>
 
