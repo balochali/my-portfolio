@@ -1,6 +1,7 @@
 "use client";
 import { useState, type FormEvent } from "react";
 import { sendEmail } from "@/app/actions/contact";
+import Icon from "@/components/Icon";
 import { needs } from "@/data/offerData";
 
 export default function ContactForm() {
@@ -37,10 +38,17 @@ export default function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={submit} aria-labelledby="contact-form-title">
-      <h3 id="contact-form-title">Or send the details here</h3>
+      <header className="form-head">
+        <h3 id="contact-form-title">Start your project</h3>
+        <p>Takes a minute. I reply by email, usually within a day.</p>
+      </header>
       <div className="form-row">
-        <label>Your name<input name="name" autoComplete="name" required maxLength={100} /></label>
-        <label>Email address<input name="email" type="email" autoComplete="email" required maxLength={254} /></label>
+        <label><span className="lbl">Your name</span>
+          <span className="field"><Icon name="user" /><input name="name" autoComplete="name" required maxLength={100} placeholder="Ayesha Khan" /></span>
+        </label>
+        <label><span className="lbl">Email address</span>
+          <span className="field"><Icon name="mail" /><input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="Your email" /></span>
+        </label>
       </div>
       <fieldset>
         <legend>What do you need?</legend>
@@ -53,11 +61,11 @@ export default function ContactForm() {
           ))}
         </div>
       </fieldset>
-      <label>Tell me about the project
-        <textarea name="message" rows={4} required minLength={10} maxLength={5000} placeholder="What it should do, who uses it, and when you need it." />
+      <label><span className="lbl">Tell me about the project</span>
+        <span className="field area"><Icon name="edit" /><textarea name="message" rows={4} required minLength={10} maxLength={5000} placeholder="What it should do, who uses it, and when you need it." /></span>
       </label>
       <div className="honeypot" aria-hidden="true"><label>Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <button className="button primary" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : "Send message"}</button>
+      <button className="button primary" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : <>Send message <Icon name="send" className="icon icon-arrow" /></>}</button>
       <p className={`form-feedback ${status}`} role="status" aria-live="polite">{feedback}</p>
     </form>
   );

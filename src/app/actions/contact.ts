@@ -15,7 +15,7 @@ export async function sendEmail(input: ContactInput) {
   if (recent.has(key)) return { success: false, error: "Please wait a minute before sending another message." };
   const password = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
   const recipient = process.env.CONTACT_EMAIL || process.env.EMAIL_TO;
-  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !password || !recipient) return { success: false, error: "The contact form is temporarily unavailable. Please email alibaloshi018@gmail.com directly." };
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !password || !recipient) return { success: false, error: "The contact form is temporarily unavailable. Please email alibaloch.web@gmail.com directly." };
   recent.set(key, now);
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST, port: Number(process.env.SMTP_PORT || 587), secure: process.env.SMTP_PORT === "465",
@@ -32,6 +32,6 @@ export async function sendEmail(input: ContactInput) {
     return { success: true };
   } catch {
     recent.delete(key);
-    return { success: false, error: "Your message could not be sent. Please try again or email alibaloshi018@gmail.com directly." };
+    return { success: false, error: "Your message could not be sent. Please try again or email alibaloch.web@gmail.com directly." };
   } finally { transporter.close(); }
 }

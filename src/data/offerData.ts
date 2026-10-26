@@ -6,7 +6,7 @@
 export const site = {
   name: "Ali Baloch",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://balochali.dev",
-  email: "alibaloshi018@gmail.com",
+  email: "alibaloch.web@gmail.com",
   whatsapp: "923433322698",
   linkedin: "https://www.linkedin.com/in/balochali/",
   github: "https://github.com/balochali",
