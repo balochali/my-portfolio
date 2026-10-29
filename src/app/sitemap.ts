@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/data/offerData";
 import { projects } from "@/data/projectData";
-import { siteUrl } from "@/data/seo";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteUrl();
-  if (!base) return [];
-  return ["/", "/projects", ...projects.map((p) => `/projects/${p.slug}`)].map(
-    (path) => ({ url: new URL(path, base).href }),
-  );
+  return [
+    { url: site.url, changeFrequency: "monthly", priority: 1 },
+    ...projects.map(project => ({ url: `${site.url}/projects/${project.slug}`, changeFrequency: "yearly" as const, priority: 0.6 })),
+  ];
 }

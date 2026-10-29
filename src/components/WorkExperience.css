@@ -1,0 +1,12 @@
+.experience { background: #fff; }
+.job { position: relative; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 12px clamp(24px, 5vw, 72px); padding-block: 30px; border-top: 1px solid var(--line); }
+.job:first-child { border-top: 0; padding-top: 0; }
+.job-who h3 { font-size: 26px; letter-spacing: -0.035em; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+.job-who h3::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); flex: none; transition: transform 0.5s var(--land); }
+.job:hover .job-who h3::before { transform: scale(1.6); }
+.job-who p { color: var(--mute); font-size: 14.5px; margin: 4px 0 0 24px; }
+.job-roles { display: grid; gap: 22px; }
+.job-roles h4 { font-size: 18px; font-weight: 700; }
+.job-roles h4 span { font-weight: 500; color: var(--faint); font-size: 14px; margin-left: 8px; }
+.job-roles p { color: var(--mute); margin-top: 4px; max-width: 62ch; }
+@media (max-width: 860px) { .job { grid-template-columns: 1fr; } .job-roles h4 span { display: block; margin: 2px 0 0; } }

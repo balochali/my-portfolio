@@ -1,20 +1,25 @@
-import Portfolio from "@/components/Portfolio";
-import { pageMetadata, structuredData } from "@/data/seo";
-export const metadata = pageMetadata(
-  "Ali Baloch | Custom E-commerce & POS Developer in Karachi",
-  "Custom e-commerce stores, POS and inventory software, and business web applications for small businesses in Pakistan and the Gulf. Discuss your project with Ali Baloch.",
-  "/",
-);
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import FeaturedProjects from "@/components/FeaturedProjects";
+import Services from "@/components/Services";
+import SkillsMatrix from "@/components/SkillsMatrix";
+import WorkExperience from "@/components/WorkExperience";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
+
 export default function Page() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData()).replace(/</g, "\\u003c"),
-        }}
-      />
-      <Portfolio />
+      <Header />
+      <main id="main-content">
+        <Hero />
+        <FeaturedProjects />
+        <Services />
+        <SkillsMatrix />
+        <WorkExperience />
+        <ContactSection />
+      </main>
+      <Footer />
     </>
   );
 }

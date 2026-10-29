@@ -40,10 +40,10 @@ export const projects: Project[] = [
     ],
     role: "Desktop Application Developer",
     duration: "Ongoing development",
-    challenge:
-      "Bring scattered project, partner, and payment records into a connected workspace that remains usable without internet access.",
-    solution:
-      "Combined a React interface with Tauri desktop capabilities and local SQLite storage, with shared record filters, financial summaries, and interactive charts across the workspace.",
+    problem:
+      "A property developer's land, projects, partner payments and expenses were scattered across notes and files. They now live in one searchable desktop workspace that runs on a local database.",
+    challenge: "Bring scattered project, partner, and payment records into a connected workspace that remains usable without internet access.",
+    solution: "Combined a React interface with Tauri desktop capabilities and local SQLite storage, with shared record filters, financial summaries, and interactive charts across the workspace.",
     demoUrl: "",
     codeUrl: "",
     status: "In Progress",
@@ -81,6 +81,8 @@ The system demonstrates advanced frontend visualization techniques, scalable arc
     ],
     role: "Frontend Developer & Data Visualization Engineer",
     duration: "2 Months",
+    problem:
+      "Logistics teams had to dig through container data port by port and city by city. This dashboard puts it on a live map with charts and filters.",
     challenge:
       "Handling large-scale geographic and logistics data while ensuring smooth performance, real-time interactivity, and accurate visualization across multiple ports and cities.",
     solution:
@@ -156,17 +158,19 @@ Orders, billing and menu categories are managed in the same desktop application.
       "User-friendly UI",
     ],
     techStack: ["Python", "PyQt6", "SQLite3"],
-    image: "/project-images/noshedehwari/1.webp",
+    image: "/project-images/noshedehwari/3.png",
     gallery: [
-      "/project-images/noshedehwari/1.webp",
-      "/project-images/noshedehwari/2.webp",
-      "/project-images/noshedehwari/3.webp",
-      "/project-images/noshedehwari/4.webp",
-      "/project-images/noshedehwari/5.webp",
-      "/project-images/noshedehwari/restaurantpos.webp",
+      "/project-images/noshedehwari/3.png",
+      "/project-images/noshedehwari/1.png",
+      "/project-images/noshedehwari/2.png",
+      "/project-images/noshedehwari/4.png",
+      "/project-images/noshedehwari/5.png",
+      "/project-images/noshedehwari/restaurantpos.png",
     ],
     role: "Desktop Application Developer",
     duration: "1.5 Months",
+    problem:
+      "A restaurant counter needs fast billing without expensive hardware. This POS handles orders, the menu, inventory, customers and staff in one admin panel, and prints invoices automatically.",
     challenge:
       "Designing a fast, reliable POS system with minimal hardware requirements and intuitive UI.",
     solution:
@@ -209,6 +213,8 @@ The storefront connects to a backend built with Express and Prisma.
     ],
     role: "Full Stack Developer",
     duration: "3 Months",
+    problem:
+      "A clothing brand needed one place to sell online and run the shop: products, stock, checkout, order tracking and an admin dashboard.",
     challenge:
       "Building a secure and scalable e-commerce backend with real-time admin controls.",
     solution:
