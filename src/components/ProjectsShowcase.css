@@ -20,7 +20,7 @@
 .win-bar i:first-child { background: #ff6b6b; }
 .win-bar i:nth-child(2) { background: var(--amber); }
 .win-bar i:nth-child(3) { background: #3ddc97; }
-.window img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; }
+.window img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; }
 
 .project h3 { font-size: clamp(28px, 3.2vw, 44px); letter-spacing: -0.04em; line-height: 1.06; font-weight: 800; margin-bottom: 8px; }
 .project-kind { color: var(--mute); font-size: 15px; margin-bottom: 20px; }
