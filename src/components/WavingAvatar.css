@@ -1,0 +1,6 @@
+.avatar-greeting-sprite{position:absolute;width:71%;height:94%;left:14.5%;top:3%;background-image:url('/avatar/ali-greeting-atlas.png');background-size:400% 200%;background-repeat:no-repeat;pointer-events:none}
+/* Complementary masks share the shoulder-to-pocket seam. The head, torso,
+   opposite arm, trousers and shoes are always painted from the resting cell. */
+.avatar-still-body{background-position:0% 0%;clip-path:polygon(0% 0%,66% 0%,66% 23%,63% 26%,66% 34%,66% 45%,70% 53%,75% 58%,100% 58%,100% 100%,0% 100%)}
+.avatar-moving-arm{background-position:var(--pose-x,0%) var(--pose-y,0%);clip-path:polygon(66% 0%,100% 0%,100% 58%,75% 58%,70% 53%,66% 45%,66% 34%,63% 26%,66% 23%)}
+

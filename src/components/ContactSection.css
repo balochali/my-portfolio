@@ -1,0 +1,47 @@
+.contact { padding-block: clamp(40px, 6vw, 88px) clamp(48px, 7vw, 104px); }
+.contact-card { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(28px, 4vw, 56px); align-items: start; border-radius: clamp(28px, 4vw, 52px); padding: clamp(20px, 4vw, 56px); background: radial-gradient(60% 70% at 8% 0%, #ffffff 0%, rgba(255,255,255,0) 70%), radial-gradient(55% 60% at 100% 100%, #d9dbe3 0%, rgba(217,219,227,0) 70%), linear-gradient(135deg, #f4f4f0 0%, #e8e8e2 55%, #dcdde3 100%); border: 1px solid var(--line); box-shadow: 0 40px 80px -50px rgba(0, 0, 0, 0.4); }
+.contact .section-title { color: var(--ink); font-size: clamp(32px, 4.2vw, 56px); }
+.contact-lede { color: var(--mute); font-size: 19px; max-width: 38ch; margin-bottom: 34px; }
+.contact-rows { display: grid; gap: 12px; max-width: 460px; }
+.contact-rows a { display: flex; align-items: center; gap: 16px; padding: 14px 18px 14px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.78); border: 1px solid rgba(22, 22, 22, 0.08); box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.35); text-decoration: none; color: var(--ink); transition: background 0.3s, transform 0.4s var(--land), border-color 0.3s, box-shadow 0.3s; }
+.contact-rows a:hover { background: #fff; border-color: var(--ink); transform: translateX(6px); box-shadow: 0 16px 28px -16px rgba(0, 0, 0, 0.45); }
+.contact-rows .ci { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: #fff; flex: none; }
+.contact-rows span:nth-child(2) { display: grid; min-width: 0; flex: 1; }
+.contact-rows small { color: var(--mute); font-size: 13px; line-height: 1.2; }
+.contact-rows strong { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+.contact-rows .go { transition: transform 0.35s var(--land); color: var(--faint); }
+.contact-rows a:hover .go { transform: translate(3px, -3px); color: var(--ink); }
+.contact-meta { display: flex; gap: 10px; align-items: flex-start; margin-top: 30px; color: var(--mute); font-size: 15px; }
+.contact-meta i { width: 9px; height: 9px; margin-top: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(25, 194, 90, 0.2); flex: none; }
+
+/* The form is a light card on the dark panel, so it is the thing the eye lands on */
+.contact-form { display: grid; gap: 20px; background: #fff; border: 1px solid rgba(22, 22, 22, 0.06); color: var(--ink); border-radius: 30px; padding: clamp(22px, 3vw, 38px); box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.35); }
+.form-head h3 { font-size: clamp(24px, 2.4vw, 30px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.form-head p { color: var(--mute); font-size: 15px; margin-top: 6px; }
+.contact-form label { display: grid; gap: 7px; font-size: 14px; font-weight: 700; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { position: relative; display: block; }
+.field .icon { position: absolute; left: 16px; top: 15px; width: 18px; height: 18px; color: var(--faint); pointer-events: none; transition: color 0.2s; }
+.field:focus-within .icon { color: var(--ink); }
+.contact-form input:not([type="radio"]), .contact-form textarea { width: 100%; background: var(--soft); border: 1.5px solid transparent; border-radius: 16px; padding: 13px 16px 13px 44px; color: var(--ink); font-weight: 500; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; }
+.contact-form ::placeholder { color: var(--faint); font-weight: 400; }
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.contact-form input:not([type="radio"]):focus, .contact-form textarea:focus { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(22, 22, 22, 0.08); outline: none; }
+.contact-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.contact-form legend { font-size: 14px; font-weight: 700; padding: 0; margin-bottom: 9px; }
+.form-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.form-choices label:nth-child(n+1) { flex: 0 0 auto; }
+.form-choices label { display: block; position: relative; font-weight: 500; }
+.form-choices input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.form-choices span { display: block; padding: 9px 16px; background: var(--soft); border: 1.5px solid transparent; border-radius: 999px; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.3s var(--land); }
+.form-choices label:hover span { border-color: var(--ink); transform: translateY(-2px); }
+.form-choices input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+.form-choices input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 2px; }
+.contact-form .button.primary { justify-self: stretch; min-height: 56px; background: var(--ink); border-color: var(--ink); color: #fff; box-shadow: var(--shadow-pill); }
+.contact-form .button.primary:hover { background: #000; }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-feedback { font-size: 15px; min-height: 1.4em; }
+.form-feedback.success { color: #0f8a3c; font-weight: 600; }
+.form-feedback.error { color: #c0341d; font-weight: 600; }
+@media (max-width: 860px) { .contact-card { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; }  }
